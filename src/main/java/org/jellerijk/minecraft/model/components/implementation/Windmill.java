@@ -3,12 +3,11 @@ package org.jellerijk.minecraft.model.components.implementation;
 import org.jellerijk.minecraft.model.components.Generator;
 
 public class Windmill extends ConstantGenerator implements Generator {
-    private static final int STRESS_CAPACITY_PER_RPM = 512; // SU increase per 1 RPM increase.
     private static final int BLOCKS_PER_RPM = 8; // Blocks needed for a 1 RPM increase.
     private static final int MAX_BLOCKS = 128; // Maximum number of sails that count on the windmill.
 
-    public Windmill(String name, String imgPath, int amount) {
-        super(name, imgPath, calculateRPM(amount), STRESS_CAPACITY_PER_RPM);
+    public Windmill(String name, String imgPath, int amount, int stressCapacity) {
+        super(name, imgPath, calculateRPM(amount), stressCapacity);
     }
 
     private static int calculateRPM(int amount) {
