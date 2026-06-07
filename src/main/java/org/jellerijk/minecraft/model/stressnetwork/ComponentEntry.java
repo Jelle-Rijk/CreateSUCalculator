@@ -1,8 +1,8 @@
-package domain.system;
+package org.jellerijk.minecraft.model.stressnetwork;
 
-import domain.component.ComponentFacade;
+import org.jellerijk.minecraft.model.component.Component;
 
-public abstract class ComponentEntry<T extends ComponentFacade<?>> {
+public abstract class ComponentEntry<T extends Component<?>> {
     private final T component;
     private final int amount;
 

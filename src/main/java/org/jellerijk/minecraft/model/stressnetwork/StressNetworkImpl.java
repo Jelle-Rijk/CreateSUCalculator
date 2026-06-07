@@ -1,4 +1,4 @@
-package domain.system;
+package org.jellerijk.minecraft.model.stressnetwork;
 
 import java.util.List;
 

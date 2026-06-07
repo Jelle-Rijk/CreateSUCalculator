@@ -1,0 +1,9 @@
+.root{
+    small-text: 11;
+    medium-text: 13;
+
+}
+
+.bold {
+    -fx-font-weight: bold;
+}

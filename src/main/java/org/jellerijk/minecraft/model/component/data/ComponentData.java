@@ -1,4 +1,4 @@
-package domain.component;
+package org.jellerijk.minecraft.model.component.data;
 
 public class ComponentData {
     private final String name;
@@ -23,7 +23,7 @@ public class ComponentData {
     /**
      * @return The amount of stress to be used or generated per RPM.
      */
-    protected int getStressImpact() {
+    public int getStressImpact() {
         return stressImpact;
     }
 

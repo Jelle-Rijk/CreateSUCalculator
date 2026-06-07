@@ -1,4 +1,4 @@
-package domain.component;
+package org.jellerijk.minecraft.model.component.data;
 
 public class GeneratorData extends ComponentData {
     private final int rpm;
