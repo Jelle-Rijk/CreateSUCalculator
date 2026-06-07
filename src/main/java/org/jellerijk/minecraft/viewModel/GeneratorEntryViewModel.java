@@ -1,11 +1,9 @@
-package org.jellerijk.minecraft.presenters;
+package org.jellerijk.minecraft.viewModel;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableIntegerValue;
-import javafx.beans.value.ObservableStringValue;
 
-public interface GeneratorViewModel {
+public interface GeneratorEntryViewModel extends ComponentViewModel {
     /**
      * Contains the Generator's name.
      */

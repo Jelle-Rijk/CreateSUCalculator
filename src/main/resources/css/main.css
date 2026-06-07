@@ -1,9 +1,11 @@
 .root{
     small-text: 11;
     medium-text: 13;
+    text-primary: rgba(1, 1, 12);
 
 }
 
-.bold {
+.component-name {
     -fx-font-weight: bold;
+    -fx-text-fill: text-primary;
 }
