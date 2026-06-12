@@ -1,7 +1,6 @@
 package org.jellerijk.minecraft.model.network;
 
-import org.jellerijk.minecraft.model.components.Consumer;
-import org.jellerijk.minecraft.model.components.Generator;
+import org.jellerijk.minecraft.model.components.Component;
 
 import java.util.Map;
 
@@ -25,13 +24,13 @@ public interface StressNetwork {
      * @return A map containing all the consumers in the system as the keys and the amount of each consumer as the
      * values.
      */
-    Map<Consumer, Integer> getConsumers();
+    Map<Component, Integer> getConsumers();
 
     /**
      * @return A map containing all the generators in the system as the keys and the amount of each generator as the
      * values.
      */
-    Map<Generator, Integer> getGenerators();
+    Map<Component, Integer> getGenerators();
 
     /**
      * @return The network's unique identifier.

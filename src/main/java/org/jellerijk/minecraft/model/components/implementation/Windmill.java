@@ -1,13 +1,14 @@
 package org.jellerijk.minecraft.model.components.implementation;
 
-import org.jellerijk.minecraft.model.components.Generator;
+import org.jellerijk.minecraft.model.components.Component;
+import org.jellerijk.minecraft.model.components.ComponentType;
 
-public class Windmill extends ConstantGenerator implements Generator {
+public class Windmill extends ComponentImpl implements Component {
     private static final int BLOCKS_PER_RPM = 8; // Blocks needed for a 1 RPM increase.
     private static final int MAX_BLOCKS = 128; // Maximum number of sails that count on the windmill.
 
-    public Windmill(String name, String imgPath, int amount, int stressCapacity) {
-        super(name, imgPath, calculateRPM(amount), stressCapacity);
+    public Windmill(ComponentType type, int amountOfSails) {
+        super(type, calculateRPM(amountOfSails));
     }
 
     private static int calculateRPM(int amount) {

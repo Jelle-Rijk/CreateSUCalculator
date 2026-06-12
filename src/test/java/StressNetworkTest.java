@@ -1,7 +1,6 @@
-import org.jellerijk.minecraft.model.components.Consumer;
-import org.jellerijk.minecraft.model.components.Generator;
-import org.jellerijk.minecraft.model.components.implementation.ConstantGenerator;
-import org.jellerijk.minecraft.model.components.implementation.ConsumerImpl;
+import org.jellerijk.minecraft.model.components.Component;
+import org.jellerijk.minecraft.model.components.implementation.ComponentImpl;
+import org.jellerijk.minecraft.model.components.implementation.ComponentTypeImpl;
 import org.jellerijk.minecraft.model.network.StressNetwork;
 import org.jellerijk.minecraft.model.network.implementations.StressNetworkImpl;
 import org.junit.jupiter.api.BeforeAll;
@@ -18,10 +17,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class StressNetworkTest {
     private static final String VALID_NAME = "Andesite factory";
     private static final String VALID_ID = "123456";
-    private static final Generator WATER_WHEEL = new ConstantGenerator("Water wheel", "waterwheel.png", 8, 32);
-    private static final ConsumerImpl MILLSTONE_16RPM = new ConsumerImpl("Millstone", "mill_stone.png", 16, 4);
-    private static final Map<Generator, Integer> VALID_GENERATORS = new HashMap<>();
-    private static final Map<Consumer, Integer> VALID_CONSUMERS = new HashMap<>();
+    private static final Component WATER_WHEEL = new ComponentImpl(new ComponentTypeImpl("Water wheel", "waterwheel.png", 32, true, 0, 8));
+    private static final Component MILLSTONE_16RPM = new ComponentImpl(new ComponentTypeImpl("Millstone", "mill_stone.png", 4, false, 0, null), 16);
+    private static final Map<Component, Integer> VALID_GENERATORS = new HashMap<>();
+    private static final Map<Component, Integer> VALID_CONSUMERS = new HashMap<>();
 
     @BeforeAll
     static void setUpGeneratorsAndConsumers() {
@@ -83,9 +82,10 @@ public class StressNetworkTest {
         assertEquals(totalSU, s.calculateTotalSUProduced());
     }
 
-    @Test public void calculateSUConsumption_returnsCorrectValue() {
+    @Test
+    public void calculateSUConsumption_returnsCorrectValue() {
         StressNetwork s = new StressNetworkImpl(VALID_ID, VALID_NAME, VALID_GENERATORS, VALID_CONSUMERS);
-        int totalSU = 16*4*2;
+        int totalSU = 16 * 4 * 2;
         assertEquals(totalSU, s.calculateTotalSUConsumed());
     }
 

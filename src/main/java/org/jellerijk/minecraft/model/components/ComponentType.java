@@ -1,6 +1,8 @@
 package org.jellerijk.minecraft.model.components;
 
-public interface Component {
+import java.util.Optional;
+
+public interface ComponentType {
     String getName();
 
     String getImgPath();
@@ -11,9 +13,5 @@ public interface Component {
 
     int getMinRpm();
 
-    int getRpm();
-
-    int calculateSU();
-
-    boolean hasMinRequiredRpm();
+    Optional<Integer> getRpmConstant();
 }
