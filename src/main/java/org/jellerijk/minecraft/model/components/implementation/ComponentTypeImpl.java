@@ -69,7 +69,7 @@ public class ComponentTypeImpl implements ComponentType {
 
     private void validateImgPath(String imgPath) {
         if (imgPath == null || imgPath.isBlank()) throw new IllegalArgumentException("Image path was null or blank");
-        if (!imgPath.matches("^.*\\.[A-Za-z]+$")) throw new IllegalArgumentException("Invalid image path.");
+        if (!imgPath.matches(".*\\.[A-Za-z]+$")) throw new IllegalArgumentException("Invalid image path.");
     }
 
     private void validateName(String name) {

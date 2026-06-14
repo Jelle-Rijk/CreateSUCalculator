@@ -7,7 +7,7 @@ import org.jellerijk.minecraft.model.components.implementation.ComponentImpl;
 import org.jellerijk.minecraft.model.components.implementation.Windmill;
 import org.jellerijk.minecraft.model.network.StressNetwork;
 import org.jellerijk.minecraft.model.network.implementations.StressNetworkBuilder;
-import org.jellerijk.minecraft.services.repositories.ComponentTypeRepository;
+import org.jellerijk.minecraft.services.dataaccess.ComponentTypeRepository;
 import org.jellerijk.minecraft.services.repositories.StressNetworkRepository;
 import org.jellerijk.minecraft.services.usecases.UseCase;
 import org.jellerijk.minecraft.services.usecases.viewNetwork.NetworkNotFoundException;

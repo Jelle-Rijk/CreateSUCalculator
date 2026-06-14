@@ -7,7 +7,10 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import org.jellerijk.minecraft.gui.view.NetworkDetailScreen;
 import org.jellerijk.minecraft.gui.viewModel.DetailedStressNetworkViewModel;
+import org.jellerijk.minecraft.model.components.ComponentType;
+import org.jellerijk.minecraft.persistence.ComponentTypeDB;
 
+import java.util.List;
 import java.util.Objects;
 
 public class CalculatorApplication extends Application {
@@ -28,6 +31,10 @@ public class CalculatorApplication extends Application {
     public Parent createTestRoot() {
         DetailedStressNetworkViewModel viewModel = new DetailedStressNetworkViewModel();
         NetworkDetailScreen detailScreen = new NetworkDetailScreen(viewModel);
+        ComponentTypeDB db = new ComponentTypeDB();
+        List<ComponentType> types = db.loadAll();
+        for (ComponentType type : types)
+            System.out.println(type);
         return detailScreen;
     }
 
