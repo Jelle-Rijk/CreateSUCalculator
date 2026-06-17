@@ -1,6 +1,6 @@
-package org.jellerijk.minecraft.model.components.implementation;
+package org.jellerijk.minecraft.model.component.type.implementations;
 
-import org.jellerijk.minecraft.model.components.ComponentType;
+import org.jellerijk.minecraft.model.component.type.ComponentType;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -11,30 +11,21 @@ public class ComponentTypeImpl implements ComponentType {
     private final int stressImpact;
     private final boolean generator;
     private final int minRpm;
-    private final Integer rpmConstant;
 
-    public ComponentTypeImpl(String name, String imgPath, int stressImpact, boolean generator, int minRpm, Integer rpmConstant) {
+    public ComponentTypeImpl(String name, String imgPath, int stressImpact, boolean generator, int minRpm) {
         validateName(name);
         validateImgPath(imgPath);
         validateRPM(minRpm);
         validateStressImpact(stressImpact);
-        validateConstant(rpmConstant);
         this.name = name;
         this.imgPath = imgPath;
         this.minRpm = minRpm;
         this.stressImpact = stressImpact;
         this.generator = generator;
-        this.rpmConstant = rpmConstant;
-    }
-
-    private void validateConstant(Integer rpmConstant) {
-        if (rpmConstant != null)
-            validateRPM(rpmConstant);
     }
 
     private void validateStressImpact(int stressImpact) {
-        if (stressImpact < 0)
-            throw new IllegalArgumentException("Stress impact cannot be a negative number.");
+        if (stressImpact < 0) throw new IllegalArgumentException("Stress impact cannot be a negative number.");
     }
 
     @Override
@@ -62,10 +53,6 @@ public class ComponentTypeImpl implements ComponentType {
         return minRpm;
     }
 
-    @Override
-    public Optional<Integer> getRpmConstant() {
-        return Optional.ofNullable(rpmConstant);
-    }
 
     private void validateImgPath(String imgPath) {
         if (imgPath == null || imgPath.isBlank()) throw new IllegalArgumentException("Image path was null or blank");
@@ -77,8 +64,7 @@ public class ComponentTypeImpl implements ComponentType {
     }
 
     protected void validateRPM(int rpm) {
-        if (rpm < 0)
-            throw new IllegalArgumentException("RPM cannot be a negative number.");
+        if (rpm < 0) throw new IllegalArgumentException("RPM cannot be a negative number.");
     }
 
     @Override

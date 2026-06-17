@@ -1,14 +1,14 @@
 package org.jellerijk.minecraft.persistence;
 
 import org.jellerijk.minecraft.model.network.StressNetwork;
-import org.jellerijk.minecraft.services.dataaccess.StressNetworkDatabaseAccess;
+import org.jellerijk.minecraft.services.repositories.NetworkDAO;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class MockNetworkDB implements StressNetworkDatabaseAccess {
+public class MockNetworkDB implements NetworkDAO {
     List<StressNetwork> networks;
     @Override
     public void save(StressNetwork component) {

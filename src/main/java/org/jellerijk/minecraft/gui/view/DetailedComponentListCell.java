@@ -15,7 +15,7 @@ public class DetailedComponentListCell extends ListCell<StressNetworkComponentVi
     public DetailedComponentListCell() {
         graphic = buildGraphic();
         graphicProperty().bind(Bindings.createObjectBinding(() -> isEmpty() ? null : graphic, emptyProperty()));
-    }
+        }
 
     private Node buildGraphic() {
         return buildNameLabel();

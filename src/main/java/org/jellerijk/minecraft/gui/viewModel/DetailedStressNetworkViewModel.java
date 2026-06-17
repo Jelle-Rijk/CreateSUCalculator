@@ -3,7 +3,6 @@ package org.jellerijk.minecraft.gui.viewModel;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.jellerijk.minecraft.dtos.StressNetworkDTO;
 
 public class DetailedStressNetworkViewModel {
     private final ObservableList<StressNetworkComponentViewModel> consumers = FXCollections.observableArrayList();

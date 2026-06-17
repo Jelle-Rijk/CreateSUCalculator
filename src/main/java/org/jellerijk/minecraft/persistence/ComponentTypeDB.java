@@ -1,8 +1,8 @@
 package org.jellerijk.minecraft.persistence;
 
 import org.jellerijk.minecraft.exceptions.DataAccessException;
-import org.jellerijk.minecraft.model.components.ComponentType;
-import org.jellerijk.minecraft.model.components.implementation.ComponentTypeImpl;
+import org.jellerijk.minecraft.model.component.type.ComponentType;
+import org.jellerijk.minecraft.model.component.type.implementations.ComponentTypeImpl;
 import org.jellerijk.minecraft.services.dataaccess.ComponentTypeDAO;
 import org.jellerijk.minecraft.util.sql.QueryBuilder;
 

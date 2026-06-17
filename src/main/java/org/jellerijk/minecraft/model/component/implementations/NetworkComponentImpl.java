@@ -1,19 +1,15 @@
-package org.jellerijk.minecraft.model.components.implementation;
+package org.jellerijk.minecraft.model.component.implementations;
 
-import org.jellerijk.minecraft.model.components.Component;
-import org.jellerijk.minecraft.model.components.ComponentType;
+import org.jellerijk.minecraft.model.component.NetworkComponent;
+import org.jellerijk.minecraft.model.component.type.ComponentType;
+import org.jellerijk.minecraft.model.component.type.ConstantSpeedComponentType;
 
-public class ComponentImpl implements Component {
+public class NetworkComponentImpl implements NetworkComponent {
     private final ComponentType type;
     private final int rpm;
 
-    /**
-     * This constructor can be used to instantiate Components that have an RPM constant.
-     *
-     * @param type The component's type.
-     */
-    public ComponentImpl(ComponentType type) {
-        this(type, type.getRpmConstant().orElseThrow());
+    public NetworkComponentImpl(ConstantSpeedComponentType type) {
+        this(type, type.getRpm());
     }
 
     /**
@@ -22,7 +18,7 @@ public class ComponentImpl implements Component {
      * @param type The component's type.
      * @param rpm  The rpm to set the component to.
      */
-    public ComponentImpl(ComponentType type, int rpm) {
+    public NetworkComponentImpl(ComponentType type, int rpm) {
         if (type == null)
             throw new IllegalArgumentException("Every component needs a type.");
         if (rpm < 0)

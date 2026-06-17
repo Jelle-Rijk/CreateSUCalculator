@@ -1,4 +1,4 @@
-package org.jellerijk.minecraft.model.components;
+package org.jellerijk.minecraft.model.component.type;
 
 import java.util.Optional;
 
@@ -12,6 +12,4 @@ public interface ComponentType {
     boolean isGenerator();
 
     int getMinRpm();
-
-    Optional<Integer> getRpmConstant();
 }

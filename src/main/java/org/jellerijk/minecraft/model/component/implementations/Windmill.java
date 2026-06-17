@@ -1,9 +1,9 @@
-package org.jellerijk.minecraft.model.components.implementation;
+package org.jellerijk.minecraft.model.component.implementations;
 
-import org.jellerijk.minecraft.model.components.Component;
-import org.jellerijk.minecraft.model.components.ComponentType;
+import org.jellerijk.minecraft.model.component.NetworkComponent;
+import org.jellerijk.minecraft.model.component.type.ComponentType;
 
-public class Windmill extends ComponentImpl implements Component {
+public class Windmill extends NetworkComponentImpl implements NetworkComponent {
     private static final int BLOCKS_PER_RPM = 8; // Blocks needed for a 1 RPM increase.
     private static final int MAX_BLOCKS = 128; // Maximum number of sails that count on the windmill.
 

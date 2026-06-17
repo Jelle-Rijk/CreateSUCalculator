@@ -1,6 +1,6 @@
 package org.jellerijk.minecraft.services.dataaccess;
 
-import org.jellerijk.minecraft.model.components.ComponentType;
+import org.jellerijk.minecraft.model.component.type.ComponentType;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -18,5 +18,13 @@ public class ComponentTypeRepository {
 
     public List<ComponentType> loadAll() {
         return compDAO.loadAll();
+    }
+
+    public List<ComponentType> loadGenerators() {
+        return compDAO.getGenerators();
+    }
+
+    public List<ComponentType> loadConsumers() {
+        return compDAO.getConsumers();
     }
 }

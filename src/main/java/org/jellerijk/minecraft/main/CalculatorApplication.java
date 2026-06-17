@@ -5,13 +5,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import org.jellerijk.minecraft.gui.view.NetworkDetailScreen;
-import org.jellerijk.minecraft.gui.viewModel.DetailedStressNetworkViewModel;
-import org.jellerijk.minecraft.model.components.ComponentType;
-import org.jellerijk.minecraft.persistence.ComponentTypeDB;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class CalculatorApplication extends Application {
     private static final boolean TEST_MODE = true;
@@ -29,13 +24,7 @@ public class CalculatorApplication extends Application {
     }
 
     public Parent createTestRoot() {
-        DetailedStressNetworkViewModel viewModel = new DetailedStressNetworkViewModel();
-        NetworkDetailScreen detailScreen = new NetworkDetailScreen(viewModel);
-        ComponentTypeDB db = new ComponentTypeDB();
-        List<ComponentType> types = db.loadAll();
-        for (ComponentType type : types)
-            System.out.println(type);
-        return detailScreen;
+        return new Label("Test");
     }
 
     public Parent createRoot() {

@@ -1,6 +1,6 @@
-package org.jellerijk.minecraft.model.components;
+package org.jellerijk.minecraft.model.component;
 
-public interface Component {
+public interface NetworkComponent {
     String getName();
 
     String getImgPath();
