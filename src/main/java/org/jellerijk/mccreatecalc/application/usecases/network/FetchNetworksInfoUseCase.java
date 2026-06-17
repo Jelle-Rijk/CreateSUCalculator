@@ -1,6 +1,6 @@
 package org.jellerijk.mccreatecalc.application.usecases.network;
 
-import org.jellerijk.mccreatecalc.application.repositories.NetworkRepository;
+import org.jellerijk.mccreatecalc.application.gateways.NetworkRepository;
 import org.jellerijk.mccreatecalc.application.usecases.NoArgsUseCase;
 
 import java.util.List;

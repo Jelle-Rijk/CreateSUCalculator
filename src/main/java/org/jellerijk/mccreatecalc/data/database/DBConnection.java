@@ -1,4 +1,4 @@
-package org.jellerijk.mccreatecalc.database;
+package org.jellerijk.mccreatecalc.data.database;
 
 import java.nio.file.Path;
 import java.sql.Connection;

@@ -1,7 +1,7 @@
-package org.jellerijk.mccreatecalc.database;
+package org.jellerijk.mccreatecalc.data.database;
 
 import org.jellerijk.mccreatecalc.application.usecases.network.NetworkInfo;
-import org.jellerijk.mccreatecalc.data.NetworkDAO;
+import org.jellerijk.mccreatecalc.data.dao.NetworkDAO;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
 import org.jellerijk.mccreatecalc.exceptions.DataBaseAccessException;
 import org.jellerijk.mccreatecalc.util.sql.QueryBuilder;
@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class NetworkDB implements NetworkDAO {
     private static final String COL_ID = "Id";
@@ -42,5 +43,25 @@ public class NetworkDB implements NetworkDAO {
         } catch (SQLException ex) {
             throw new DataBaseAccessException("Something went wrong while loading info for all networks.", ex);
         }
+    }
+
+    @Override
+    public Optional<StressNetwork> getById(String id) {
+        StressNetwork network = null;
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement query = conn.prepareStatement(QueryBuilder.selectBy(TABLE, COL_ID))) {
+            query.setString(1, id);
+            ResultSet res = query.executeQuery();
+            if (res.next())
+                network = mapToStressNetwork(res);
+            return Optional.ofNullable(network);
+        } catch (SQLException e) {
+            throw new DataBaseAccessException("Something went wrong while getting a network by its id.", e);
+        }
+    }
+
+    private StressNetwork mapToStressNetwork(ResultSet res) throws SQLException {
+        String id = res.getString(COL_ID);
+        String name = res.getString(COL_NAME);
+        return new StressNetwork(id, name);
     }
 }

@@ -1,8 +1,7 @@
 package org.jellerijk.mccreatecalc.presentation.model;
 
 import javafx.beans.binding.ObjectBinding;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.jellerijk.mccreatecalc.application.usecases.network.NetworkInfo;
@@ -12,6 +11,20 @@ import java.util.Collection;
 public class NetworkListModel {
     private final ObservableList<NetworkInfo> networks = FXCollections.observableArrayList();
     private final ObjectProperty<NetworkInfo> selectedNetwork = new SimpleObjectProperty<>();
+    private final StringProperty userInput = new SimpleStringProperty();
+    private final BooleanProperty userInputEnabled = new SimpleBooleanProperty();
+
+    public boolean isUserInputEnabled() {
+        return userInputEnabled.get();
+    }
+
+    public BooleanProperty userInputEnabledProperty() {
+        return userInputEnabled;
+    }
+
+    public void setUserInputEnabled(Boolean userInputEnabled) {
+        this.userInputEnabled.set(userInputEnabled);
+    }
 
     public ObservableList<NetworkInfo> getNetworks() {
         return networks;
@@ -36,5 +49,17 @@ public class NetworkListModel {
 
     public void bindSelectedNetwork(ObjectBinding<NetworkInfo> binding) {
         selectedNetwork.bind(binding);
+    }
+
+    public String getUserInput() {
+        return userInput.get();
+    }
+
+    public StringProperty userInputProperty() {
+        return userInput;
+    }
+
+    public void setUserInput(String input) {
+        userInput.set(input);
     }
 }
