@@ -1,4 +1,4 @@
-package org.jellerijk.minecraft.util.fxlib;
+package org.jellerijk.mccreatecalc.util.fxlib;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;

@@ -1,12 +1,13 @@
-package org.jellerijk.minecraft.util.sql;
+package org.jellerijk.mccreatecalc.util.sql;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class QueryBuilder {
-    public static String selectAll(String table) {
-        return "SELECT * FROM " + table;
+    public static String selectAll(String table, String... cols) {
+        String colSelection = cols.length == 0 ? "*" : String.join(",", cols);
+        return "SELECT " + colSelection + " FROM " + table;
     }
 
     public static String updateCols(String table, String id, List<String> cols) {
@@ -34,6 +35,7 @@ public abstract class QueryBuilder {
     }
 
     public static String insert(String table, List<String> cols) {
-        return "INSERT INTO " + table + " (" + String.join(",", cols) + ") VALUES (" + "?,".repeat(cols.size() - 1) + "?)";
+        return "INSERT INTO " + table + " (" + String.join(",", cols) + ") VALUES (" + "?,".repeat(
+                cols.size() - 1) + "?)";
     }
 }

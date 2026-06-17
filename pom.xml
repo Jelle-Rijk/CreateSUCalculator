@@ -71,7 +71,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>org.jellerijk.minecraft.main.GUIStartup</mainClass>
+                            <mainClass>org.jellerijk.mccreatecalc.main.GUIStartup</mainClass>
                             <options>
                                 <option>--enable-native-access=javafx.graphics</option>
                             </options>

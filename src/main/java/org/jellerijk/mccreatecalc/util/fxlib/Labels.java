@@ -1,8 +1,7 @@
-package org.jellerijk.minecraft.util.fxlib;
+package org.jellerijk.mccreatecalc.util.fxlib;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.value.ObservableIntegerValue;
 import javafx.beans.value.ObservableStringValue;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;

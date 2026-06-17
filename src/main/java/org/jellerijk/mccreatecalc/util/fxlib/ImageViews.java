@@ -1,4 +1,4 @@
-package org.jellerijk.minecraft.util.fxlib;
+package org.jellerijk.mccreatecalc.util.fxlib;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

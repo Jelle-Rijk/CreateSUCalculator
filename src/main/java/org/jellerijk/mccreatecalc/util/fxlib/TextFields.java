@@ -1,4 +1,4 @@
-package org.jellerijk.minecraft.util.fxlib;
+package org.jellerijk.mccreatecalc.util.fxlib;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.scene.control.TextField;
