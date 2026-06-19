@@ -41,6 +41,8 @@ public class NetworkListViewBuilder implements Builder<Region> {
     private Node buildInputField() {
         TextField txf = new TextField();
         txf.textProperty().bindBidirectional(model.userInputProperty());
+        txf.editableProperty().bind(model.userInputEnabledProperty());
+        txf.disableProperty().bind(model.userInputEnabledProperty().not());
         txf.setOnAction((_) -> createNetworkHandler.run());
         return txf;
     }

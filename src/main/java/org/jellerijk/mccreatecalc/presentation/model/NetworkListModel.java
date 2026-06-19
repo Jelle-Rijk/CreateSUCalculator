@@ -12,7 +12,7 @@ public class NetworkListModel {
     private final ObservableList<NetworkInfo> networks = FXCollections.observableArrayList();
     private final ObjectProperty<NetworkInfo> selectedNetwork = new SimpleObjectProperty<>();
     private final StringProperty userInput = new SimpleStringProperty();
-    private final BooleanProperty userInputEnabled = new SimpleBooleanProperty();
+    private final BooleanProperty userInputEnabled = new SimpleBooleanProperty(true);
 
     public boolean isUserInputEnabled() {
         return userInputEnabled.get();

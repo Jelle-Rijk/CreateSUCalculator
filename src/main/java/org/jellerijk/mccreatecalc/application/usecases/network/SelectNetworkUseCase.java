@@ -15,6 +15,10 @@ public class SelectNetworkUseCase implements VoidUseCase<String> {
         this.data = selectedData;
     }
 
+    /**
+     * Selects a network.
+     * @param networkId The network to be selected.
+     */
     @Override
     public void execute(String networkId) {
         StressNetwork network = networkRepo.getById(networkId)

@@ -12,6 +12,9 @@ public class FetchNetworksInfoUseCase implements NoArgsUseCase<List<NetworkInfo>
         this.networkRepo = networkRepo;
     }
 
+    /**
+     * @return A list containing the ID and Name of every stress network in the repository.
+     */
     @Override
     public List<NetworkInfo> execute() {
         return networkRepo.getInfoForAllNetworks();

@@ -21,7 +21,14 @@ public class NetworkListInteractor {
     }
 
     public void fetchNetworks() {
-        networkFetcher.execute();
+        Task<Void> fetchTask = new Task<>() {
+            @Override
+            protected Void call() {
+                model.setNetworks(networkFetcher.execute());
+                return null;
+            }
+        };
+        fetchTask.run();
     }
 
     private void createModelBindings() {
@@ -30,21 +37,21 @@ public class NetworkListInteractor {
 
     public void createNetwork() {
         CreateNetworkRequest request = new CreateNetworkRequest(model.getUserInput());
+        System.out.println("Handler called");
         model.setUserInputEnabled(false);
         Task<Void> create = new Task<>() {
             @Override
-            protected Void call() throws Exception {
+            protected Void call() {
                 networkCreator.execute(request);
-                Thread.sleep(2000);
                 return null;
             }
         };
-        create.run();
         create.setOnSucceeded((_) -> {
             fetchNetworks();
             model.setUserInput("");
             model.setUserInputEnabled(true);
         });
+        create.run();
 
     }
 

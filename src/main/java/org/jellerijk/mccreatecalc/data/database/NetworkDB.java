@@ -25,7 +25,7 @@ public class NetworkDB implements NetworkDAO {
                 QueryBuilder.insert(TABLE, List.of(COL_ID, COL_NAME)))) {
             query.setString(1, network.id());
             query.setString(2, network.name());
-            query.executeQuery();
+            query.executeUpdate();
         } catch (SQLException ex) {
             throw new DataBaseAccessException("Something went wrong while inserting a network.", ex);
         }

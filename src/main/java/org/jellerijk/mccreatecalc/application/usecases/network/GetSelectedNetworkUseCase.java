@@ -11,6 +11,9 @@ public class GetSelectedNetworkUseCase implements NoArgsUseCase<StressNetwork> {
         this.data = data;
     }
 
+    /**
+     * @return The selected stress network or null if no network is selected.
+     */
     @Override
     public StressNetwork execute() {
         return data.read().orElse(null);

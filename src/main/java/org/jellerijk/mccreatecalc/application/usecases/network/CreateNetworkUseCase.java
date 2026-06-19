@@ -14,7 +14,7 @@ public class CreateNetworkUseCase implements UseCase<CreateNetworkRequest, Strin
     }
 
     /**
-     * Creates a new network, saves it to the org.jellerijk.mccreatecalc.database and returns the id for the newly
+     * Creates a new network, saves it to the repository and returns the id for the newly
      * created network.
      *
      * @param createNetworkRequest The data needed for the new network.
