@@ -1,4 +1,4 @@
-package org.jellerijk.mccreatecalc.presentation.model;
+package org.jellerijk.mccreatecalc.presentation.networklist;
 
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.*;

@@ -1,4 +1,4 @@
-package org.jellerijk.mccreatecalc.presentation.model;
+package org.jellerijk.mccreatecalc.presentation.networkdetails;
 
 
 import javafx.beans.property.*;
@@ -53,4 +53,5 @@ public class NetworkDetailsModel {
     public BooleanProperty overstressedProperty() {
         return overstressed;
     }
+
 }

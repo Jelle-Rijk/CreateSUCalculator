@@ -1,11 +1,10 @@
-package org.jellerijk.mccreatecalc.presentation.interactor;
+package org.jellerijk.mccreatecalc.presentation.networklist;
 
 import javafx.concurrent.Task;
 import org.jellerijk.mccreatecalc.application.usecases.network.CreateNetworkRequest;
 import org.jellerijk.mccreatecalc.application.usecases.network.CreateNetworkUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.network.FetchNetworksInfoUseCase;
-import org.jellerijk.mccreatecalc.presentation.NetworkUseCaseFactory;
-import org.jellerijk.mccreatecalc.presentation.model.NetworkListModel;
+import org.jellerijk.mccreatecalc.application.services.NetworkUseCaseFactory;
 
 public class NetworkListInteractor {
     private final NetworkListModel model;

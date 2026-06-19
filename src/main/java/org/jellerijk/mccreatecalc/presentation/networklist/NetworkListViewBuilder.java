@@ -1,4 +1,4 @@
-package org.jellerijk.mccreatecalc.presentation.views;
+package org.jellerijk.mccreatecalc.presentation.networklist;
 
 import javafx.beans.binding.Bindings;
 import javafx.scene.Node;
@@ -10,7 +10,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Builder;
 import org.jellerijk.mccreatecalc.application.usecases.network.NetworkInfo;
-import org.jellerijk.mccreatecalc.presentation.model.NetworkListModel;
 
 public class NetworkListViewBuilder implements Builder<Region> {
     private final NetworkListModel model;

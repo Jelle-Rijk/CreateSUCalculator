@@ -1,10 +1,7 @@
-package org.jellerijk.mccreatecalc.presentation.controllers;
+package org.jellerijk.mccreatecalc.presentation.networklist;
 
 import javafx.scene.layout.Region;
-import org.jellerijk.mccreatecalc.presentation.NetworkUseCaseFactory;
-import org.jellerijk.mccreatecalc.presentation.interactor.NetworkListInteractor;
-import org.jellerijk.mccreatecalc.presentation.model.NetworkListModel;
-import org.jellerijk.mccreatecalc.presentation.views.NetworkListViewBuilder;
+import org.jellerijk.mccreatecalc.application.services.NetworkUseCaseFactory;
 
 public class NetworkListController {
     private final NetworkListViewBuilder viewBuilder;

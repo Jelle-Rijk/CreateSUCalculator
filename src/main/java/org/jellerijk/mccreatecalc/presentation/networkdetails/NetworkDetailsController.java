@@ -1,10 +1,7 @@
-package org.jellerijk.mccreatecalc.presentation.controllers;
+package org.jellerijk.mccreatecalc.presentation.networkdetails;
 
 import javafx.scene.layout.Region;
-import org.jellerijk.mccreatecalc.presentation.NetworkUseCaseFactory;
-import org.jellerijk.mccreatecalc.presentation.interactor.NetworkDetailsInteractor;
-import org.jellerijk.mccreatecalc.presentation.model.NetworkDetailsModel;
-import org.jellerijk.mccreatecalc.presentation.views.NetworkDetailsViewBuilder;
+import org.jellerijk.mccreatecalc.application.services.NetworkUseCaseFactory;
 
 public class NetworkDetailsController {
     private final NetworkDetailsInteractor interactor;

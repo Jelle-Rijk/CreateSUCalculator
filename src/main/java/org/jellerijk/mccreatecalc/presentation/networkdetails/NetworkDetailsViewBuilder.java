@@ -1,4 +1,4 @@
-package org.jellerijk.mccreatecalc.presentation.views;
+package org.jellerijk.mccreatecalc.presentation.networkdetails;
 
 
 import javafx.geometry.Pos;
@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.util.Builder;
-import org.jellerijk.mccreatecalc.presentation.model.NetworkDetailsModel;
 import org.jellerijk.mccreatecalc.util.fxlib.HBoxes;
 import org.jellerijk.mccreatecalc.util.fxlib.Labels;
 
