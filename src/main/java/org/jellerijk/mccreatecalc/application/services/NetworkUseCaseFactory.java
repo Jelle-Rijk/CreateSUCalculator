@@ -18,7 +18,7 @@ public class NetworkUseCaseFactory {
     private final SelectedNetworkPublisher selectedNetworkPublisher;
 
     public NetworkUseCaseFactory(NetworkRepository networkRepo, GeneratorRepository generatorRepo, SelectedNetworkData selectedData, SelectedNetworkPublisher selectedNetworkPublisher) {
-        this.networkService = new NetworkServiceImpl(networkRepo);
+        this.networkService = new NetworkServiceImpl(networkRepo, selectedData);
         this.generatorService = new GeneratorServiceImpl(generatorRepo);
         this.networkRepo = networkRepo;
         this.selectedData = selectedData;
