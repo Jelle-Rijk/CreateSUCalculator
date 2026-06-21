@@ -2,6 +2,7 @@ package org.jellerijk.mccreatecalc.application.services;
 
 import org.jellerijk.mccreatecalc.entities.Generator;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface GeneratorService {
@@ -11,4 +12,5 @@ public interface GeneratorService {
      */
     Optional<Generator> getByName(String name);
 
+    List<Generator> getAll();
 }
