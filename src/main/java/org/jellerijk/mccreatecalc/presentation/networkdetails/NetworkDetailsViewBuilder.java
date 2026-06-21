@@ -4,6 +4,7 @@ package org.jellerijk.mccreatecalc.presentation.networkdetails;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
@@ -33,7 +34,7 @@ public class NetworkDetailsViewBuilder implements Builder<Region> {
     }
 
     private Node buildSUOverview() {
-        Node suBalance = buildSULabel("Balance:", Labels.balanceLabel(model.suBalanceProperty()));
+        Node suBalance = HBoxes.aligned(Pos.CENTER_LEFT, 1, new Label("Balance:", Labels.balanceLabel(model.suBalanceProperty())));
         return HBoxes.aligned(Pos.CENTER_LEFT, 5, suBalance);
     }
 
@@ -43,25 +44,29 @@ public class NetworkDetailsViewBuilder implements Builder<Region> {
         return HBoxes.aligned(Pos.TOP_CENTER, 5, generators, consumers);
     }
 
-    private Node buildSULabel(String prefix, Label lbl) {
-        Label prefixLabel = new Label(prefix);
-        return HBoxes.aligned(Pos.CENTER_LEFT, 1, prefixLabel, lbl);
-    }
-
     private Node buildComponentOverview(String title, IntegerProperty su) {
         BorderPane container = new BorderPane();
-        container.setTop(buildComponentOverviewHeader(title));
+        container.setTop(buildComponentOverviewHeader(title, buildGeneratorSelector()));
         container.setCenter(buildComponentOverviewCenter());
         container.setBottom(buildComponentOverviewFooter(su));
         return container;
+    }
+
+    private ComboBox<GeneratorOption> buildGeneratorSelector() {
+        ComboBox<GeneratorOption> optionComboBox = new ComboBox<>();
+        optionComboBox.setCellFactory(_ -> new GeneratorOptionListCell());
+        optionComboBox.setButtonCell(new GeneratorOptionListCell());
+        optionComboBox.setItems(model.getGeneratorOptions());
+        return optionComboBox;
     }
 
     private Node buildComponentOverviewCenter() {
         return new ListView<>();
     }
 
-    private Node buildComponentOverviewHeader(String title) {
-        return HBoxes.aligned(Pos.CENTER_LEFT, 5, new Label(title));
+    private Node buildComponentOverviewHeader(String title, ComboBox<?> selector) {
+        Label lblTitle = new Label(title);
+        return new VBox(3, lblTitle, selector);
     }
 
     private Node buildComponentOverviewFooter(IntegerProperty su) {

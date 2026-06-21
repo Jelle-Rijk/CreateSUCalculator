@@ -5,6 +5,8 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.Collection;
+
 public class NetworkDetailsModel {
     private final StringProperty networkName = new SimpleStringProperty();
     private final IntegerProperty suConsumed = new SimpleIntegerProperty();
@@ -13,6 +15,11 @@ public class NetworkDetailsModel {
     private final ObservableList<String> generators = FXCollections.observableArrayList(); // TODO implement
     private final ObservableList<String> consumers = FXCollections.observableArrayList(); // TODO implement
     private final BooleanProperty overstressed = new SimpleBooleanProperty();
+    private final ObservableList<GeneratorOption> generatorOptions = FXCollections.observableArrayList();
+
+    public ObservableList<GeneratorOption> getGeneratorOptions() {
+        return generatorOptions;
+    }
 
     public String getNetworkName() {
         return networkName.get();
@@ -24,6 +31,10 @@ public class NetworkDetailsModel {
 
     public int getSuConsumed() {
         return suConsumed.get();
+    }
+
+    public void setGeneratorOptions(Collection<GeneratorOption> generatorOptions) {
+        this.generatorOptions.setAll(generatorOptions);
     }
 
     public IntegerProperty suConsumedProperty() {
