@@ -30,7 +30,7 @@ public record StressNetwork(String id, String name, List<GeneratorEntry> generat
     }
 
     public int calculateSUProduced() {
-        throw new UnsupportedOperationException();
+        return generators.stream().mapToInt(GeneratorEntry::calculateSUProduced).reduce(0, Integer::sum);
     }
 
     public int calculateSUBalance() {
