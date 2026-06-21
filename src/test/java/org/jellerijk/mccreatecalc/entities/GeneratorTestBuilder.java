@@ -1,6 +1,6 @@
 package org.jellerijk.mccreatecalc.entities;
 
-class GeneratorTestBuilder {
+public class GeneratorTestBuilder {
     public static final String DEFAULT_IMG = "test.png";
     public static final String DEFAULT_NAME = "Test-Generator";
     public static final int DEFAULT_SU = 512;

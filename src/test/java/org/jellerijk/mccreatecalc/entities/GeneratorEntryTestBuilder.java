@@ -1,6 +1,6 @@
 package org.jellerijk.mccreatecalc.entities;
 
-class GeneratorEntryTestBuilder {
+public class GeneratorEntryTestBuilder {
     public static final Generator DEFAULT_GENERATOR = GeneratorTestBuilder.defaultGenerator().build();
     public static final int DEFAULT_AMOUNT = 4;
 

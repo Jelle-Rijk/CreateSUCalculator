@@ -23,5 +23,7 @@ public interface NetworkService {
      */
     void setSelectedNetwork(StressNetwork network);
 
+    void save(StressNetwork network);
+
 
 }
