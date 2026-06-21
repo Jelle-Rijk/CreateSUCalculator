@@ -29,4 +29,9 @@ public class NetworkRepositoryImpl implements NetworkRepository {
     public Optional<StressNetwork> getById(String id) {
         return networkDAO.getById(id);
     }
+
+    @Override
+    public void update(StressNetwork network) {
+        networkDAO.update(network);
+    }
 }

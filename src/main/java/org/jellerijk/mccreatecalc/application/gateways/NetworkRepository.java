@@ -12,4 +12,6 @@ public interface NetworkRepository {
     List<NetworkInfo> getInfoForAllNetworks();
 
     Optional<StressNetwork> getById(String id);
+
+    void update(StressNetwork network);
 }

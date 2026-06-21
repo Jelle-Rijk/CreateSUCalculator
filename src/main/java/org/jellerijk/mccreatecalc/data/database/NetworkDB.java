@@ -60,6 +60,11 @@ public class NetworkDB implements NetworkDAO {
         }
     }
 
+    @Override
+    public void update(StressNetwork network) {
+        throw new UnsupportedOperationException();
+    }
+
     private StressNetwork mapToStressNetwork(ResultSet res) throws SQLException {
         String id = res.getString(COL_ID);
         String name = res.getString(COL_NAME);
