@@ -26,7 +26,7 @@ public record StressNetwork(String id, String name, List<GeneratorEntry> generat
     }
 
     public int calculateSUConsumed() {
-        throw new UnsupportedOperationException();
+        return 0; // TODO implement SU consumers
     }
 
     public int calculateSUProduced() {

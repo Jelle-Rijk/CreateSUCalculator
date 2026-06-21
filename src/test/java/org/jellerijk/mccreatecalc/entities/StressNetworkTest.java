@@ -13,6 +13,7 @@ class StressNetworkTest {
     private static final String VALID_NAME = "Test-Network";
     private static final String VALID_ID = "Test123";
     private static int expectedSUProduced;
+    private static int expectedSUConsumed;
     private static final List<GeneratorEntry> VALID_GENERATORS = new ArrayList<>();
     private StressNetworkBuilder defaultStressNetwork;
 
@@ -29,10 +30,11 @@ class StressNetworkTest {
                 .withGenerator(gen2)
                 .withAmount(20)
                 .build();
-        expectedSUProduced = entry1.calculateSUProduced() + entry2.calculateSUProduced();
         VALID_GENERATORS.add(entry1);
         VALID_GENERATORS.add(entry2);
 
+        expectedSUProduced = entry1.calculateSUProduced() + entry2.calculateSUProduced();
+        expectedSUConsumed = 0;
     }
 
     @BeforeEach
@@ -47,7 +49,7 @@ class StressNetworkTest {
     void calculateSUConsumed() {
     }
 
-//    === calculateSUProduced() ===
+    //    === calculateSUProduced() ===
     @Test
     void calculateSUProduced_returnsCorrectValue() {
         assertEquals(expectedSUProduced, defaultStressNetwork.build().calculateSUProduced());
@@ -55,6 +57,7 @@ class StressNetworkTest {
 
     @Test
     void calculateSUBalance() {
+        assertEquals(expectedSUProduced - expectedSUConsumed, defaultStressNetwork.build().calculateSUBalance());
     }
 
     @Test
