@@ -1,6 +1,7 @@
 package org.jellerijk.mccreatecalc.entities;
 
-public record StressNetwork(String id, String name) {
+public record StressNetwork(String id, String name) implements SUProducer {
+
     public StressNetwork {
         validateId(id);
         validateName(name);
@@ -14,5 +15,17 @@ public record StressNetwork(String id, String name) {
     private void validateName(String name) {
         if (name == null || name.isBlank())
             throw new IllegalArgumentException("Name cannot be null or blank");
+    }
+
+    public int calculateSUConsumed() {
+        throw new UnsupportedOperationException();
+    }
+
+    public int calculateSUProduced() {
+        throw new UnsupportedOperationException();
+    }
+
+    public int calculateSUBalance() {
+        return calculateSUProduced() - calculateSUConsumed();
     }
 }

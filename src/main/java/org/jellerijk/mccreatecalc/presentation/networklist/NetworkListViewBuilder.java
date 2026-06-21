@@ -9,15 +9,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Builder;
-import org.jellerijk.mccreatecalc.application.usecases.network.NetworkInfo;
+import org.jellerijk.mccreatecalc.application.usecases.network.read.NetworkInfo;
+
+import java.util.function.Consumer;
 
 public class NetworkListViewBuilder implements Builder<Region> {
     private final NetworkListModel model;
     private final Runnable createNetworkHandler;
+    private final Consumer<String> selectNetworkHandler;
 
-    public NetworkListViewBuilder(NetworkListModel model, Runnable createNetworkHandler) {
+    public NetworkListViewBuilder(NetworkListModel model, Runnable createNetworkHandler, Consumer<String> selectNetworkHandler) {
         this.model = model;
         this.createNetworkHandler = createNetworkHandler;
+        this.selectNetworkHandler = selectNetworkHandler;
     }
 
     @Override
@@ -34,6 +38,9 @@ public class NetworkListViewBuilder implements Builder<Region> {
         lv.setCellFactory(_ -> new NetworkListViewCell());
         model.bindSelectedNetwork(Bindings.createObjectBinding(() -> lv.getSelectionModel().getSelectedItem(),
                 lv.getSelectionModel().selectedItemProperty()));
+        lv.getSelectionModel()
+                .selectedItemProperty()
+                .addListener((_, _, selected) -> selectNetworkHandler.accept(selected.id()));
         return lv;
     }
 

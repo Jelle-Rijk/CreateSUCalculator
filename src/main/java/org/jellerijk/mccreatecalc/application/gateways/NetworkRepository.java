@@ -1,6 +1,6 @@
 package org.jellerijk.mccreatecalc.application.gateways;
 
-import org.jellerijk.mccreatecalc.application.usecases.network.NetworkInfo;
+import org.jellerijk.mccreatecalc.application.usecases.network.read.NetworkInfo;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package org.jellerijk.mccreatecalc.application.usecases.network;
+package org.jellerijk.mccreatecalc.application.usecases.network.read;
 
 import org.jellerijk.mccreatecalc.application.gateways.SelectedNetworkData;
 import org.jellerijk.mccreatecalc.application.usecases.NoArgsUseCase;

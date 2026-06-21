@@ -14,6 +14,8 @@ import org.jellerijk.mccreatecalc.presentation.networkdetails.NetworkDetailsCont
 import org.jellerijk.mccreatecalc.presentation.networklist.NetworkListController;
 import org.jellerijk.mccreatecalc.util.fxlib.HBoxes;
 
+import java.util.Objects;
+
 public class CalculatorTestApplication extends Application {
     @Override
     public void start(Stage stage) {
@@ -23,6 +25,7 @@ public class CalculatorTestApplication extends Application {
         NetworkDetailsController detailsController = new NetworkDetailsController(networkUCFactory);
         HBox container = HBoxes.aligned(Pos.CENTER_LEFT, 5, networkListController.getView(), detailsController.getView());
         Scene scene = new Scene(container);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/main.css")).toExternalForm());
 
         stage.setScene(scene);
         stage.setTitle("Test application");

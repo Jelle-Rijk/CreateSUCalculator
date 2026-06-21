@@ -1,6 +1,6 @@
 package org.jellerijk.mccreatecalc.application.services;
 
-import org.jellerijk.mccreatecalc.application.usecases.network.SelectedNetworkObserver;
+import org.jellerijk.mccreatecalc.application.usecases.network.selection.SelectedNetworkObserver;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
 
 import java.util.ArrayList;

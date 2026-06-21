@@ -2,7 +2,11 @@ package org.jellerijk.mccreatecalc.application.services;
 
 import org.jellerijk.mccreatecalc.application.gateways.NetworkRepository;
 import org.jellerijk.mccreatecalc.application.gateways.SelectedNetworkData;
-import org.jellerijk.mccreatecalc.application.usecases.network.*;
+import org.jellerijk.mccreatecalc.application.usecases.network.creation.CreateNetworkUseCase;
+import org.jellerijk.mccreatecalc.application.usecases.network.read.FetchNetworksInfoUseCase;
+import org.jellerijk.mccreatecalc.application.usecases.network.read.GetSelectedNetworkUseCase;
+import org.jellerijk.mccreatecalc.application.usecases.network.selection.ObserveSelectedNetworkUseCase;
+import org.jellerijk.mccreatecalc.application.usecases.network.selection.SelectNetworkUseCase;
 
 public class NetworkUseCaseFactory {
     private final NetworkRepository networkRepo;

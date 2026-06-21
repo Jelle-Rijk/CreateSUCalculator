@@ -1,6 +1,6 @@
 package org.jellerijk.mccreatecalc.data.database;
 
-import org.jellerijk.mccreatecalc.application.usecases.network.NetworkInfo;
+import org.jellerijk.mccreatecalc.application.usecases.network.read.NetworkInfo;
 import org.jellerijk.mccreatecalc.data.dao.NetworkDAO;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
 import org.jellerijk.mccreatecalc.exceptions.DataBaseAccessException;

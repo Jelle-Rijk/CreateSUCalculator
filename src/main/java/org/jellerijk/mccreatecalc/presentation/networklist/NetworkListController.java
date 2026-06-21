@@ -9,7 +9,7 @@ public class NetworkListController {
     public NetworkListController(NetworkUseCaseFactory factory) {
         NetworkListModel model = new NetworkListModel();
         NetworkListInteractor interactor = new NetworkListInteractor(model, factory);
-        viewBuilder = new NetworkListViewBuilder(model, interactor::createNetwork);
+        viewBuilder = new NetworkListViewBuilder(model, interactor::createNetwork, interactor::selectNetwork);
     }
 
     public Region getView() {
