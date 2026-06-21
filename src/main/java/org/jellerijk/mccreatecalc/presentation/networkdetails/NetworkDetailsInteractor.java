@@ -2,7 +2,7 @@ package org.jellerijk.mccreatecalc.presentation.networkdetails;
 
 import javafx.concurrent.Task;
 import org.jellerijk.mccreatecalc.application.usecases.network.read.GetSelectedNetworkUseCase;
-import org.jellerijk.mccreatecalc.application.services.NetworkUseCaseFactory;
+import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
 import org.jellerijk.mccreatecalc.application.usecases.network.selection.SelectedNetworkObserver;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
 
@@ -12,7 +12,7 @@ public class NetworkDetailsInteractor implements SelectedNetworkObserver {
     private final NetworkDetailsModel model;
     private final GetSelectedNetworkUseCase selectedNetworkFetcher;
 
-    public NetworkDetailsInteractor(NetworkDetailsModel model, NetworkUseCaseFactory factory) {
+    public NetworkDetailsInteractor(NetworkDetailsModel model, UseCaseFactory factory) {
         this.model = model;
         selectedNetworkFetcher = factory.buildGetSelectedNetworkUseCase();
         factory.buildObserveSelectedNetworkUseCase().execute(this);

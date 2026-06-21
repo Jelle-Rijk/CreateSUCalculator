@@ -4,7 +4,7 @@ import javafx.concurrent.Task;
 import org.jellerijk.mccreatecalc.application.usecases.network.creation.CreateNetworkRequest;
 import org.jellerijk.mccreatecalc.application.usecases.network.creation.CreateNetworkUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.network.read.FetchNetworksInfoUseCase;
-import org.jellerijk.mccreatecalc.application.services.NetworkUseCaseFactory;
+import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
 import org.jellerijk.mccreatecalc.application.usecases.network.selection.SelectNetworkUseCase;
 
 public class NetworkListInteractor {
@@ -13,7 +13,7 @@ public class NetworkListInteractor {
     private final FetchNetworksInfoUseCase networkFetcher;
     private final SelectNetworkUseCase networkSelector;
 
-    public NetworkListInteractor(NetworkListModel model, NetworkUseCaseFactory factory) {
+    public NetworkListInteractor(NetworkListModel model, UseCaseFactory factory) {
         this.model = model;
         this.networkFetcher = factory.buildFetchNetworksInfoUseCase();
         this.networkCreator = factory.buildCreateNetworkUseCase();
