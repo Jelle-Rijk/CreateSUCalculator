@@ -25,7 +25,7 @@ public final class StressNetworkBuilder {
     }
 
     public StressNetworkBuilder withGenerators(List<GeneratorEntry> generators) {
-        this.generators = List.copyOf(generators);
+        this.generators = generators;
         return this;
     }
 

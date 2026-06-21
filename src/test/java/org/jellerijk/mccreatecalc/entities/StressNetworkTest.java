@@ -3,6 +3,9 @@ package org.jellerijk.mccreatecalc.entities;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,15 +63,36 @@ class StressNetworkTest {
         assertEquals(expectedSUProduced - expectedSUConsumed, defaultStressNetwork.build().calculateSUBalance());
     }
 
+    //    === FIELD - ID ===
     @Test
-    void id() {
+    void id_valid_returnsCorrectValue() {
+        assertEquals(VALID_ID, defaultStressNetwork.build().id());
     }
 
-    @Test
-    void name() {
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {" ", "    ", "\t", "\r", "\n"})
+    void id_invalidId_throwsIAE(String invalidId) {
+        assertThrows(IllegalArgumentException.class, () -> defaultStressNetwork.withId(invalidId).build());
     }
 
+//    === FIELD - NAME ===
+
     @Test
-    void generators() {
+    void name_valid_returnsCorrectValue() {
+        assertEquals(VALID_NAME, defaultStressNetwork.build().name());
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {" ", "    ", "\t", "\r", "\n"})
+    void name_invalidName_throwsIAE(String invalidName) {
+        assertThrows(IllegalArgumentException.class, () -> defaultStressNetwork.withName(invalidName).build());
+    }
+
+    //    === FIELD - GENERATORS ===
+    @Test
+    void constructor_generatorsIsNull_throwsIAE() {
+        assertThrows(IllegalArgumentException.class, () -> defaultStressNetwork.withGenerators(null).build());
     }
 }

@@ -8,6 +8,8 @@ public record StressNetwork(String id, String name, List<GeneratorEntry> generat
         validateId(id);
         validateName(name);
         validateGenerators(generators);
+        generators = List.copyOf(generators);
+        System.out.println(generators);
     }
 
     private void validateId(String id) {
