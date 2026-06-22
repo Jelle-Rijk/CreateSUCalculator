@@ -15,14 +15,12 @@ public class UseCaseFactory {
     private final NetworkService networkService;
     private final GeneratorService generatorService;
     private final SelectedNetworkData selectedData;
-    private final SelectedNetworkPublisher selectedNetworkPublisher;
 
-    public UseCaseFactory(NetworkRepository networkRepo, GeneratorRepository generatorRepo, SelectedNetworkData selectedData, SelectedNetworkPublisher selectedNetworkPublisher) {
+    public UseCaseFactory(NetworkRepository networkRepo, GeneratorRepository generatorRepo, SelectedNetworkData selectedData) {
         this.networkService = new NetworkServiceImpl(networkRepo, selectedData);
         this.generatorService = new GeneratorServiceImpl(generatorRepo);
         this.networkRepo = networkRepo;
         this.selectedData = selectedData;
-        this.selectedNetworkPublisher = selectedNetworkPublisher;
     }
 
     //===== Public methods =====
@@ -39,7 +37,7 @@ public class UseCaseFactory {
     }
 
     public SelectNetworkUseCase buildSelectNetworkUseCase() {
-        return new SelectNetworkUseCase(networkRepo, selectedData, selectedNetworkPublisher);
+        return new SelectNetworkUseCase(networkRepo, selectedData);
     }
 
     public AddGeneratorToNetworkUseCase buildAddGeneratorToNetworkUseCase() {

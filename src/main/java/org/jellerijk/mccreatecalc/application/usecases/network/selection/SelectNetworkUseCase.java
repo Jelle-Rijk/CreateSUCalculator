@@ -3,7 +3,6 @@ package org.jellerijk.mccreatecalc.application.usecases.network.selection;
 import org.jellerijk.mccreatecalc.application.VoidUseCase;
 import org.jellerijk.mccreatecalc.application.gateways.NetworkRepository;
 import org.jellerijk.mccreatecalc.application.gateways.SelectedNetworkData;
-import org.jellerijk.mccreatecalc.application.services.SelectedNetworkPublisher;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
 import org.jellerijk.mccreatecalc.exceptions.NetworkNotFoundException;
 
@@ -15,7 +14,7 @@ public class SelectNetworkUseCase implements VoidUseCase<String> {
     private final NetworkRepository networkRepo;
     private final List<SelectedNetworkObserver> observers;
 
-    public SelectNetworkUseCase(NetworkRepository networkRepo, SelectedNetworkData selectedData, SelectedNetworkPublisher publisher) {
+    public SelectNetworkUseCase(NetworkRepository networkRepo, SelectedNetworkData selectedData) {
         this.networkRepo = networkRepo;
         this.data = selectedData;
         this.observers = new ArrayList<>();
