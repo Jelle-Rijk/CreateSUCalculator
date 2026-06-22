@@ -23,7 +23,15 @@ public interface NetworkService {
      */
     void setSelectedNetwork(StressNetwork network);
 
+    /**
+     * Saves an existing network to the repository.
+     * @param network The network to save.
+     */
     void save(StressNetwork network);
 
-
+    /**
+     * Saves a new network to the repository.
+     * @param network The network to add.
+     */
+    void add(StressNetwork network);
 }

@@ -34,4 +34,9 @@ public class NetworkServiceImpl implements NetworkService {
     public void save(StressNetwork network) {
         networkRepo.update(network);
     }
+
+    @Override
+    public void add(StressNetwork network) {
+        networkRepo.add(network);
+    }
 }
