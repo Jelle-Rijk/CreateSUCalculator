@@ -62,7 +62,14 @@ public class NetworkDB implements NetworkDAO {
 
     @Override
     public void update(StressNetwork network) {
-        throw new UnsupportedOperationException();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement query = conn.prepareStatement(QueryBuilder.updateCols(TABLE, COL_ID, List.of(COL_NAME)))) {
+            query.setString(1, network.name());
+            query.setString(2, network.id());
+            query.executeUpdate();
+        } catch (SQLException e) {
+            throw new DataBaseAccessException("Something went wrong while updating a stress network.", e);
+        }
     }
 
     private StressNetwork mapToStressNetwork(ResultSet res) throws SQLException {

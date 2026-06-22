@@ -23,7 +23,7 @@ public abstract class Labels {
         return lbl;
     }
 
-    public static Label balanceLabel(IntegerProperty number, String... styleClasses) {
+    public static Label balanceLabel(IntegerProperty number, String... styleClasses) {//TODO bidirectional binding
         Label lbl = new Label();
         lbl.textProperty().bind(number.asString());
         lbl.textFillProperty()

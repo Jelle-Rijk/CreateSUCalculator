@@ -27,7 +27,7 @@ public class NetworkDetailsInteractor implements SelectedNetworkObserver {
         model.networkNameProperty().set(network.name());
         model.suConsumedProperty().set(network.calculateSUConsumed());
         model.suProducedProperty().set(network.calculateSUProduced());
-        model.suBalanceProperty().set(network.calculateSUBalance());
+//        model.suBalanceProperty().set(network.calculateSUBalance()); //TODO needs to implement bidirectional binding first.
     }
 
     private void clearStressNetworkProperties() {
