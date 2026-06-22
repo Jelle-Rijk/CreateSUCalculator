@@ -3,7 +3,6 @@ package org.jellerijk.mccreatecalc.application.services;
 import org.jellerijk.mccreatecalc.application.usecases.generator.GetGeneratorsUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.network.creation.CreateNetworkUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.network.read.FetchNetworksInfoUseCase;
-import org.jellerijk.mccreatecalc.application.usecases.network.read.GetSelectedNetworkUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.network.selection.SelectNetworkUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.network.update.AddGeneratorToNetworkUseCase;
 
@@ -24,10 +23,6 @@ public class UseCaseFactory {
 
     public FetchNetworksInfoUseCase buildFetchNetworksInfoUseCase() {
         return new FetchNetworksInfoUseCase(networkService);
-    }
-
-    public GetSelectedNetworkUseCase buildGetSelectedNetworkUseCase() {
-        return new GetSelectedNetworkUseCase(networkService);
     }
 
     public SelectNetworkUseCase buildSelectNetworkUseCase() {
