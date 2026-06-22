@@ -1,8 +1,5 @@
 package org.jellerijk.mccreatecalc.application.services;
 
-import org.jellerijk.mccreatecalc.application.gateways.GeneratorRepository;
-import org.jellerijk.mccreatecalc.application.gateways.NetworkRepository;
-import org.jellerijk.mccreatecalc.application.gateways.SelectedNetworkData;
 import org.jellerijk.mccreatecalc.application.usecases.generator.GetGeneratorsUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.network.creation.CreateNetworkUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.network.read.FetchNetworksInfoUseCase;
@@ -11,33 +8,30 @@ import org.jellerijk.mccreatecalc.application.usecases.network.selection.SelectN
 import org.jellerijk.mccreatecalc.application.usecases.network.update.AddGeneratorToNetworkUseCase;
 
 public class UseCaseFactory {
-    private final NetworkRepository networkRepo;
     private final NetworkService networkService;
     private final GeneratorService generatorService;
-    private final SelectedNetworkData selectedData;
 
-    public UseCaseFactory(NetworkRepository networkRepo, GeneratorRepository generatorRepo, SelectedNetworkData selectedData) {
-        this.networkService = new NetworkServiceImpl(networkRepo, selectedData);
-        this.generatorService = new GeneratorServiceImpl(generatorRepo);
-        this.networkRepo = networkRepo;
-        this.selectedData = selectedData;
+    public UseCaseFactory(NetworkService networkService, GeneratorService generatorService) {
+        this.networkService = networkService;
+        this.generatorService = generatorService;
+
     }
 
     //===== Public methods =====
     public CreateNetworkUseCase buildCreateNetworkUseCase() {
-        return new CreateNetworkUseCase(networkRepo);
+        return new CreateNetworkUseCase(networkService);
     }
 
     public FetchNetworksInfoUseCase buildFetchNetworksInfoUseCase() {
-        return new FetchNetworksInfoUseCase(networkRepo);
+        return new FetchNetworksInfoUseCase(networkService);
     }
 
     public GetSelectedNetworkUseCase buildGetSelectedNetworkUseCase() {
-        return new GetSelectedNetworkUseCase(selectedData);
+        return new GetSelectedNetworkUseCase(networkService);
     }
 
     public SelectNetworkUseCase buildSelectNetworkUseCase() {
-        return new SelectNetworkUseCase(networkRepo, selectedData);
+        return new SelectNetworkUseCase(networkService);
     }
 
     public AddGeneratorToNetworkUseCase buildAddGeneratorToNetworkUseCase() {

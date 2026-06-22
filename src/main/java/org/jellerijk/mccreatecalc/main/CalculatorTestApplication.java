@@ -5,7 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
+import org.jellerijk.mccreatecalc.application.services.*;
 import org.jellerijk.mccreatecalc.data.database.GeneratorDB;
 import org.jellerijk.mccreatecalc.data.database.NetworkDB;
 import org.jellerijk.mccreatecalc.data.local.SelectedNetwork;
@@ -20,7 +20,9 @@ import java.util.Objects;
 public class CalculatorTestApplication extends Application {
     @Override
     public void start(Stage stage) {
-        UseCaseFactory networkUCFactory = new UseCaseFactory(new NetworkRepositoryImpl(new NetworkDB()), new GeneratorRepositoryImpl(new GeneratorDB()), new SelectedNetwork());
+        NetworkService networkService = new NetworkServiceImpl(new NetworkRepositoryImpl(new NetworkDB()), new SelectedNetwork());
+        GeneratorService generatorService = new GeneratorServiceImpl(new GeneratorRepositoryImpl(new GeneratorDB()));
+        UseCaseFactory networkUCFactory = new UseCaseFactory(networkService, generatorService);
 
         NetworkListController networkListController = new NetworkListController(networkUCFactory);
         NetworkDetailsController detailsController = new NetworkDetailsController(networkUCFactory);
