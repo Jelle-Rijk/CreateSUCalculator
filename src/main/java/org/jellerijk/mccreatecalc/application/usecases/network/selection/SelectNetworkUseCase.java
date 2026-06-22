@@ -7,15 +7,18 @@ import org.jellerijk.mccreatecalc.application.services.SelectedNetworkPublisher;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
 import org.jellerijk.mccreatecalc.exceptions.NetworkNotFoundException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SelectNetworkUseCase implements VoidUseCase<String> {
     private final SelectedNetworkData data;
     private final NetworkRepository networkRepo;
-    private final SelectedNetworkPublisher publisher;
+    private final List<SelectedNetworkObserver> observers;
 
     public SelectNetworkUseCase(NetworkRepository networkRepo, SelectedNetworkData selectedData, SelectedNetworkPublisher publisher) {
         this.networkRepo = networkRepo;
         this.data = selectedData;
-        this.publisher = publisher;
+        this.observers = new ArrayList<>();
     }
 
     /**
@@ -28,6 +31,14 @@ public class SelectNetworkUseCase implements VoidUseCase<String> {
         StressNetwork network = networkRepo.getById(networkId)
                 .orElseThrow(() -> new NetworkNotFoundException(networkId));
         data.write(network);
-        publisher.publish(network);
+        publish(network);
+    }
+
+    private void publish(StressNetwork network) {
+        observers.forEach(o -> o.onNetworkSelectionChanged(network));
+    }
+
+    public void subscribe(SelectedNetworkObserver observer) {
+        observers.add(observer);
     }
 }
