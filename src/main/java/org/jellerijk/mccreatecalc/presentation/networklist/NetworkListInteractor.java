@@ -1,11 +1,13 @@
 package org.jellerijk.mccreatecalc.presentation.networklist;
 
-import javafx.concurrent.Task;
+import org.jellerijk.mccreatecalc.application.dto.NetworkInfo;
 import org.jellerijk.mccreatecalc.application.usecases.network.creation.CreateNetworkRequest;
 import org.jellerijk.mccreatecalc.application.usecases.network.creation.CreateNetworkUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.network.read.FetchNetworksInfoUseCase;
 import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
 import org.jellerijk.mccreatecalc.application.usecases.network.selection.SelectNetworkUseCase;
+
+import java.util.List;
 
 public class NetworkListInteractor {
     private final NetworkListModel model;
@@ -21,33 +23,20 @@ public class NetworkListInteractor {
         fetchNetworks();
     }
 
-    public void fetchNetworks() {
-        Task<Void> fetchTask = new Task<>() {
-            @Override
-            protected Void call() {
-                model.setNetworks(networkFetcher.execute());
-                return null;
-            }
-        };
-        fetchTask.run();
+    public List<NetworkInfo> fetchNetworks() {
+        return networkFetcher.execute();
+    }
+
+    public void updateNetworks(List<NetworkInfo> networks) {
+        model.setNetworks(networks);
     }
 
     public void createNetwork() {
         CreateNetworkRequest request = new CreateNetworkRequest(model.getUserInput());
         model.setUserInputEnabled(false);
-        Task<Void> create = new Task<>() {
-            @Override
-            protected Void call() {
-                networkCreator.execute(request);
-                return null;
-            }
-        };
-        create.setOnSucceeded((_) -> {
-            fetchNetworks();
-            model.setUserInput("");
-            model.setUserInputEnabled(true);
-        });
-        create.run();
+        networkCreator.execute(request);
+        model.setUserInput("");
+        model.setUserInputEnabled(true);
     }
 
     public void selectNetwork(String networkId) {

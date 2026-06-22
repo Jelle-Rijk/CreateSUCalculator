@@ -9,7 +9,7 @@ public class NetworkDetailsInteractor implements SelectedNetworkObserver {
 
     public NetworkDetailsInteractor(NetworkDetailsModel model, UseCaseFactory factory) {
         this.model = model;
-        factory.buildObserveSelectedNetworkUseCase().execute(this);
+        factory.buildSelectNetworkUseCase().subscribe(this);
     }
 
     @Override

@@ -4,9 +4,10 @@ package org.jellerijk.mccreatecalc.presentation.componentselector;
 import javafx.concurrent.Task;
 import javafx.scene.Node;
 import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
+import org.jellerijk.mccreatecalc.presentation.Controller;
 
 
-public class GeneratorSelectorController {
+public class GeneratorSelectorController extends Controller {
     private final GeneratorSelectorInteractor interactor;
     private final GeneratorSelectorViewBuilder viewBuilder;
     private final GeneratorSelectorModel model = new GeneratorSelectorModel();
@@ -26,8 +27,7 @@ public class GeneratorSelectorController {
                 return null;
             }
         };
-        Thread optionLoadingThread = new Thread(loadOptions);
-        optionLoadingThread.start();
+        startTaskOnNewThread(loadOptions);
     }
 
     private void addGenerator() {
@@ -40,8 +40,7 @@ public class GeneratorSelectorController {
             }
         };
         addGenerator.setOnSucceeded(_ -> model.setAddingDisabled(false));
-        Thread addGeneratorThread = new Thread(addGenerator);
-        addGeneratorThread.start();
+        startTaskOnNewThread(addGenerator);
     }
 
 
