@@ -1,8 +1,7 @@
 package org.jellerijk.mccreatecalc.application.usecases.network.selection;
 
 import org.jellerijk.mccreatecalc.application.VoidUseCase;
-import org.jellerijk.mccreatecalc.application.gateways.NetworkRepository;
-import org.jellerijk.mccreatecalc.application.gateways.SelectedNetworkData;
+import org.jellerijk.mccreatecalc.application.services.NetworkService;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
 import org.jellerijk.mccreatecalc.exceptions.NetworkNotFoundException;
 
@@ -10,13 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SelectNetworkUseCase implements VoidUseCase<String> {
-    private final SelectedNetworkData data;
-    private final NetworkRepository networkRepo;
+    private final NetworkService networkService;
     private final List<SelectedNetworkObserver> observers;
 
-    public SelectNetworkUseCase(NetworkRepository networkRepo, SelectedNetworkData selectedData) {
-        this.networkRepo = networkRepo;
-        this.data = selectedData;
+    public SelectNetworkUseCase(NetworkService networkService) {
+        this.networkService = networkService;
         this.observers = new ArrayList<>();
     }
 
@@ -27,9 +24,9 @@ public class SelectNetworkUseCase implements VoidUseCase<String> {
      */
     @Override
     public void execute(String networkId) {
-        StressNetwork network = networkRepo.getById(networkId)
+        StressNetwork network = networkService.getById(networkId)
                 .orElseThrow(() -> new NetworkNotFoundException(networkId));
-        data.write(network);
+        networkService.setSelectedNetwork(network);
         publish(network);
     }
 
