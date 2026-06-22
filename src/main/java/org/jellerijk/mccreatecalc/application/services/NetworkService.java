@@ -1,6 +1,7 @@
 package org.jellerijk.mccreatecalc.application.services;
 
 import org.jellerijk.mccreatecalc.application.dto.NetworkInfo;
+import org.jellerijk.mccreatecalc.application.usecases.network.selection.SelectedNetworkObserver;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
 
 import java.util.List;
@@ -17,6 +18,8 @@ public interface NetworkService {
      * @return The currently selected network.
      */
     Optional<StressNetwork> getSelectedNetwork();
+
+    void subscribeToSelectedNetwork(SelectedNetworkObserver observer);
 
     /**
      * Sets the currently selected network.

@@ -1,5 +1,6 @@
 package org.jellerijk.mccreatecalc.presentation.networkdetails;
 
+import javafx.application.Platform;
 import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
 import org.jellerijk.mccreatecalc.application.usecases.network.selection.SelectedNetworkObserver;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
@@ -9,12 +10,12 @@ public class NetworkDetailsInteractor implements SelectedNetworkObserver {
 
     public NetworkDetailsInteractor(NetworkDetailsModel model, UseCaseFactory factory) {
         this.model = model;
-        factory.buildSelectNetworkUseCase().subscribe(this);
+        factory.buildObserveSelectedNetworkUC().execute(this);
     }
 
     @Override
     public void onNetworkSelectionChanged(StressNetwork selectedNetwork) {
-        setStressNetworkProperties(selectedNetwork);
+        Platform.runLater(() -> setStressNetworkProperties(selectedNetwork));
     }
 
     private void setStressNetworkProperties(StressNetwork network) {

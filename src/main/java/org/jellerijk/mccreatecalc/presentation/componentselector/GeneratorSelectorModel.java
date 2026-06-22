@@ -13,6 +13,14 @@ public class GeneratorSelectorModel {
     private final IntegerProperty amount = new SimpleIntegerProperty();
     private final BooleanProperty addingDisabled = new SimpleBooleanProperty();
 
+    public GeneratorOption getSelectedGeneratorOption() {
+        return selectedGeneratorOption.get();
+    }
+
+    public int getAmount() {
+        return amount.get();
+    }
+
     public void setAddingDisabled(boolean enabled) {
         addingDisabled.set(enabled);
     }
