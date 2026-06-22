@@ -1,6 +1,6 @@
 package org.jellerijk.mccreatecalc.application.usecases.network.creation;
 
-import org.jellerijk.mccreatecalc.application.gateways.NetworkRepository;
+import org.jellerijk.mccreatecalc.application.services.NetworkService;
 import org.jellerijk.mccreatecalc.application.usecases.UseCase;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
 import org.jellerijk.mccreatecalc.entities.StressNetworkBuilder;
@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class CreateNetworkUseCase implements UseCase<CreateNetworkRequest, String> {
-    private final NetworkRepository networkRepo;
+    private final NetworkService networkService;
 
-    public CreateNetworkUseCase(NetworkRepository networkRepo) {
-        this.networkRepo = networkRepo;
+    public CreateNetworkUseCase(NetworkService networkService) {
+        this.networkService = networkService;
     }
 
     /**
@@ -29,7 +29,7 @@ public class CreateNetworkUseCase implements UseCase<CreateNetworkRequest, Strin
                 .withName(createNetworkRequest.name())
                 .withGenerators(new ArrayList<>())
                 .build();
-        networkRepo.add(network);
+        networkService.add(network);
         return id;
     }
 }
