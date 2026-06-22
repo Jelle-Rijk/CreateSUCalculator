@@ -1,16 +1,16 @@
 package org.jellerijk.mccreatecalc.application.usecases.network.read;
 
 import org.jellerijk.mccreatecalc.application.dto.NetworkInfo;
-import org.jellerijk.mccreatecalc.application.gateways.NetworkRepository;
+import org.jellerijk.mccreatecalc.application.services.NetworkService;
 import org.jellerijk.mccreatecalc.application.usecases.NoArgsUseCase;
 
 import java.util.List;
 
 public class FetchNetworksInfoUseCase implements NoArgsUseCase<List<NetworkInfo>> {
-    private final NetworkRepository networkRepo;
+    private final NetworkService networkService;
 
-    public FetchNetworksInfoUseCase(NetworkRepository networkRepo) {
-        this.networkRepo = networkRepo;
+    public FetchNetworksInfoUseCase(NetworkService networkService) {
+        this.networkService = networkService;
     }
 
     /**
@@ -18,6 +18,6 @@ public class FetchNetworksInfoUseCase implements NoArgsUseCase<List<NetworkInfo>
      */
     @Override
     public List<NetworkInfo> execute() {
-        return networkRepo.getInfoForAllNetworks();
+        return networkService.getAllNamesAndIds();
     }
 }
