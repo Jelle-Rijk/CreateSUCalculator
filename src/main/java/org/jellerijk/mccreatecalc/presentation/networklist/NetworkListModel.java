@@ -4,7 +4,7 @@ import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.jellerijk.mccreatecalc.application.usecases.network.read.NetworkInfo;
+import org.jellerijk.mccreatecalc.application.dto.NetworkInfo;
 
 import java.util.Collection;
 

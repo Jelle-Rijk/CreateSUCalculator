@@ -1,5 +1,6 @@
 package org.jellerijk.mccreatecalc.application.usecases.network.read;
 
+import org.jellerijk.mccreatecalc.application.dto.NetworkInfo;
 import org.jellerijk.mccreatecalc.application.gateways.NetworkRepository;
 import org.jellerijk.mccreatecalc.application.usecases.NoArgsUseCase;
 

@@ -1,7 +1,7 @@
 package org.jellerijk.mccreatecalc.data.repositories;
 
 import org.jellerijk.mccreatecalc.application.gateways.NetworkRepository;
-import org.jellerijk.mccreatecalc.application.usecases.network.read.NetworkInfo;
+import org.jellerijk.mccreatecalc.application.dto.NetworkInfo;
 import org.jellerijk.mccreatecalc.data.dao.NetworkDAO;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
 

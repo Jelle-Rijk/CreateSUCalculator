@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Builder;
-import org.jellerijk.mccreatecalc.application.usecases.network.read.NetworkInfo;
+import org.jellerijk.mccreatecalc.application.dto.NetworkInfo;
 
 import java.util.function.Consumer;
 
