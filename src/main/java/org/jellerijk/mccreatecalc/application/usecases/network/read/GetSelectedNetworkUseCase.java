@@ -4,7 +4,9 @@ import org.jellerijk.mccreatecalc.application.gateways.SelectedNetworkData;
 import org.jellerijk.mccreatecalc.application.usecases.NoArgsUseCase;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
 
-public class GetSelectedNetworkUseCase implements NoArgsUseCase<StressNetwork> {
+import java.util.Optional;
+
+public class GetSelectedNetworkUseCase implements NoArgsUseCase<Optional<StressNetwork>> {
     private final SelectedNetworkData data;
 
     public GetSelectedNetworkUseCase(SelectedNetworkData data) {
@@ -15,7 +17,7 @@ public class GetSelectedNetworkUseCase implements NoArgsUseCase<StressNetwork> {
      * @return The selected stress network or null if no network is selected.
      */
     @Override
-    public StressNetwork execute() {
-        return data.read().orElse(null);
+    public Optional<StressNetwork> execute() {
+        return data.read();
     }
 }

@@ -11,15 +11,15 @@ import javafx.scene.layout.VBox;
 import javafx.util.Builder;
 import org.jellerijk.mccreatecalc.util.fxlib.HBoxes;
 import org.jellerijk.mccreatecalc.util.fxlib.Labels;
-import org.jellerijk.mccreatecalc.util.fxlib.TextFields;
 
 public class NetworkDetailsViewBuilder implements Builder<Region> {
     private final NetworkDetailsModel model;
-    private final Runnable addGeneratorHandler;
+    private final Node generatorSelectorContent;
 
-    public NetworkDetailsViewBuilder(NetworkDetailsModel model, Runnable addGeneratorHandler) {
+    public NetworkDetailsViewBuilder(NetworkDetailsModel model,
+                                     Node generatorSelectorContent) {
         this.model = model;
-        this.addGeneratorHandler = addGeneratorHandler;
+        this.generatorSelectorContent = generatorSelectorContent;
     }
 
     @Override
@@ -35,39 +35,26 @@ public class NetworkDetailsViewBuilder implements Builder<Region> {
     }
 
     private Node buildSUOverview() {
-        Node suBalance = HBoxes.aligned(Pos.CENTER_LEFT, 1, new Label("Balance:", Labels.balanceLabel(model.suBalanceProperty())));
+        Node suBalance = HBoxes.aligned(Pos.CENTER_LEFT, 1,
+                new Label("Balance:", Labels.balanceLabel(model.suBalanceProperty())));
         return HBoxes.aligned(Pos.CENTER_LEFT, 5, suBalance);
     }
 
     private Node buildComponentLists() {
-        Node generators = buildComponentOverview("Generators", model.suProducedProperty());
-        Node consumers = buildComponentOverview("Consumers", model.suConsumedProperty());
+        Node generators = buildComponentOverview("Generators", model.suProducedProperty(), generatorSelectorContent);
+        Node consumers = buildComponentOverview("Consumers", model.suConsumedProperty(),
+                new Label("Consumer selector here"));
         return HBoxes.aligned(Pos.TOP_CENTER, 5, generators, consumers);
     }
 
-    private Node buildComponentOverview(String title, IntegerProperty su) {
+    private Node buildComponentOverview(String title, IntegerProperty su, Node selector) {
         BorderPane container = new BorderPane();
-        container.setTop(buildComponentOverviewHeader(title, buildAddComponentPane()));
+        container.setTop(buildComponentOverviewHeader(title, selector));
         container.setCenter(buildComponentOverviewCenter());
         container.setBottom(buildComponentOverviewFooter(su));
         return container;
     }
 
-    private Node buildAddComponentPane() {
-        TextField amount = TextFields.numericalField(model.addGeneratorAmountProperty());
-        Button btnAdd = new Button("+");
-        btnAdd.setOnAction(_ -> addGeneratorHandler.run());
-        return HBoxes.aligned(Pos.CENTER_LEFT, 3, buildGeneratorSelector(), amount, btnAdd);
-    }
-
-    private ComboBox<GeneratorOption> buildGeneratorSelector() {
-        ComboBox<GeneratorOption> optionComboBox = new ComboBox<>();
-        optionComboBox.setCellFactory(_ -> new GeneratorOptionListCell());
-        optionComboBox.setButtonCell(new GeneratorOptionListCell());
-        optionComboBox.setItems(model.getGeneratorOptions());
-        optionComboBox.valueProperty().bindBidirectional(model.selectedGeneratorOptionProperty());
-        return optionComboBox;
-    }
 
     private Node buildComponentOverviewCenter() {
         return new ListView<>();

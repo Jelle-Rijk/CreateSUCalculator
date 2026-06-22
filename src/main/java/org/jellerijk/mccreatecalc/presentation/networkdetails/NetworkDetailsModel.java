@@ -5,82 +5,53 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.Collection;
-
 public class NetworkDetailsModel {
+    private final ObservableList<String> consumers = FXCollections.observableArrayList(); // TODO implement
+    private final ObservableList<String> generators = FXCollections.observableArrayList(); // TODO implement
     private final StringProperty networkName = new SimpleStringProperty();
+    private final BooleanProperty overstressed = new SimpleBooleanProperty();
+    private final IntegerProperty suBalance = new SimpleIntegerProperty();
     private final IntegerProperty suConsumed = new SimpleIntegerProperty();
     private final IntegerProperty suProduced = new SimpleIntegerProperty();
-    private final IntegerProperty suBalance = new SimpleIntegerProperty();
-    private final ObservableList<String> generators = FXCollections.observableArrayList(); // TODO implement
-    private final ObservableList<String> consumers = FXCollections.observableArrayList(); // TODO implement
-    private final BooleanProperty overstressed = new SimpleBooleanProperty();
-    private final ObservableList<GeneratorOption> generatorOptions = FXCollections.observableArrayList();
-    private final ObjectProperty<GeneratorOption> selectedGeneratorOption = new SimpleObjectProperty<>();
-    private final IntegerProperty addGeneratorAmount = new SimpleIntegerProperty();
-
-    public int getAddGeneratorAmount() {
-        return addGeneratorAmount.get();
-    }
-
-    public IntegerProperty addGeneratorAmountProperty() {
-        return addGeneratorAmount;
-    }
-
-    public GeneratorOption getSelectedGeneratorOption() {
-        return selectedGeneratorOption.get();
-    }
-
-    public ObjectProperty<GeneratorOption> selectedGeneratorOptionProperty() {
-        return selectedGeneratorOption;
-    }
-
-    public ObservableList<GeneratorOption> getGeneratorOptions() {
-        return generatorOptions;
-    }
 
     public String getNetworkName() {
         return networkName.get();
-    }
-
-    public StringProperty networkNameProperty() {
-        return networkName;
-    }
-
-    public int getSuConsumed() {
-        return suConsumed.get();
-    }
-
-    public void setGeneratorOptions(Collection<GeneratorOption> generatorOptions) {
-        this.generatorOptions.setAll(generatorOptions);
-    }
-
-    public IntegerProperty suConsumedProperty() {
-        return suConsumed;
-    }
-
-    public int getSuProduced() {
-        return suProduced.get();
-    }
-
-    public IntegerProperty suProducedProperty() {
-        return suProduced;
     }
 
     public int getSuBalance() {
         return suBalance.get();
     }
 
-    public IntegerProperty suBalanceProperty() {
-        return suBalance;
+    public int getSuConsumed() {
+        return suConsumed.get();
+    }
+
+    public int getSuProduced() {
+        return suProduced.get();
     }
 
     public boolean isOverstressed() {
         return overstressed.get();
     }
 
+    public StringProperty networkNameProperty() {
+        return networkName;
+    }
+
     public BooleanProperty overstressedProperty() {
         return overstressed;
+    }
+
+    public IntegerProperty suBalanceProperty() {
+        return suBalance;
+    }
+
+    public IntegerProperty suConsumedProperty() {
+        return suConsumed;
+    }
+
+    public IntegerProperty suProducedProperty() {
+        return suProduced;
     }
 
 }

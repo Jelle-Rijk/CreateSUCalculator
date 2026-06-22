@@ -1,4 +1,4 @@
-package org.jellerijk.mccreatecalc.presentation.networkdetails;
+package org.jellerijk.mccreatecalc.presentation.componentselector;
 
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Pos;
