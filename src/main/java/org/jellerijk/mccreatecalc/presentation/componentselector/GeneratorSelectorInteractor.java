@@ -22,6 +22,7 @@ public class GeneratorSelectorInteractor {
         System.out.println("Adding generator");
         AddGeneratorToSelectedNetworkRequest request = new AddGeneratorToSelectedNetworkRequest(model.getSelectedGeneratorOption()
                 .name(), model.getAmount());
+        System.out.printf("Requested %d x %s", request.amount(), request.generatorName());
         addGeneratorUC.execute(request);
         System.out.println("Generator added.");
 
