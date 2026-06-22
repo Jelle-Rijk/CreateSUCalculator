@@ -25,6 +25,7 @@ public class CreateNetworkUseCase implements UseCase<CreateNetworkRequest, Strin
     public String execute(CreateNetworkRequest createNetworkRequest) {
         String id = UUID.randomUUID().toString();
         StressNetwork network = StressNetworkBuilder.aStressNetwork()
+                .withId(id)
                 .withName(createNetworkRequest.name())
                 .withGenerators(new ArrayList<>())
                 .build();
