@@ -32,9 +32,22 @@ public class GeneratorSelectorViewBuilder {
     }
 
     private Node buildAddComponentPane() {
+        Node amount = buildAmountField();
+        Node btnAdd = buildAddButton();
+        return HBoxes.aligned(Pos.CENTER_LEFT, 3, buildGeneratorSelector(), amount, btnAdd);
+    }
+
+    private Node buildAmountField() {
         TextField amount = TextFields.numericalField(model.amountProperty());
+        amount.editableProperty().bind(model.addingDisabledProperty().not().and(model.selectedProperty()));
+        amount.disableProperty().bind(amount.editableProperty().not());
+        return amount;
+    }
+
+    private Node buildAddButton() {
         Button btnAdd = new Button("+");
         btnAdd.setOnAction(_ -> addGeneratorHandler.run());
-        return HBoxes.aligned(Pos.CENTER_LEFT, 3, buildGeneratorSelector(), amount, btnAdd);
+        btnAdd.disableProperty().bind(model.addingDisabledProperty().or(model.selectedProperty().not()));
+        return btnAdd;
     }
 }

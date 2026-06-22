@@ -9,10 +9,10 @@ import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
 public class GeneratorSelectorController {
     private final GeneratorSelectorInteractor interactor;
     private final GeneratorSelectorViewBuilder viewBuilder;
+    private final GeneratorSelectorModel model = new GeneratorSelectorModel();
 
     public GeneratorSelectorController(
             UseCaseFactory factory) {
-        GeneratorSelectorModel model = new GeneratorSelectorModel();
         interactor = new GeneratorSelectorInteractor(model, factory);
         viewBuilder = new GeneratorSelectorViewBuilder(model, this::addGenerator);
         loadGeneratorOptions();
@@ -34,10 +34,12 @@ public class GeneratorSelectorController {
         Task<Void> addGenerator = new Task<>() {
             @Override
             protected Void call() {
+                model.setAddingDisabled(true);
                 interactor.addGenerator();
                 return null;
             }
         };
+        addGenerator.setOnSucceeded(_ -> model.setAddingDisabled(false));
         Thread addGeneratorThread = new Thread(addGenerator);
         addGeneratorThread.start();
     }
