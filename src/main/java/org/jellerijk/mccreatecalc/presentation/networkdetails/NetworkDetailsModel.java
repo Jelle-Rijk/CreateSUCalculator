@@ -16,6 +16,24 @@ public class NetworkDetailsModel {
     private final ObservableList<String> consumers = FXCollections.observableArrayList(); // TODO implement
     private final BooleanProperty overstressed = new SimpleBooleanProperty();
     private final ObservableList<GeneratorOption> generatorOptions = FXCollections.observableArrayList();
+    private final ObjectProperty<GeneratorOption> selectedGeneratorOption = new SimpleObjectProperty<>();
+    private final IntegerProperty addGeneratorAmount = new SimpleIntegerProperty();
+
+    public int getAddGeneratorAmount() {
+        return addGeneratorAmount.get();
+    }
+
+    public IntegerProperty addGeneratorAmountProperty() {
+        return addGeneratorAmount;
+    }
+
+    public GeneratorOption getSelectedGeneratorOption() {
+        return selectedGeneratorOption.get();
+    }
+
+    public ObjectProperty<GeneratorOption> selectedGeneratorOptionProperty() {
+        return selectedGeneratorOption;
+    }
 
     public ObservableList<GeneratorOption> getGeneratorOptions() {
         return generatorOptions;

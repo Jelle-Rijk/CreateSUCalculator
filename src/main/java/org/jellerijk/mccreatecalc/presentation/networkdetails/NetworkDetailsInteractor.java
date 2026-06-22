@@ -37,6 +37,10 @@ public class NetworkDetailsInteractor implements SelectedNetworkObserver {
         }
     }
 
+    public void addGenerator() {
+        System.out.println("Adding generator");
+    }
+
     public void loadGeneratorSelectorOptions() {
         List<GeneratorOption> generatorOptions = generatorOptionFetcher.execute()
                 .stream()

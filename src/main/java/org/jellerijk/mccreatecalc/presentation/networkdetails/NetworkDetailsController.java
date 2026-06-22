@@ -11,7 +11,7 @@ public class NetworkDetailsController {
     public NetworkDetailsController(UseCaseFactory factory) {
         model = new NetworkDetailsModel();
         interactor = new NetworkDetailsInteractor(model, factory);
-        viewBuilder = new NetworkDetailsViewBuilder(model);
+        viewBuilder = new NetworkDetailsViewBuilder(model, interactor::addGenerator);
     }
 
     public Region getView() {
