@@ -1,16 +1,16 @@
 package org.jellerijk.mccreatecalc.application.usecases.network.read;
 
-import org.jellerijk.mccreatecalc.application.gateways.SelectedNetworkData;
+import org.jellerijk.mccreatecalc.application.services.NetworkService;
 import org.jellerijk.mccreatecalc.application.usecases.NoArgsUseCase;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
 
 import java.util.Optional;
 
 public class GetSelectedNetworkUseCase implements NoArgsUseCase<Optional<StressNetwork>> {
-    private final SelectedNetworkData data;
+    private final NetworkService networkService;
 
-    public GetSelectedNetworkUseCase(SelectedNetworkData data) {
-        this.data = data;
+    public GetSelectedNetworkUseCase(NetworkService networkService) {
+        this.networkService = networkService;
     }
 
     /**
@@ -18,6 +18,6 @@ public class GetSelectedNetworkUseCase implements NoArgsUseCase<Optional<StressN
      */
     @Override
     public Optional<StressNetwork> execute() {
-        return data.read();
+        return networkService.getSelectedNetwork();
     }
 }
