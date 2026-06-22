@@ -8,18 +8,18 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class AddGeneratorToNetworkUseCaseTest {
-    private AddGeneratorToNetworkUseCase useCase;
+class AddGeneratorToSelectedNetworkUseCaseTest {
+    private AddGeneratorToSelectedNetworkUseCase useCase;
 
     @BeforeEach
     void setUp() {
-        useCase = new AddGeneratorToNetworkUseCase(new MockNetworkService(), new MockGeneratorService());
+        useCase = new AddGeneratorToSelectedNetworkUseCase(new MockNetworkService(), new MockGeneratorService());
     }
 
     @Test
     void execute_returnsUpdatedGenerators() {
         String generatorName = "Test-Generator";
-        AddGeneratorToNetworkRequest request = new AddGeneratorToNetworkRequest(MockNetworkService.MOCK_NETWORK_ID, generatorName, 5);
+        AddGeneratorToSelectedNetworkRequest request = new AddGeneratorToSelectedNetworkRequest(MockNetworkService.MOCK_NETWORK_ID, generatorName, 5);
         StressNetwork network = useCase.execute(request);
         assertEquals(generatorName, network.generators().getLast().getGenerator().getName());
     }

@@ -11,12 +11,12 @@ import org.jellerijk.mccreatecalc.entities.StressNetworkBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddGeneratorToNetworkUseCase implements UseCase<AddGeneratorToNetworkRequest, StressNetwork> {
+public class AddGeneratorToSelectedNetworkUseCase implements UseCase<AddGeneratorToSelectedNetworkRequest, StressNetwork> {
 
     private final GeneratorService generatorService;
     private final NetworkService networkService;
 
-    public AddGeneratorToNetworkUseCase(NetworkService networkService, GeneratorService generatorService) {
+    public AddGeneratorToSelectedNetworkUseCase(NetworkService networkService, GeneratorService generatorService) {
         this.networkService = networkService;
         this.generatorService = generatorService;
     }
@@ -28,21 +28,18 @@ public class AddGeneratorToNetworkUseCase implements UseCase<AddGeneratorToNetwo
      * @return The updated StressNetwork.
      */
     @Override
-    public StressNetwork execute(AddGeneratorToNetworkRequest request) {
-        StressNetwork network = getNetwork(request);
+    public StressNetwork execute(AddGeneratorToSelectedNetworkRequest request) {
+        StressNetwork network = networkService.getSelectedNetwork().orElseThrow();
         GeneratorEntry newEntry = new GeneratorEntry(getGenerator(request), request.amount());
         List<GeneratorEntry> generators = updateGenerators(network, newEntry);
         network = new StressNetworkBuilder(network).withGenerators(generators).build();
         networkService.save(network);
+        networkService.setSelectedNetwork(network);
         return network;
     }
 
-    private Generator getGenerator(AddGeneratorToNetworkRequest request) {
+    private Generator getGenerator(AddGeneratorToSelectedNetworkRequest request) {
         return generatorService.getByName(request.generatorName()).orElseThrow();
-    }
-
-    private StressNetwork getNetwork(AddGeneratorToNetworkRequest request) {
-        return networkService.getById(request.networkId()).orElseThrow();
     }
 
     private List<GeneratorEntry> updateGenerators(StressNetwork network, GeneratorEntry newEntry) {
