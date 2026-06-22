@@ -14,10 +14,6 @@ public class NetworkListModel {
     private final StringProperty userInput = new SimpleStringProperty();
     private final BooleanProperty userInputEnabled = new SimpleBooleanProperty(true);
 
-    public boolean isUserInputEnabled() {
-        return userInputEnabled.get();
-    }
-
     public BooleanProperty userInputEnabledProperty() {
         return userInputEnabled;
     }
@@ -28,18 +24,6 @@ public class NetworkListModel {
 
     public ObservableList<NetworkInfo> getNetworks() {
         return networks;
-    }
-
-    public NetworkInfo getSelectedNetwork() {
-        return selectedNetwork.get();
-    }
-
-    public ObjectProperty<NetworkInfo> selectedNetworkProperty() {
-        return selectedNetwork;
-    }
-
-    public void setSelectedNetwork(NetworkInfo selectedNetwork) {
-        this.selectedNetwork.set(selectedNetwork);
     }
 
     public final void setNetworks(
