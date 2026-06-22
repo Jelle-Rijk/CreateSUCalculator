@@ -1,9 +1,11 @@
 package org.jellerijk.mccreatecalc.application.services;
 
+import org.jellerijk.mccreatecalc.application.dto.NetworkInfo;
 import org.jellerijk.mccreatecalc.application.gateways.NetworkRepository;
 import org.jellerijk.mccreatecalc.application.gateways.SelectedNetworkData;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
 
+import java.util.List;
 import java.util.Optional;
 
 public class NetworkServiceImpl implements NetworkService {
@@ -38,5 +40,10 @@ public class NetworkServiceImpl implements NetworkService {
     @Override
     public void add(StressNetwork network) {
         networkRepo.add(network);
+    }
+
+    @Override
+    public List<NetworkInfo> getAllNamesAndIds() {
+        return networkRepo.getInfoForAllNetworks();
     }
 }

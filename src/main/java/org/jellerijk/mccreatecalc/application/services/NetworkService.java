@@ -1,7 +1,9 @@
 package org.jellerijk.mccreatecalc.application.services;
 
+import org.jellerijk.mccreatecalc.application.dto.NetworkInfo;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface NetworkService {
@@ -34,4 +36,9 @@ public interface NetworkService {
      * @param network The network to add.
      */
     void add(StressNetwork network);
+
+    /**
+     * @return List of objects containing a name and id for each network in the repository.
+     */
+    List<NetworkInfo> getAllNamesAndIds();
 }
