@@ -1,37 +1,38 @@
 package org.jellerijk.mccreatecalc.main;
 
 import javafx.application.Application;
-import javafx.geometry.Pos;
+import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.jellerijk.mccreatecalc.application.services.*;
-import org.jellerijk.mccreatecalc.data.database.GeneratorDB;
-import org.jellerijk.mccreatecalc.data.database.NetworkDB;
-import org.jellerijk.mccreatecalc.data.local.SelectedNetwork;
-import org.jellerijk.mccreatecalc.data.repositories.GeneratorRepositoryImpl;
-import org.jellerijk.mccreatecalc.data.repositories.NetworkRepositoryImpl;
-import org.jellerijk.mccreatecalc.presentation.networkdetails.NetworkDetailsController;
-import org.jellerijk.mccreatecalc.presentation.networklist.NetworkListController;
-import org.jellerijk.mccreatecalc.util.fxlib.HBoxes;
+import org.jellerijk.mccreatecalc.entities.Generator;
+import org.jellerijk.mccreatecalc.entities.GeneratorEntry;
+import org.jellerijk.mccreatecalc.presentation.generatorEntry.GeneratorEntryController;
 
 import java.util.Objects;
 
 public class CalculatorTestApplication extends Application {
     @Override
     public void start(Stage stage) {
-        NetworkService networkService = new NetworkServiceImpl(new NetworkRepositoryImpl(new NetworkDB()), new SelectedNetwork(), new SelectedNetworkPublisher());
-        GeneratorService generatorService = new GeneratorServiceImpl(new GeneratorRepositoryImpl(new GeneratorDB()));
-        UseCaseFactory networkUCFactory = new UseCaseFactory(networkService, generatorService);
 
-        NetworkListController networkListController = new NetworkListController(networkUCFactory);
-        NetworkDetailsController detailsController = new NetworkDetailsController(networkUCFactory);
-        HBox container = HBoxes.aligned(Pos.CENTER_LEFT, 5, networkListController.getView(), detailsController.getView());
-        Scene scene = new Scene(container);
+        BorderPane root = new BorderPane();
+        root.setCenter(buildRoot());
+        BorderPane.setMargin(root.getCenter(), new Insets(25));
+        Scene scene = new Scene(root);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/main.css")).toExternalForm());
 
         stage.setScene(scene);
         stage.setTitle("Test application");
         stage.show();
+    }
+
+    private Parent buildRoot() {
+        GeneratorEntryController controller = new GeneratorEntryController();
+        Generator generator = new Generator("Water wheel", "create_water_wheel.png", 256);
+        GeneratorEntry entry = new GeneratorEntry(generator, 4);
+        controller.setEntry(entry);
+        return (Parent) controller.getView();
     }
 }
