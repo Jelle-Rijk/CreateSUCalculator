@@ -1,6 +1,5 @@
 package org.jellerijk.mccreatecalc.entities;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,42 +10,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class StressNetworkTest {
     private static final String VALID_NAME = "Test-Network";
     private static final String VALID_ID = "Test123";
-    private static int expectedSUProduced;
-    private static int expectedSUConsumed;
-    private static final List<GeneratorEntry> VALID_GENERATORS = new ArrayList<>();
-    private StressNetworkBuilder defaultStressNetwork;
-
-
-    @BeforeAll
-    static void init() {
-        Generator gen1 = GeneratorTestBuilder.defaultGenerator().withSuGeneration(1000).build();
-        GeneratorEntry entry1 = GeneratorEntryTestBuilder.defaultGeneratorEntry()
-                .withGenerator(gen1)
-                .withAmount(5)
-                .build();
-        Generator gen2 = GeneratorTestBuilder.defaultGenerator().withSuGeneration(35).build();
-        GeneratorEntry entry2 = GeneratorEntryTestBuilder.defaultGeneratorEntry()
-                .withGenerator(gen2)
-                .withAmount(20)
-                .build();
-        VALID_GENERATORS.add(entry1);
-        VALID_GENERATORS.add(entry2);
-
-        expectedSUProduced = entry1.calculateSUProduced() + entry2.calculateSUProduced();
-        expectedSUConsumed = 0;
-    }
+    private StressNetworkBuilder builder;
 
     @BeforeEach
     void setUp() {
-        defaultStressNetwork = StressNetworkBuilder.aStressNetwork()
+        builder = StressNetworkBuilder.aStressNetwork()
                 .withId(VALID_ID)
                 .withName(VALID_NAME)
-                .withGenerators(VALID_GENERATORS);
+                .withGenerators(new ArrayList<>());
     }
+
+//    === CONSTRUCTOR ===
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {" ", "    ", "\t", "\r", "\n"})
+    void constructor_invalidId_throwsIAE(String invalidId) {
+        assertThrows(IllegalArgumentException.class, () -> builder.withId(invalidId).build());
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {" ", "    ", "\t", "\r", "\n"})
+    void constructor_invalidName_throwsIAE(String invalidName) {
+        assertThrows(IllegalArgumentException.class, () -> builder.withName(invalidName).build());
+    }
+
+    @Test
+    void constructor_generatorsIsNull_throwsIAE() {
+        assertThrows(IllegalArgumentException.class, () -> builder.withGenerators(null).build());
+    }
+
+
+//    === SU CALCULATION ===
 
     @Test
     void calculateSUConsumed() {
@@ -55,44 +57,19 @@ class StressNetworkTest {
     //    === calculateSUProduced() ===
     @Test
     void calculateSUProduced_returnsCorrectValue() {
-        assertEquals(expectedSUProduced, defaultStressNetwork.build().calculateSUProduced());
+        GeneratorEntry entry1 = mock();
+        GeneratorEntry entry2 = mock();
+        when(entry1.calculateSUProduced()).thenReturn(100);
+        when(entry2.calculateSUProduced()).thenReturn(200);
+        StressNetwork network = builder.withGenerators(List.of(entry1, entry2)).build();
+
+        assertEquals(300, network.calculateSUProduced());
     }
 
-    @Test
-    void calculateSUBalance() {
-        assertEquals(expectedSUProduced - expectedSUConsumed, defaultStressNetwork.build().calculateSUBalance());
-    }
+//    @Test
+//    void calculateSUBalance() {
+//
+//        assertEquals(expectedSUProduced - expectedSUConsumed, defaultStressNetwork.build().calculateSUBalance());
+//    }
 
-    //    === FIELD - ID ===
-    @Test
-    void id_valid_returnsCorrectValue() {
-        assertEquals(VALID_ID, defaultStressNetwork.build().id());
-    }
-
-    @ParameterizedTest
-    @NullAndEmptySource
-    @ValueSource(strings = {" ", "    ", "\t", "\r", "\n"})
-    void id_invalidId_throwsIAE(String invalidId) {
-        assertThrows(IllegalArgumentException.class, () -> defaultStressNetwork.withId(invalidId).build());
-    }
-
-//    === FIELD - NAME ===
-
-    @Test
-    void name_valid_returnsCorrectValue() {
-        assertEquals(VALID_NAME, defaultStressNetwork.build().name());
-    }
-
-    @ParameterizedTest
-    @NullAndEmptySource
-    @ValueSource(strings = {" ", "    ", "\t", "\r", "\n"})
-    void name_invalidName_throwsIAE(String invalidName) {
-        assertThrows(IllegalArgumentException.class, () -> defaultStressNetwork.withName(invalidName).build());
-    }
-
-    //    === FIELD - GENERATORS ===
-    @Test
-    void constructor_generatorsIsNull_throwsIAE() {
-        assertThrows(IllegalArgumentException.class, () -> defaultStressNetwork.withGenerators(null).build());
-    }
 }

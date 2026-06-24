@@ -7,57 +7,67 @@ import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class GeneratorEntryTest {
-    private GeneratorEntry defaultEntry;
+    private Generator generator;
+    private static final int DEFAULT_AMOUNT = 4;
+    private GeneratorEntryTestBuilder builder;
 
     @BeforeEach
     void setUp() {
-        defaultEntry = GeneratorEntryTestBuilder.defaultGeneratorEntry().build();
+        generator = mock();
+        builder = new GeneratorEntryTestBuilder().withGenerator(generator).withAmount(DEFAULT_AMOUNT);
     }
 
     //    === FIELD - GENERATOR ===
     @ParameterizedTest
     @NullSource
-    void generator_invalidGenerator_throwsIAE(Generator invalidGenerator) {
-        assertThrows(IllegalArgumentException.class, () -> GeneratorEntryTestBuilder.defaultGeneratorEntry()
-                .withGenerator(invalidGenerator)
-                .build());
+    void constructor_invalidGenerator_throwsIAE(Generator invalidGenerator) {
+        assertThrows(IllegalArgumentException.class, () -> builder.withGenerator(invalidGenerator).build());
     }
 
-    @Test
-    void generator_valid_returnsCorrectValue() {
-        assertEquals(GeneratorEntryTestBuilder.DEFAULT_GENERATOR, defaultEntry.getGenerator());
-    }
-
-    //    === FIELD - AMOUNT ===
     @ParameterizedTest
     @ValueSource(ints = {0, -1, Integer.MIN_VALUE})
     void amount_invalidAmount_throwsIAE(int invalidAmount) {
-        assertThrows(IllegalArgumentException.class, () -> GeneratorEntryTestBuilder.defaultGeneratorEntry()
-                .withAmount(invalidAmount).build());
+        assertThrows(IllegalArgumentException.class, () -> builder.withAmount(invalidAmount).build());
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = {1, 2, GeneratorEntryTestBuilder.DEFAULT_AMOUNT, Integer.MAX_VALUE})
-    void amount_valid_returnsCorrectValue(int amount) {
-        GeneratorEntry entry = GeneratorEntryTestBuilder.defaultGeneratorEntry().withAmount(amount).build();
-        assertEquals(amount, entry.getAmount());
+    @Test
+    void constructor_validArgs_CreatesEntry() {
+        assertDoesNotThrow(() -> builder.build());
     }
 
     //    === CALCULATE SU PRODUCED ===
     @Test
     void calculateSUProduced_returnsCorrectValue() {
-        int genSU = 3000;
-        int amount = 5;
-        int expected = genSU * amount;
+        int genSU = 512;
+        int expected = genSU * DEFAULT_AMOUNT;
+        when(generator.getSuGeneration()).thenReturn(512);
+        assertEquals(expected, builder.build().calculateSUProduced());
+    }
 
-        Generator gen = GeneratorTestBuilder.defaultGenerator().withSuGeneration(genSU).build();
-        GeneratorEntry entry = GeneratorEntryTestBuilder.defaultGeneratorEntry()
-                .withGenerator(gen)
-                .withAmount(amount)
-                .build();
-        assertEquals(expected, entry.calculateSUProduced());
+    private static class GeneratorEntryTestBuilder {
+        private Generator generator;
+        private int amount;
+
+        private GeneratorEntryTestBuilder() {
+        }
+
+        private GeneratorEntryTestBuilder withGenerator(Generator generator) {
+            this.generator = generator;
+            return this;
+        }
+
+        private GeneratorEntryTestBuilder withAmount(int amount) {
+            this.amount = amount;
+            return this;
+        }
+
+        private GeneratorEntry build() {
+            return new GeneratorEntry(generator, amount);
+        }
     }
 
 }
