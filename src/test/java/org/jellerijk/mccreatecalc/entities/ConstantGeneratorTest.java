@@ -1,5 +1,6 @@
 package org.jellerijk.mccreatecalc.entities;
 
+import org.jellerijk.mccreatecalc.entities.components.ConstantGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,15 +10,19 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GeneratorTest {
+class ConstantGeneratorTest {
     private static final String VALID_IMG = "test.png";
-    private static final String VALID_NAME = "Test-Generator";
+    private static final String VALID_NAME = "Test-ConstantGenerator";
     private static final int VALID_SU = 512;
-    private GeneratorTestBuilder builder;
+    private ConstantGenerator.Builder builder;
 
     @BeforeEach
     void setup() {
-        builder = new GeneratorTestBuilder().withName(VALID_NAME).withImage(VALID_IMG).withSu(VALID_SU);
+        builder = ConstantGenerator.Builder.aConstantGenerator()
+                .withName(VALID_NAME)
+                .withImg(VALID_IMG)
+                .withSuGeneration(VALID_SU)
+                .withRpm(8);
     }
 
     //    ==================== FIELD - IMG ====================
@@ -37,7 +42,7 @@ class GeneratorTest {
     @ValueSource(strings = {"  ", "\t", "\r", "\n", "test", ".png", "test,png"})
     void constructor_InvalidImg_ThrowsIAE(String invalidImg) {
         assertThrows(IllegalArgumentException.class,
-                () -> builder.withImage(invalidImg).build());
+                () -> builder.withImg(invalidImg).build());
     }
 
     // ==================== FIELD - NAME ====================
@@ -60,7 +65,7 @@ class GeneratorTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 1, VALID_SU, Integer.MAX_VALUE})
     void getSuGeneration_Valid_Returns(int validSU) {
-        Generator gen = builder.withSu(validSU).build();
+        ConstantGenerator gen = builder.withSuGeneration(validSU).build();
         assertEquals(validSU, gen.getSuGeneration());
     }
 
@@ -68,43 +73,12 @@ class GeneratorTest {
     @ValueSource(ints = {Integer.MIN_VALUE, -1})
     void constructor_invalidSuGeneration_ThrowsIAE(int invalidSU) {
         assertThrows(IllegalArgumentException.class,
-                () -> builder.withSu(invalidSU).build());
+                () -> builder.withSuGeneration(invalidSU).build());
     }
 
     //    === CalculateSUProduced() ===
     @Test
     void calculateSUProduced_matchesSuGeneration() {
-        assertEquals(builder.build().getSuGeneration(), builder.build().calculateSUProduced());
+        assertEquals(builder.build().getSuGeneration(), builder.build().calculateSuProduced());
     }
-
-    private static class GeneratorTestBuilder {
-        private String name;
-        private String image;
-        private int su;
-
-        private GeneratorTestBuilder() {
-        }
-
-        private GeneratorTestBuilder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        private GeneratorTestBuilder withImage(String image) {
-            this.image = image;
-            return this;
-        }
-
-
-        private GeneratorTestBuilder withSu(int su) {
-            this.su = su;
-            return this;
-        }
-
-        private Generator build() {
-            return new Generator(name, image, su);
-        }
-    }
-
-
 }

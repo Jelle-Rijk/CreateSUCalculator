@@ -3,7 +3,7 @@ package org.jellerijk.mccreatecalc.application.usecases.network.update;
 import org.jellerijk.mccreatecalc.application.services.GeneratorService;
 import org.jellerijk.mccreatecalc.application.services.NetworkService;
 import org.jellerijk.mccreatecalc.application.usecases.UseCase;
-import org.jellerijk.mccreatecalc.entities.Generator;
+import org.jellerijk.mccreatecalc.entities.components.ConstantGenerator;
 import org.jellerijk.mccreatecalc.entities.GeneratorEntry;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
 import org.jellerijk.mccreatecalc.entities.StressNetworkBuilder;
@@ -38,7 +38,7 @@ public class AddGeneratorToSelectedNetworkUseCase implements UseCase<AddGenerato
         return network;
     }
 
-    private Generator getGenerator(AddGeneratorToSelectedNetworkRequest request) {
+    private ConstantGenerator getGenerator(AddGeneratorToSelectedNetworkRequest request) {
         return generatorService.getByName(request.generatorName()).orElseThrow();
     }
 

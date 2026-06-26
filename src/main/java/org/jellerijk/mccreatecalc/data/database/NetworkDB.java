@@ -79,6 +79,6 @@ public class NetworkDB implements NetworkDAO {
                 .withId(id)
                 .withName(name)
                 .withGenerators(new ArrayList<>())
-                .build(); // TODO fill generators argument with actual generators
+                .build(); // TODO fill components argument with actual components
     }
 }

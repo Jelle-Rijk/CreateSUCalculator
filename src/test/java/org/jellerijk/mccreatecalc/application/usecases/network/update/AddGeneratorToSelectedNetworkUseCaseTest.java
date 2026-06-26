@@ -2,7 +2,7 @@ package org.jellerijk.mccreatecalc.application.usecases.network.update;
 
 import org.jellerijk.mccreatecalc.application.services.GeneratorService;
 import org.jellerijk.mccreatecalc.application.services.NetworkService;
-import org.jellerijk.mccreatecalc.entities.Generator;
+import org.jellerijk.mccreatecalc.entities.components.ConstantGenerator;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,9 +28,9 @@ class AddGeneratorToSelectedNetworkUseCaseTest {
 
     @Test
     void execute_returnsUpdatedGenerators() {
-        String generatorName = "Test-Generator";
+        String generatorName = "Test-ConstantGenerator";
         StressNetwork network = new StressNetwork("1234", generatorName, new ArrayList<>());
-        Generator generator = mock();
+        ConstantGenerator generator = mock();
         when(networkService.getSelectedNetwork()).thenReturn(Optional.of(network));
         when(generatorService.getByName(generatorName)).thenReturn(Optional.of(generator));
 

@@ -1,5 +1,6 @@
 package org.jellerijk.mccreatecalc.entities;
 
+import org.jellerijk.mccreatecalc.entities.components.ConstantGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,7 +12,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class GeneratorEntryTest {
-    private Generator generator;
+    private ConstantGenerator generator;
     private static final int DEFAULT_AMOUNT = 4;
     private GeneratorEntryTestBuilder builder;
 
@@ -24,7 +25,7 @@ class GeneratorEntryTest {
     //    === FIELD - GENERATOR ===
     @ParameterizedTest
     @NullSource
-    void constructor_invalidGenerator_throwsIAE(Generator invalidGenerator) {
+    void constructor_invalidGenerator_throwsIAE(ConstantGenerator invalidGenerator) {
         assertThrows(IllegalArgumentException.class, () -> builder.withGenerator(invalidGenerator).build());
     }
 
@@ -49,13 +50,13 @@ class GeneratorEntryTest {
     }
 
     private static class GeneratorEntryTestBuilder {
-        private Generator generator;
+        private ConstantGenerator generator;
         private int amount;
 
         private GeneratorEntryTestBuilder() {
         }
 
-        private GeneratorEntryTestBuilder withGenerator(Generator generator) {
+        private GeneratorEntryTestBuilder withGenerator(ConstantGenerator generator) {
             this.generator = generator;
             return this;
         }
