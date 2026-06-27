@@ -1,34 +1,83 @@
 package org.jellerijk.mccreatecalc.entities.components;
 
-public enum WaterWheel {
-    SMALL("Water Wheel", "create_water_wheel.png", 256, 8), LARGE("Large Water Wheel", "create_large_water_wheel.png", 512, 4);
+import org.jellerijk.mccreatecalc.entities.Generator;
 
-    private final String name;
-    private final String img;
-    private final int suProduction;
+public class WaterWheel extends BaseComponent implements Generator {
+
+    private final int suGeneration;
     private final int rpm;
 
-    WaterWheel(String name, String img, int suProduction, int rpm) {
-        this.name = name;
-        this.img = img;
-        this.suProduction = suProduction;
+    public WaterWheel(String name, String img, int suGeneration, int rpm) {
+        super(name, img);
+        validateSU(suGeneration);
+        validateRPM(rpm);
         this.rpm = rpm;
+        this.suGeneration = suGeneration;
     }
 
-    public String getName() {
-        return name;
+    private void validateRPM(int rpm) {
+        if (rpm < 0)
+            throw new IllegalArgumentException("RPM cannot be a negative number.");
     }
 
-    public String getImg() {
-        return img;
-    }
-
+    //===== Public methods =====
+    @Override
     public int getSuProduction() {
-        return suProduction;
+        return getSuGeneration();
     }
 
-    public int getRpm() {
+    @Override
+    public int getRPM() {
         return rpm;
     }
 
+    public int getSuGeneration() {
+        return suGeneration;
+    }
+
+    //===== Private methods =====
+
+
+    private void validateSU(int suGeneration) {
+        if (suGeneration < 0)
+            throw new IllegalArgumentException("Stress unit generation needs to be a positive integer.");
+    }
+
+    public static final class Builder {
+        private String img;
+        private String name;
+        private int suGeneration;
+        private int rpm;
+
+        private Builder() {
+        }
+
+        public static Builder aConstantGenerator() {
+            return new Builder();
+        }
+
+        public WaterWheel build() {
+            return new WaterWheel(name, img, suGeneration, rpm);
+        }
+
+        public Builder withImg(String img) {
+            this.img = img;
+            return this;
+        }
+
+        public Builder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder withSuGeneration(int suGeneration) {
+            this.suGeneration = suGeneration;
+            return this;
+        }
+
+        public Builder withRpm(int rpm) {
+            this.rpm = rpm;
+            return this;
+        }
+    }
 }

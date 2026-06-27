@@ -6,6 +6,8 @@ import javafx.scene.Node;
 import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
 import org.jellerijk.mccreatecalc.presentation.Controller;
 
+import java.util.function.Consumer;
+
 
 public class GeneratorSelectorController extends Controller {
     private final GeneratorSelectorInteractor interactor;
@@ -13,8 +15,8 @@ public class GeneratorSelectorController extends Controller {
     private final GeneratorSelectorModel model = new GeneratorSelectorModel();
 
     public GeneratorSelectorController(
-            UseCaseFactory factory) {
-        interactor = new GeneratorSelectorInteractor(model, factory);
+            UseCaseFactory factory, Consumer<GeneratorOption> addGeneratorGroupFunction) {
+        interactor = new GeneratorSelectorInteractor(model, factory, addGeneratorGroupFunction);
         viewBuilder = new GeneratorSelectorViewBuilder(model, this::addGenerator);
         loadGeneratorOptions();
     }

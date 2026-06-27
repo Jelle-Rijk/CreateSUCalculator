@@ -5,6 +5,6 @@ import java.util.Optional;
 public interface Component {
     String getName();
 
-    Optional<String> getImg();
+    String getImg();
 
 }

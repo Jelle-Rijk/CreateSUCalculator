@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import org.jellerijk.mccreatecalc.entities.components.ConstantGenerator;
+import org.jellerijk.mccreatecalc.entities.components.WaterWheel;
 import org.jellerijk.mccreatecalc.entities.GeneratorEntry;
 import org.jellerijk.mccreatecalc.presentation.generatorEntry.GeneratorEntryController;
 
@@ -29,7 +29,7 @@ public class CalculatorTestApplication extends Application {
 
     private Parent buildRoot() {
         GeneratorEntryController controller = new GeneratorEntryController();
-        ConstantGenerator generator = new ConstantGenerator("Water wheel", "create_water_wheel.png", 256, 8);
+        WaterWheel generator = new WaterWheel("Water wheel", "create_water_wheel.png", 256, 8);
         GeneratorEntry entry = new GeneratorEntry(generator, 4);
         controller.setEntry(entry);
         return (Parent) controller.getView();

@@ -3,10 +3,13 @@ package org.jellerijk.mccreatecalc.application.usecases.network.update;
 import org.jellerijk.mccreatecalc.application.services.GeneratorService;
 import org.jellerijk.mccreatecalc.application.services.NetworkService;
 import org.jellerijk.mccreatecalc.application.usecases.UseCase;
-import org.jellerijk.mccreatecalc.entities.components.ConstantGenerator;
+import org.jellerijk.mccreatecalc.entities.Generator;
+import org.jellerijk.mccreatecalc.entities.components.WaterWheel;
 import org.jellerijk.mccreatecalc.entities.GeneratorEntry;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
 import org.jellerijk.mccreatecalc.entities.StressNetworkBuilder;
+import org.jellerijk.mccreatecalc.entities.components.WaterWheelType;
+import org.jellerijk.mccreatecalc.entities.components.WindmillImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +33,7 @@ public class AddGeneratorToSelectedNetworkUseCase implements UseCase<AddGenerato
     @Override
     public StressNetwork execute(AddGeneratorToSelectedNetworkRequest request) {
         StressNetwork network = networkService.getSelectedNetwork().orElseThrow();
-        GeneratorEntry newEntry = new GeneratorEntry(getGenerator(request), request.amount());
+        GeneratorEntry newEntry = new GeneratorEntry(createGenerator(request), request.amount());
         List<GeneratorEntry> generators = updateGenerators(network, newEntry);
         network = new StressNetworkBuilder(network).withGenerators(generators).build();
         networkService.save(network);
@@ -38,8 +41,15 @@ public class AddGeneratorToSelectedNetworkUseCase implements UseCase<AddGenerato
         return network;
     }
 
-    private ConstantGenerator getGenerator(AddGeneratorToSelectedNetworkRequest request) {
-        return generatorService.getByName(request.generatorName()).orElseThrow();
+    private Generator createGenerator(AddGeneratorToSelectedNetworkRequest request) {
+        return switch (request.type()) {
+            case WATER_WHEEL -> {
+                WaterWheelType type = request.waterWheelType();
+                yield new WaterWheel(type.getName(), type.getImg(), type.getSuProduction(), type.getRpm());
+            }
+            case WINDMILL -> new WindmillImpl(request.sails());
+            default -> throw new IllegalArgumentException("Unsupported Generator type");
+        };
     }
 
     private List<GeneratorEntry> updateGenerators(StressNetwork network, GeneratorEntry newEntry) {

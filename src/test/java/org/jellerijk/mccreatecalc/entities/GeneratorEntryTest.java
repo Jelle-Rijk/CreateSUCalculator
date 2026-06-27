@@ -1,6 +1,6 @@
 package org.jellerijk.mccreatecalc.entities;
 
-import org.jellerijk.mccreatecalc.entities.components.ConstantGenerator;
+import org.jellerijk.mccreatecalc.entities.components.WaterWheel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,7 +12,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class GeneratorEntryTest {
-    private ConstantGenerator generator;
+    private WaterWheel generator;
     private static final int DEFAULT_AMOUNT = 4;
     private GeneratorEntryTestBuilder builder;
 
@@ -25,7 +25,7 @@ class GeneratorEntryTest {
     //    === FIELD - GENERATOR ===
     @ParameterizedTest
     @NullSource
-    void constructor_invalidGenerator_throwsIAE(ConstantGenerator invalidGenerator) {
+    void constructor_invalidGenerator_throwsIAE(WaterWheel invalidGenerator) {
         assertThrows(IllegalArgumentException.class, () -> builder.withGenerator(invalidGenerator).build());
     }
 
@@ -42,7 +42,7 @@ class GeneratorEntryTest {
 
     //    === CALCULATE SU PRODUCED ===
     @Test
-    void calculateSUProduced_returnsCorrectValue() {
+    void getSUProduction_returnsCorrectValue() {
         int genSU = 512;
         int expected = genSU * DEFAULT_AMOUNT;
         when(generator.getSuGeneration()).thenReturn(512);
@@ -50,13 +50,13 @@ class GeneratorEntryTest {
     }
 
     private static class GeneratorEntryTestBuilder {
-        private ConstantGenerator generator;
+        private WaterWheel generator;
         private int amount;
 
         private GeneratorEntryTestBuilder() {
         }
 
-        private GeneratorEntryTestBuilder withGenerator(ConstantGenerator generator) {
+        private GeneratorEntryTestBuilder withGenerator(WaterWheel generator) {
             this.generator = generator;
             return this;
         }

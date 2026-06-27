@@ -2,11 +2,11 @@ package org.jellerijk.mccreatecalc.application.usecases.generator;
 
 import org.jellerijk.mccreatecalc.application.services.GeneratorService;
 import org.jellerijk.mccreatecalc.application.usecases.NoArgsUseCase;
-import org.jellerijk.mccreatecalc.entities.components.ConstantGenerator;
+import org.jellerijk.mccreatecalc.entities.components.WaterWheel;
 
 import java.util.List;
 
-public class GetGeneratorsUseCase implements NoArgsUseCase<List<ConstantGenerator>> {
+public class GetGeneratorsUseCase implements NoArgsUseCase<List<WaterWheel>> {
     private final GeneratorService generatorService;
 
     public GetGeneratorsUseCase(GeneratorService generatorService) {
@@ -15,7 +15,7 @@ public class GetGeneratorsUseCase implements NoArgsUseCase<List<ConstantGenerato
 
 
     @Override
-    public List<ConstantGenerator> execute() {
+    public List<WaterWheel> execute() {
         return generatorService.getAll();
     }
 }

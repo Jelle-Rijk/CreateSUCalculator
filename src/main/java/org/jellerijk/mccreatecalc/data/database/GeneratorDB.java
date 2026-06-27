@@ -1,7 +1,7 @@
 package org.jellerijk.mccreatecalc.data.database;
 
 import org.jellerijk.mccreatecalc.data.dao.GeneratorDAO;
-import org.jellerijk.mccreatecalc.entities.components.ConstantGenerator;
+import org.jellerijk.mccreatecalc.entities.components.WaterWheel;
 import org.jellerijk.mccreatecalc.exceptions.DataBaseAccessException;
 import org.jellerijk.mccreatecalc.util.sql.QueryBuilder;
 
@@ -20,8 +20,8 @@ public class GeneratorDB implements GeneratorDAO {
     private static final String COL_NAME = "Name";
 
     @Override
-    public Optional<ConstantGenerator> getByName(String name) {
-        ConstantGenerator generator = null;
+    public Optional<WaterWheel> getByName(String name) {
+        WaterWheel generator = null;
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement query = conn.prepareStatement(QueryBuilder.selectBy(TABLE, COL_NAME))) {
             query.setString(1, name);
@@ -35,8 +35,8 @@ public class GeneratorDB implements GeneratorDAO {
     }
 
     @Override
-    public List<ConstantGenerator> getAll() {
-        List<ConstantGenerator> generators = new ArrayList<>();
+    public List<WaterWheel> getAll() {
+        List<WaterWheel> generators = new ArrayList<>();
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement query = conn.prepareStatement(QueryBuilder.selectAll(TABLE))) {
             ResultSet res = query.executeQuery();
@@ -48,7 +48,7 @@ public class GeneratorDB implements GeneratorDAO {
         }
     }
 
-    private ConstantGenerator mapToGenerator(ResultSet res) throws SQLException {
-        return new ConstantGenerator(res.getString(COL_NAME), res.getString(COL_IMAGE), res.getInt(COL_SU), 16); // TODO remove
+    private WaterWheel mapToGenerator(ResultSet res) throws SQLException {
+        return new WaterWheel(res.getString(COL_NAME), res.getString(COL_IMAGE), res.getInt(COL_SU), 16); // TODO remove
     }
 }

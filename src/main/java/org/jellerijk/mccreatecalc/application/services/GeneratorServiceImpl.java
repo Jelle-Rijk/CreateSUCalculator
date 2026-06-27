@@ -1,7 +1,7 @@
 package org.jellerijk.mccreatecalc.application.services;
 
 import org.jellerijk.mccreatecalc.application.gateways.GeneratorRepository;
-import org.jellerijk.mccreatecalc.entities.components.ConstantGenerator;
+import org.jellerijk.mccreatecalc.entities.components.WaterWheel;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,12 +14,12 @@ public class GeneratorServiceImpl implements GeneratorService {
     }
 
     @Override
-    public Optional<ConstantGenerator> getByName(String name) {
+    public Optional<WaterWheel> getByName(String name) {
         return generatorRepo.getByName(name);
     }
 
     @Override
-    public List<ConstantGenerator> getAll() {
+    public List<WaterWheel> getAll() {
         return generatorRepo.getAll();
     }
 }

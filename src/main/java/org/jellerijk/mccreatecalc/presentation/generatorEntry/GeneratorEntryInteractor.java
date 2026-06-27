@@ -10,7 +10,7 @@ public class GeneratorEntryInteractor {
     }
 
     public void setEntry(GeneratorEntry entry) {
-        model.setImagePath(entry.getGenerator().getImg().orElseThrow());
+        model.setImagePath(entry.getGenerator().getImg());
         model.setAmount(entry.getAmount());
         model.suProducedProperty().set(entry.calculateSUProduced());
     }

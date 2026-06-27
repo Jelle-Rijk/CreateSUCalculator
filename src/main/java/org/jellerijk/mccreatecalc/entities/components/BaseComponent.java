@@ -7,6 +7,7 @@ import java.util.Optional;
 public abstract class BaseComponent implements Component {
     private final String img;
     private final String name;
+    private static final String DEFAULT_IMG = "create_cuckoo_clock.png";
 
     public BaseComponent(String name, String img) {
         this.name = name;
@@ -19,8 +20,10 @@ public abstract class BaseComponent implements Component {
         return name;
     }
 
-    public Optional<String> getImg() {
-        return Optional.ofNullable(img);
+    public String getImg() {
+        if (img == null)
+            return DEFAULT_IMG;
+        return img;
     }
 
     private void validateImg(String img) {

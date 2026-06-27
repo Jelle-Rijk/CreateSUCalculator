@@ -1,6 +1,6 @@
 package org.jellerijk.mccreatecalc.entities;
 
-import org.jellerijk.mccreatecalc.entities.components.ConstantGenerator;
+import org.jellerijk.mccreatecalc.entities.components.WaterWheel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,15 +10,17 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ConstantGeneratorTest {
+class WaterWheelTest {
     private static final String VALID_IMG = "test.png";
-    private static final String VALID_NAME = "Test-ConstantGenerator";
+    private static final String VALID_NAME = "Test-WaterWheel";
     private static final int VALID_SU = 512;
-    private ConstantGenerator.Builder builder;
+
+    private static final String DEFAULT_IMAGE = "create_cuckoo_clock.png";
+    private WaterWheel.Builder builder;
 
     @BeforeEach
     void setup() {
-        builder = ConstantGenerator.Builder.aConstantGenerator()
+        builder = WaterWheel.Builder.aConstantGenerator()
                 .withName(VALID_NAME)
                 .withImg(VALID_IMG)
                 .withSuGeneration(VALID_SU)
@@ -27,13 +29,13 @@ class ConstantGeneratorTest {
 
     //    ==================== FIELD - IMG ====================
     @Test
-    void getImg_Valid_ReturnsNonEmptyOptional() {
-        assertTrue(builder.build().getImg().isPresent());
+    void getImg_ImageIsNull_ReturnsDefaultImg() {
+        assertEquals(DEFAULT_IMAGE, builder.withImg(null).build().getImg());
     }
 
     @Test
     void getImg_Valid_ReturnsCorrectString() {
-        assertEquals(VALID_IMG, builder.build().getImg().orElseThrow());
+        assertEquals(VALID_IMG, builder.build().getImg());
     }
 
 
@@ -65,7 +67,7 @@ class ConstantGeneratorTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 1, VALID_SU, Integer.MAX_VALUE})
     void getSuGeneration_Valid_Returns(int validSU) {
-        ConstantGenerator gen = builder.withSuGeneration(validSU).build();
+        WaterWheel gen = builder.withSuGeneration(validSU).build();
         assertEquals(validSU, gen.getSuGeneration());
     }
 
@@ -78,7 +80,7 @@ class ConstantGeneratorTest {
 
     //    === CalculateSUProduced() ===
     @Test
-    void calculateSUProduced_matchesSuGeneration() {
-        assertEquals(builder.build().getSuGeneration(), builder.build().calculateSuProduced());
+    void getSUProduced_matchesSuGeneration() {
+        assertEquals(builder.build().getSuGeneration(), builder.build().getSuProduction());
     }
 }

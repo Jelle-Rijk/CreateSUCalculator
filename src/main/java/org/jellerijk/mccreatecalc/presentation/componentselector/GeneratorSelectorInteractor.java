@@ -5,24 +5,22 @@ import org.jellerijk.mccreatecalc.application.usecases.generator.GetGeneratorsUs
 import org.jellerijk.mccreatecalc.application.usecases.network.update.AddGeneratorToSelectedNetworkRequest;
 import org.jellerijk.mccreatecalc.application.usecases.network.update.AddGeneratorToSelectedNetworkUseCase;
 
+import java.util.function.Consumer;
+
 public class GeneratorSelectorInteractor {
+    private final Consumer<GeneratorOption> addGeneratorGroup;
     private final GeneratorSelectorModel model;
     private final GetGeneratorsUseCase generatorOptionFetcher;
-    private final AddGeneratorToSelectedNetworkUseCase addGeneratorUC;
 
-
-    public GeneratorSelectorInteractor(GeneratorSelectorModel model, UseCaseFactory factory) {
+    public GeneratorSelectorInteractor(GeneratorSelectorModel model, UseCaseFactory factory, Consumer<GeneratorOption> addGeneratorGroup) {
         this.model = model;
         generatorOptionFetcher = factory.buildGetGeneratorsUseCase();
-        addGeneratorUC = factory.buildAddGeneratorToNetworkUseCase();
+        this.addGeneratorGroup = addGeneratorGroup;
         bindModelProperties();
     }
 
     public void addGenerator() {
-        AddGeneratorToSelectedNetworkRequest request = new AddGeneratorToSelectedNetworkRequest(model.getSelectedGeneratorOption()
-                .name(), model.getAmount());
-        addGeneratorUC.execute(request);
-
+        addGeneratorGroup.accept(model.getSelectedGeneratorOption());
     }
 
     public void loadGeneratorSelectorOptions() {

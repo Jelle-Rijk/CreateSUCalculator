@@ -29,7 +29,7 @@ class WindmillTest {
     @Test
     void constructor_validArgs_setsDefaultImage() {
         Windmill w = builder.build();
-        assertEquals(DEFAULT_IMAGE, w.getImg().orElseThrow());
+        assertEquals(DEFAULT_IMAGE, w.getImg());
     }
 
     @ParameterizedTest
@@ -86,25 +86,25 @@ class WindmillTest {
     @Test
     void getSuProduction_0Sails_returns0() {
         Windmill w = builder.withSails(0).build();
-        assertEquals(0, w.calculateSuProduced());
+        assertEquals(0, w.getSuProduction());
     }
 
     @Test
     void getSuProduction_7Sails_returns0() {
         Windmill w = builder.withSails(7).build();
-        assertEquals(0, w.calculateSuProduced());
+        assertEquals(0, w.getSuProduction());
     }
 
     @Test
     void getSuProduction_8Sails_returns512() {
         Windmill w = builder.withSails(8).build();
-        assertEquals(512, w.calculateSuProduced());
+        assertEquals(512, w.getSuProduction());
     }
 
     @ParameterizedTest
     @ValueSource(ints = {128, 129, 300, Integer.MAX_VALUE})
     void getSuProduction_MaxSails_returns8192(int sails) {
         Windmill w = builder.withSails(sails).build();
-        assertEquals(8192, w.calculateSuProduced());
+        assertEquals(8192, w.getSuProduction());
     }
 }

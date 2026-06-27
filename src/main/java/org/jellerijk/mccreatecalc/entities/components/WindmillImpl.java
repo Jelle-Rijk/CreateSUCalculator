@@ -19,7 +19,7 @@ public class WindmillImpl extends BaseComponent implements Windmill {
 
 //===== Public methods =====
     @Override
-    public int calculateSuProduced() {
+    public int getSuProduction() {
         return getRPM() * SU_PER_RPM;
     }
 
