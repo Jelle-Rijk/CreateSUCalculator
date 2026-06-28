@@ -2,8 +2,6 @@ package org.jellerijk.mccreatecalc.entities.components;
 
 import org.jellerijk.mccreatecalc.entities.Component;
 
-import java.util.Optional;
-
 public abstract class BaseComponent implements Component {
     private final String img;
     private final String name;
@@ -14,6 +12,11 @@ public abstract class BaseComponent implements Component {
         this.img = img;
         validateName(name);
         validateImg(img);
+    }
+
+    protected void validateRpm(int rpm) {
+        if (rpm < 0)
+            throw new IllegalArgumentException("Rpm cannot be a negative number.");
     }
 
     public String getName() {

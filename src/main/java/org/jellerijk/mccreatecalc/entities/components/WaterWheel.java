@@ -7,6 +7,12 @@ public class WaterWheel extends BaseComponent implements Generator {
     private final int suGeneration;
     private final int rpm;
 
+    public WaterWheel(WaterWheelType waterWheelType) {
+        super(waterWheelType.getName(), waterWheelType.getImg());
+        this.rpm = waterWheelType.getRpm();
+        this.suGeneration = waterWheelType.getSuProduction();
+    }
+
     public WaterWheel(String name, String img, int suGeneration, int rpm) {
         super(name, img);
         validateSU(suGeneration);
