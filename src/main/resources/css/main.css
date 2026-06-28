@@ -23,3 +23,9 @@
 .combo-box > .list-cell .label {
     -fx-text-fill: rgb(1, 1, 12);
 }
+
+.component-card__field-label__default {
+    -fx-font-size: 9;
+    -fx-opacity: 0.65;
+    -fx-padding: 0 0 4 0;
+}

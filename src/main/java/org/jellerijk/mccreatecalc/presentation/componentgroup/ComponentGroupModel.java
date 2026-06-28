@@ -13,6 +13,19 @@ public class ComponentGroupModel {
     private final BooleanProperty needsSails = new SimpleBooleanProperty();
     private final BooleanProperty needsRpm = new SimpleBooleanProperty();
     private final BooleanProperty needsLevel = new SimpleBooleanProperty();
+    private final StringProperty image = new SimpleStringProperty();
+
+    public String getImage() {
+        return image.get();
+    }
+
+    public StringProperty imageProperty() {
+        return image;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId.set(groupId);
+    }
 
     public void setNeedsSails(boolean needsSails) {
         this.needsSails.set(needsSails);
@@ -26,48 +39,20 @@ public class ComponentGroupModel {
         this.needsLevel.set(needsLevel);
     }
 
-    public boolean isNeedsSails() {
-        return needsSails.get();
-    }
-
     public BooleanProperty needsSailsProperty() {
         return needsSails;
-    }
-
-    public boolean isNeedsRpm() {
-        return needsRpm.get();
     }
 
     public BooleanProperty needsRpmProperty() {
         return needsRpm;
     }
 
-    public boolean isNeedsLevel() {
-        return needsLevel.get();
-    }
-
-    public BooleanProperty needsLevelProperty() {
-        return needsLevel;
-    }
-
-    public String getComponentName() {
-        return componentName.get();
-    }
-
     public StringProperty componentNameProperty() {
         return componentName;
     }
 
-    public int getComponentAmount() {
-        return componentAmount.get();
-    }
-
     public IntegerProperty componentAmountProperty() {
         return componentAmount;
-    }
-
-    public int getSails() {
-        return sails.get();
     }
 
     public IntegerProperty sailsProperty() {
@@ -82,16 +67,8 @@ public class ComponentGroupModel {
         return rpm;
     }
 
-    public String getLevel() {
-        return level.get();
-    }
-
     public StringProperty levelProperty() {
         return level;
-    }
-
-    public int getSu() {
-        return su.get();
     }
 
     public IntegerProperty suProperty() {
@@ -102,7 +79,4 @@ public class ComponentGroupModel {
         return groupId.get();
     }
 
-    public StringProperty groupIdProperty() {
-        return groupId;
-    }
 }
