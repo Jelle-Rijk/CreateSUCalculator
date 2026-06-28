@@ -1,8 +1,6 @@
 package org.jellerijk.mccreatecalc.entities;
 
-import org.jellerijk.mccreatecalc.entities.components.ComponentType;
-import org.jellerijk.mccreatecalc.entities.components.Consumer;
-import org.jellerijk.mccreatecalc.entities.components.WaterWheel;
+import org.jellerijk.mccreatecalc.entities.components.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -93,6 +91,28 @@ class ComponentGroupTest {
         Consumer c = mock();
         ComponentGroup group = builder.withComponent(c).build();
         assertEquals(ComponentType.CONSUMER, group.getComponentType());
+    }
+
+    //    === Is consumer ===
+    @Test
+    void isConsumer_Consumer_ReturnsTrue() {
+        Consumer c = mock();
+        ComponentGroup group = builder.withComponent(c).build();
+        assertTrue(group.isConsumer());
+    }
+
+    @Test
+    void isConsumer_WaterWheel_ReturnsFalse() {
+        WaterWheel w = mock();
+        ComponentGroup group = builder.withComponent(w).build();
+        assertFalse(group.isConsumer());
+    }
+
+    @Test
+    void isConsumer_Windmill_ReturnsFalse() {
+        Windmill w = mock();
+        ComponentGroup group = builder.withComponent(w).build();
+        assertFalse(group.isConsumer());
     }
 
 }

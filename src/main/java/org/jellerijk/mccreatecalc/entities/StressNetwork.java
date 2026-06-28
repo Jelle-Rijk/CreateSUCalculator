@@ -1,12 +1,9 @@
 package org.jellerijk.mccreatecalc.entities;
 
-import org.jellerijk.mccreatecalc.application.dto.ComponentGroupDTO;
-import org.jellerijk.mccreatecalc.entities.components.ComponentType;
-
 import java.util.List;
 
-public record StressNetwork(String id, String name, List<ComponentGroupDTO> generators,
-                            List<ComponentGroupDTO> consumers) implements SUProducer, Identifiable {
+public record StressNetwork(String id, String name, List<ComponentGroup> generators,
+                            List<ComponentGroup> consumers) implements SUProducer, Identifiable {
 
     public StressNetwork {
         validateId(id);
@@ -38,21 +35,21 @@ public record StressNetwork(String id, String name, List<ComponentGroupDTO> gene
      * @param componentGroupDTOS The list of component groups to calculate the total su consumption or production of.
      * @return The total stress units consumed or produced by the component groups.
      */
-    private int calculateTotalSuFromComponentGroups(List<ComponentGroupDTO> componentGroupDTOS) {
-        return componentGroupDTOS.stream().mapToInt(ComponentGroupDTO::su).reduce(0, Integer::sum);
+    private int calculateTotalSuFromComponentGroups(List<ComponentGroup> componentGroupDTOS) {
+        return componentGroupDTOS.stream().mapToInt(ComponentGroup::calculateSu).reduce(0, Integer::sum);
     }
 
-    private void validateConsumers(List<ComponentGroupDTO> consumers) {
+    private void validateConsumers(List<ComponentGroup> consumers) {
         if (consumers == null)
             throw new IllegalArgumentException("Consumers cannot be null");
-        if (consumers.stream().anyMatch(componentGroup -> componentGroup.type() != ComponentType.CONSUMER))
+        if (consumers.stream().anyMatch(componentGroup -> !componentGroup.isConsumer()))
             throw new IllegalArgumentException("Consumers contained non-consumer.");
     }
 
-    private void validateGenerators(List<ComponentGroupDTO> generators) {
+    private void validateGenerators(List<ComponentGroup> generators) {
         if (generators == null)
             throw new IllegalArgumentException("StressNetwork needs a list of generator entries.");
-        if (generators.stream().anyMatch(componentGroup -> componentGroup.type() == ComponentType.CONSUMER))
+        if (generators.stream().anyMatch(ComponentGroup::isConsumer))
             throw new IllegalArgumentException("Generators contained a consumer");
     }
 
@@ -67,8 +64,8 @@ public record StressNetwork(String id, String name, List<ComponentGroupDTO> gene
     }
 
     public static final class Builder {
-        private List<ComponentGroupDTO> consumers;
-        private List<ComponentGroupDTO> generators;
+        private List<ComponentGroup> consumers;
+        private List<ComponentGroup> generators;
         private String id;
         private String name;
 
@@ -92,12 +89,12 @@ public record StressNetwork(String id, String name, List<ComponentGroupDTO> gene
             return new StressNetwork(id, name, generators, consumers);
         }
 
-        public Builder withConsumers(List<ComponentGroupDTO> consumers) {
+        public Builder withConsumers(List<ComponentGroup> consumers) {
             this.consumers = consumers;
             return this;
         }
 
-        public Builder withGenerators(List<ComponentGroupDTO> generators) {
+        public Builder withGenerators(List<ComponentGroup> generators) {
             this.generators = generators;
             return this;
         }

@@ -1,8 +1,8 @@
 package org.jellerijk.mccreatecalc.application.dto;
 
-import org.jellerijk.mccreatecalc.entities.Component;
+import org.jellerijk.mccreatecalc.entities.components.Component;
 import org.jellerijk.mccreatecalc.entities.ComponentGroup;
-import org.jellerijk.mccreatecalc.entities.Windmill;
+import org.jellerijk.mccreatecalc.entities.components.Windmill;
 import org.jellerijk.mccreatecalc.entities.components.ComponentType;
 
 public record ComponentGroupDTO(String id, ComponentType type, String name, String img, int amount, int sails,

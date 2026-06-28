@@ -1,7 +1,5 @@
 package org.jellerijk.mccreatecalc.entities.components;
 
-import org.jellerijk.mccreatecalc.entities.Windmill;
-
 public class WindmillImpl extends BaseComponent implements Windmill {
     private static final String IMAGE = "create_white_sail.png";
     private static final int MAX_RPM = 16;

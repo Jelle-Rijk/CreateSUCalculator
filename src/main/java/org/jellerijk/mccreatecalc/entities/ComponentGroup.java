@@ -1,8 +1,6 @@
 package org.jellerijk.mccreatecalc.entities;
 
-import org.jellerijk.mccreatecalc.entities.components.ComponentType;
-import org.jellerijk.mccreatecalc.entities.components.Consumer;
-import org.jellerijk.mccreatecalc.entities.components.WaterWheel;
+import org.jellerijk.mccreatecalc.entities.components.*;
 
 public class ComponentGroup implements Identifiable {
     private final int amount;

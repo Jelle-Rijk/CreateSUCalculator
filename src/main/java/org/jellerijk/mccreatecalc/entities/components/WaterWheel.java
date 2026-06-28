@@ -1,7 +1,5 @@
 package org.jellerijk.mccreatecalc.entities.components;
 
-import org.jellerijk.mccreatecalc.entities.Generator;
-
 public class WaterWheel extends BaseComponent implements Generator {
 
     private final int suGeneration;

@@ -1,4 +1,4 @@
-package org.jellerijk.mccreatecalc.entities;
+package org.jellerijk.mccreatecalc.entities.components;
 
 public interface Component {
     String getName();

@@ -1,7 +1,5 @@
 package org.jellerijk.mccreatecalc.entities;
 
-import org.jellerijk.mccreatecalc.application.dto.ComponentGroupDTO;
-import org.jellerijk.mccreatecalc.entities.components.ComponentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -52,9 +50,9 @@ class StressNetworkTest {
 
     @Test
     void constructor_generatorsContainsConsumer_ThrowsIAE() {
-        ComponentGroupDTO consumer = mock();
-        when(consumer.type()).thenReturn(ComponentType.CONSUMER);
-        List<ComponentGroupDTO> generators = List.of(consumer);
+        ComponentGroup consumer = mock();
+        when(consumer.isConsumer()).thenReturn(true);
+        List<ComponentGroup> generators = List.of(consumer);
         assertThrows(IllegalArgumentException.class, () -> builder.withGenerators(generators).build());
     }
 
@@ -65,8 +63,9 @@ class StressNetworkTest {
 
     @Test
     void construct_consumersContainsNonConsumers_throwsIAE() {
-        ComponentGroupDTO group = ComponentGroupDTO.Builder.aComponentGroup().withType(ComponentType.WATER_WHEEL).build();
-        List<ComponentGroupDTO> consumers = List.of(group);
+        ComponentGroup group = mock();
+        when(group.isConsumer()).thenReturn(false);
+        List<ComponentGroup> consumers = List.of(group);
         assertThrows(IllegalArgumentException.class, () -> builder.withConsumers(consumers).build());
     }
 
@@ -75,10 +74,10 @@ class StressNetworkTest {
     //    === calculateSUProduced() ===
     @Test
     void calculateSUProduced_returnsCorrectValue() {
-        ComponentGroupDTO group1 = mock();
-        ComponentGroupDTO group2 = mock();
-        when(group1.su()).thenReturn(100);
-        when(group2.su()).thenReturn(200);
+        ComponentGroup group1 = mock();
+        ComponentGroup group2 = mock();
+        when(group1.calculateSu()).thenReturn(100);
+        when(group2.calculateSu()).thenReturn(200);
         StressNetwork network = builder.withGenerators(List.of(group1, group2)).build();
 
         assertEquals(300, network.calculateSUProduced());
@@ -87,15 +86,13 @@ class StressNetworkTest {
     // === calculateSUConsumed ===
     @Test
     void calculateSUConsumed_returnsCorrectValue() {
-        ComponentGroupDTO group1 = ComponentGroupDTO.Builder.aComponentGroup()
-                .withType(ComponentType.CONSUMER)
-                .withSu(600)
-                .build();
-        ComponentGroupDTO group2 = ComponentGroupDTO.Builder.aComponentGroup()
-                .withType(ComponentType.CONSUMER)
-                .withSu(900)
-                .build();
-        List<ComponentGroupDTO> consumers = List.of(group1, group2);
+        ComponentGroup group1 = mock();
+        ComponentGroup group2 = mock();
+        when(group1.calculateSu()).thenReturn(600);
+        when(group2.calculateSu()).thenReturn(900);
+        when(group1.isConsumer()).thenReturn(true);
+        when(group2.isConsumer()).thenReturn(true);
+        List<ComponentGroup> consumers = List.of(group1, group2);
         StressNetwork network = builder.withConsumers(consumers).build();
         assertEquals(1500, network.calculateSUConsumed());
     }
@@ -114,44 +111,44 @@ class StressNetworkTest {
 
     @Test
     void calculateSuBalance_OnlyConsumers_ReturnsCorrectValue() {
-        ComponentGroupDTO group1 = mock();
-        ComponentGroupDTO group2 = mock();
-        when(group1.su()).thenReturn(100);
-        when(group2.su()).thenReturn(200);
-        when(group1.type()).thenReturn(ComponentType.CONSUMER);
-        when(group2.type()).thenReturn(ComponentType.CONSUMER);
-        List<ComponentGroupDTO> consumers = List.of(group1, group2);
+        ComponentGroup group1 = mock();
+        ComponentGroup group2 = mock();
+        when(group1.calculateSu()).thenReturn(100);
+        when(group2.calculateSu()).thenReturn(200);
+        when(group1.isConsumer()).thenReturn(true);
+        when(group2.isConsumer()).thenReturn(true);
+        List<ComponentGroup> consumers = List.of(group1, group2);
 
         assertEquals(-300, builder.withConsumers(consumers).build().calculateSUBalance());
     }
 
     @Test
     void calculateSuBalance_OnlyProducers_ReturnsCorrectValue() {
-        ComponentGroupDTO group1 = mock();
-        ComponentGroupDTO group2 = mock();
-        when(group1.su()).thenReturn(200);
-        when(group2.su()).thenReturn(300);
-        List<ComponentGroupDTO> generators = List.of(group1, group2);
+        ComponentGroup group1 = mock();
+        ComponentGroup group2 = mock();
+        when(group1.calculateSu()).thenReturn(200);
+        when(group2.calculateSu()).thenReturn(300);
+        List<ComponentGroup> generators = List.of(group1, group2);
 
         assertEquals(500, builder.withGenerators(generators).build().calculateSUBalance());
     }
 
     @Test
     void calculateSuBalance_ConsumersAndProducers_ReturnsCorrectValue() {
-        ComponentGroupDTO consumer1 = mock();
-        ComponentGroupDTO consumer2 = mock();
-        ComponentGroupDTO generator1 = mock();
-        ComponentGroupDTO generator2 = mock();
+        ComponentGroup consumer1 = mock();
+        ComponentGroup consumer2 = mock();
+        ComponentGroup generator1 = mock();
+        ComponentGroup generator2 = mock();
 
-        when(consumer1.su()).thenReturn(100);
-        when(consumer2.su()).thenReturn(250);
-        when(consumer1.type()).thenReturn(ComponentType.CONSUMER);
-        when(consumer2.type()).thenReturn(ComponentType.CONSUMER);
-        when(generator1.su()).thenReturn(300);
-        when(generator2.su()).thenReturn(200);
+        when(consumer1.calculateSu()).thenReturn(100);
+        when(consumer2.calculateSu()).thenReturn(250);
+        when(consumer1.isConsumer()).thenReturn(true);
+        when(consumer2.isConsumer()).thenReturn(true);
+        when(generator1.calculateSu()).thenReturn(300);
+        when(generator2.calculateSu()).thenReturn(200);
 
-        List<ComponentGroupDTO> consumers = List.of(consumer1, consumer2);
-        List<ComponentGroupDTO> generators = List.of(generator1, generator2);
+        List<ComponentGroup> consumers = List.of(consumer1, consumer2);
+        List<ComponentGroup> generators = List.of(generator1, generator2);
         StressNetwork network = builder.withConsumers(consumers).withGenerators(generators).build();
 
         int expected = 300 + 200 - 100 - 250;
