@@ -16,14 +16,15 @@ import static org.mockito.Mockito.when;
 class StressNetworkTest {
     private static final String VALID_NAME = "Test-Network";
     private static final String VALID_ID = "Test123";
-    private StressNetworkBuilder builder;
+    private StressNetwork.Builder builder;
 
     @BeforeEach
     void setUp() {
-        builder = StressNetworkBuilder.aStressNetwork()
+        builder = StressNetwork.Builder.aStressNetwork()
                 .withId(VALID_ID)
                 .withName(VALID_NAME)
-                .withGenerators(new ArrayList<>());
+                .withGenerators(new ArrayList<>())
+                .withConsumers(new ArrayList<>());
     }
 
 //    === CONSTRUCTOR ===
@@ -65,11 +66,5 @@ class StressNetworkTest {
 
         assertEquals(300, network.calculateSUProduced());
     }
-
-//    @Test
-//    void calculateSUBalance() {
-//
-//        assertEquals(expectedSUProduced - expectedSUConsumed, defaultStressNetwork.build().calculateSUBalance());
-//    }
 
 }

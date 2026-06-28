@@ -35,7 +35,7 @@ public class CalculatorTestApplication extends Application {
     private Parent buildRoot() {
         UseCaseFactory factory = mock();
         GetComponentGroupUC componentGroupUC = mock();
-        ComponentGroup group = new ComponentGroup(ComponentType.CONSUMER, "Water Wheel", "create_water_wheel.png", 3, 0, null, 3 * 256, 8);
+        ComponentGroup group = new ComponentGroup("1234", ComponentType.CONSUMER, "Water Wheel", "create_water_wheel.png", 3, 0, null, 3 * 256, 8);
         when(componentGroupUC.execute("1234")).thenReturn(group);
         when(factory.buildGetComponentGroupUC()).thenReturn(componentGroupUC);
 

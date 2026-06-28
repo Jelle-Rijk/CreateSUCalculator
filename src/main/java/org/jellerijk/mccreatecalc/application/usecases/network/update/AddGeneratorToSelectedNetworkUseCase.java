@@ -7,7 +7,6 @@ import org.jellerijk.mccreatecalc.entities.Generator;
 import org.jellerijk.mccreatecalc.entities.components.WaterWheel;
 import org.jellerijk.mccreatecalc.entities.GeneratorEntry;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
-import org.jellerijk.mccreatecalc.entities.StressNetworkBuilder;
 import org.jellerijk.mccreatecalc.entities.components.WaterWheelType;
 import org.jellerijk.mccreatecalc.entities.components.WindmillImpl;
 
@@ -16,12 +15,10 @@ import java.util.List;
 
 public class AddGeneratorToSelectedNetworkUseCase implements UseCase<AddGeneratorToSelectedNetworkRequest, StressNetwork> {
 
-    private final GeneratorService generatorService;
     private final NetworkService networkService;
 
     public AddGeneratorToSelectedNetworkUseCase(NetworkService networkService, GeneratorService generatorService) {
         this.networkService = networkService;
-        this.generatorService = generatorService;
     }
 
     /**
@@ -35,7 +32,7 @@ public class AddGeneratorToSelectedNetworkUseCase implements UseCase<AddGenerato
         StressNetwork network = networkService.getSelectedNetwork().orElseThrow();
         GeneratorEntry newEntry = new GeneratorEntry(createGenerator(request), request.amount());
         List<GeneratorEntry> generators = updateGenerators(network, newEntry);
-        network = new StressNetworkBuilder(network).withGenerators(generators).build();
+        network = new StressNetwork.Builder(network).withGenerators(generators).build();
         networkService.save(network);
         networkService.setSelectedNetwork(network);
         return network;
