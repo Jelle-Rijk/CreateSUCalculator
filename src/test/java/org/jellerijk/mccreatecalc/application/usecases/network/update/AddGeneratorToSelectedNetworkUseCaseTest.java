@@ -33,7 +33,7 @@ class AddGeneratorToSelectedNetworkUseCaseTest {
     @Test
     void execute_returnsUpdatedGenerators() {
         String generatorName = "Test-WaterWheel";
-        StressNetwork network = new StressNetwork("1234", generatorName, new ArrayList<>());
+        StressNetwork network = new StressNetwork("1234", generatorName, new ArrayList<>(), new ArrayList<>());
         WaterWheel generator = mock();
         when(networkService.getSelectedNetwork()).thenReturn(Optional.of(network));
         when(generatorService.getByName(generatorName)).thenReturn(Optional.of(generator));

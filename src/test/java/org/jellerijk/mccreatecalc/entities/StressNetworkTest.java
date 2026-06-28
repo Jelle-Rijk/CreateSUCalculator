@@ -1,5 +1,6 @@
 package org.jellerijk.mccreatecalc.entities;
 
+import org.jellerijk.mccreatecalc.entities.components.ComponentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -48,12 +49,19 @@ class StressNetworkTest {
         assertThrows(IllegalArgumentException.class, () -> builder.withGenerators(null).build());
     }
 
-
-//    === SU CALCULATION ===
+    @Test
+    void constructor_consumersIsNull_throwsIAE() {
+        assertThrows(IllegalArgumentException.class, () -> builder.withConsumers(null).build());
+    }
 
     @Test
-    void calculateSUConsumed() {
+    void construct_consumersContainsNonConsumers_throwsIAE() {
+        ComponentGroup group = ComponentGroup.Builder.aComponentGroup().withType(ComponentType.WATER_WHEEL).build();
+        List<ComponentGroup> consumers = List.of(group);
+        assertThrows(IllegalArgumentException.class, () -> builder.withConsumers(consumers).build());
     }
+
+//    === SU CALCULATION ===
 
     //    === calculateSUProduced() ===
     @Test
@@ -67,4 +75,77 @@ class StressNetworkTest {
         assertEquals(300, network.calculateSUProduced());
     }
 
+    // === calculateSUConsumed ===
+    @Test
+    void calculateSUConsumed_returnsCorrectValue() {
+        ComponentGroup group1 = ComponentGroup.Builder.aComponentGroup()
+                .withType(ComponentType.CONSUMER)
+                .withSu(600)
+                .build();
+        ComponentGroup group2 = ComponentGroup.Builder.aComponentGroup()
+                .withType(ComponentType.CONSUMER)
+                .withSu(900)
+                .build();
+        List<ComponentGroup> consumers = List.of(group1, group2);
+        StressNetwork network = builder.withConsumers(consumers).build();
+        assertEquals(1500, network.calculateSUConsumed());
+    }
+
+    @Test
+    void calculateSUConsumed_NoConsumers_Returns0() {
+        StressNetwork network = builder.withConsumers(new ArrayList<>()).build();
+        assertEquals(0, network.calculateSUConsumed());
+    }
+
+    // === Calculate SU Balance ===
+    @Test
+    void calculateSuBalance_NoComponents_Returns0() {
+        assertEquals(0, builder.build().calculateSUConsumed());
+    }
+
+    @Test
+    void calculateSuBalance_OnlyConsumers_ReturnsCorrectValue() {
+        ComponentGroup group1 = mock();
+        ComponentGroup group2 = mock();
+        when(group1.su()).thenReturn(100);
+        when(group2.su()).thenReturn(200);
+        when(group1.type()).thenReturn(ComponentType.CONSUMER);
+        when(group2.type()).thenReturn(ComponentType.CONSUMER);
+        List<ComponentGroup> consumers = List.of(group1, group2);
+
+        assertEquals(-300, builder.withConsumers(consumers).build().calculateSUBalance());
+    }
+
+    @Test
+    void calculateSuBalance_OnlyProducers_ReturnsCorrectValue() {
+        GeneratorEntry entry1 = mock();
+        GeneratorEntry entry2 = mock();
+        when(entry1.calculateSUProduced()).thenReturn(200);
+        when(entry2.calculateSUProduced()).thenReturn(300);
+        List<GeneratorEntry> generatorEntries = List.of(entry1, entry2);
+
+        assertEquals(500, builder.withGenerators(generatorEntries).build().calculateSUBalance());
+    }
+
+    @Test
+    void calculateSuBalance_ConsumersAndProducers_ReturnsCorrectValue() {
+        ComponentGroup consumer1 = mock();
+        ComponentGroup consumer2 = mock();
+        GeneratorEntry generator1 = mock();
+        GeneratorEntry generator2 = mock();
+
+        when(consumer1.su()).thenReturn(100);
+        when(consumer2.su()).thenReturn(250);
+        when(consumer1.type()).thenReturn(ComponentType.CONSUMER);
+        when(consumer2.type()).thenReturn(ComponentType.CONSUMER);
+        when(generator1.calculateSUProduced()).thenReturn(300);
+        when(generator2.calculateSUProduced()).thenReturn(200);
+
+        List<ComponentGroup> consumers = List.of(consumer1, consumer2);
+        List<GeneratorEntry> generators = List.of(generator1, generator2);
+        StressNetwork network = builder.withConsumers(consumers).withGenerators(generators).build();
+
+        int expected = 300 + 200 - 100 - 250;
+        assertEquals(expected, network.calculateSUBalance());
+    }
 }
