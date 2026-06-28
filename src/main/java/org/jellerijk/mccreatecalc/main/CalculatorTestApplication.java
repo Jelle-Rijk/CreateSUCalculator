@@ -6,11 +6,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import org.jellerijk.mccreatecalc.entities.components.WaterWheel;
-import org.jellerijk.mccreatecalc.entities.GeneratorEntry;
-import org.jellerijk.mccreatecalc.presentation.generatorEntry.GeneratorEntryController;
+import org.jellerijk.mccreatecalc.application.services.*;
+import org.jellerijk.mccreatecalc.application.usecases.GetComponentGroupUC;
+import org.jellerijk.mccreatecalc.entities.ComponentGroup;
+import org.jellerijk.mccreatecalc.entities.components.ComponentType;
+import org.jellerijk.mccreatecalc.presentation.componentgroup.ComponentGroupController;
 
 import java.util.Objects;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class CalculatorTestApplication extends Application {
     @Override
@@ -28,10 +33,13 @@ public class CalculatorTestApplication extends Application {
     }
 
     private Parent buildRoot() {
-        GeneratorEntryController controller = new GeneratorEntryController();
-        WaterWheel generator = new WaterWheel("Water wheel", "create_water_wheel.png", 256, 8);
-        GeneratorEntry entry = new GeneratorEntry(generator, 4);
-        controller.setEntry(entry);
+        UseCaseFactory factory = mock();
+        GetComponentGroupUC componentGroupUC = mock();
+        ComponentGroup group = new ComponentGroup(ComponentType.WATER_WHEEL, "Water Wheel", "create_water_wheel.png", 3, 0, null, 3 * 256, 8);
+        when(componentGroupUC.execute("1234")).thenReturn(group);
+        when(factory.buildGetComponentGroupUC()).thenReturn(componentGroupUC);
+
+        ComponentGroupController controller = new ComponentGroupController(factory, "1234");
         return (Parent) controller.getView();
     }
 }
