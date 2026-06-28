@@ -1,0 +1,61 @@
+package org.jellerijk.mccreatecalc.application.usecases.network.update;
+
+import org.jellerijk.mccreatecalc.application.services.GeneratorService;
+import org.jellerijk.mccreatecalc.application.services.NetworkService;
+import org.jellerijk.mccreatecalc.application.usecases.UseCase;
+import org.jellerijk.mccreatecalc.entities.Generator;
+import org.jellerijk.mccreatecalc.entities.components.WaterWheel;
+import org.jellerijk.mccreatecalc.entities.GeneratorEntry;
+import org.jellerijk.mccreatecalc.entities.StressNetwork;
+import org.jellerijk.mccreatecalc.entities.StressNetworkBuilder;
+import org.jellerijk.mccreatecalc.entities.components.WaterWheelType;
+import org.jellerijk.mccreatecalc.entities.components.WindmillImpl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class AddGeneratorToSelectedNetworkUseCase implements UseCase<AddGeneratorToSelectedNetworkRequest, StressNetwork> {
+
+    private final GeneratorService generatorService;
+    private final NetworkService networkService;
+
+    public AddGeneratorToSelectedNetworkUseCase(NetworkService networkService, GeneratorService generatorService) {
+        this.networkService = networkService;
+        this.generatorService = generatorService;
+    }
+
+    /**
+     * Adds a generator entry to a stress network. The request will always override existing generator entries such that the amount set in <code>addGeneratorToNetworkRequest</code> is always the total amount for this entry upon finishing the execution of the use case.
+     *
+     * @param request The request containing the data for this use case.
+     * @return The updated StressNetwork.
+     */
+    @Override
+    public StressNetwork execute(AddGeneratorToSelectedNetworkRequest request) {
+        StressNetwork network = networkService.getSelectedNetwork().orElseThrow();
+        GeneratorEntry newEntry = new GeneratorEntry(createGenerator(request), request.amount());
+        List<GeneratorEntry> generators = updateGenerators(network, newEntry);
+        network = new StressNetworkBuilder(network).withGenerators(generators).build();
+        networkService.save(network);
+        networkService.setSelectedNetwork(network);
+        return network;
+    }
+
+    private Generator createGenerator(AddGeneratorToSelectedNetworkRequest request) {
+        return switch (request.type()) {
+            case WATER_WHEEL -> {
+                WaterWheelType type = request.waterWheelType();
+                yield new WaterWheel(type.getName(), type.getImg(), type.getSuProduction(), type.getRpm());
+            }
+            case WINDMILL -> new WindmillImpl(request.sails());
+            default -> throw new IllegalArgumentException("Unsupported Generator type");
+        };
+    }
+
+    private List<GeneratorEntry> updateGenerators(StressNetwork network, GeneratorEntry newEntry) {
+        List<GeneratorEntry> generators = new ArrayList<>(network.generators());
+        generators.add(newEntry);
+        return generators;
+    }
+
+}

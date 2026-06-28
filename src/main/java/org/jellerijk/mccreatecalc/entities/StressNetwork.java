@@ -1,9 +1,14 @@
 package org.jellerijk.mccreatecalc.entities;
 
-public record StressNetwork(String id, String name) {
+import java.util.List;
+
+public record StressNetwork(String id, String name, List<GeneratorEntry> generators) implements SUProducer {
+
     public StressNetwork {
         validateId(id);
         validateName(name);
+        validateGenerators(generators);
+        generators = List.copyOf(generators);
     }
 
     private void validateId(String id) {
@@ -14,5 +19,22 @@ public record StressNetwork(String id, String name) {
     private void validateName(String name) {
         if (name == null || name.isBlank())
             throw new IllegalArgumentException("Name cannot be null or blank");
+    }
+
+    private void validateGenerators(List<GeneratorEntry> generators) {
+        if (generators == null)
+            throw new IllegalArgumentException("StressNetwork needs a list of generator entries.");
+    }
+
+    public int calculateSUConsumed() {
+        return 0; // TODO implement SU consumers
+    }
+
+    public int calculateSUProduced() {
+        return generators.stream().mapToInt(GeneratorEntry::calculateSUProduced).reduce(0, Integer::sum);
+    }
+
+    public int calculateSUBalance() {
+        return calculateSUProduced() - calculateSUConsumed();
     }
 }

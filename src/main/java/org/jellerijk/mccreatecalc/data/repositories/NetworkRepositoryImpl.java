@@ -1,7 +1,7 @@
 package org.jellerijk.mccreatecalc.data.repositories;
 
 import org.jellerijk.mccreatecalc.application.gateways.NetworkRepository;
-import org.jellerijk.mccreatecalc.application.usecases.network.NetworkInfo;
+import org.jellerijk.mccreatecalc.application.dto.NetworkInfo;
 import org.jellerijk.mccreatecalc.data.dao.NetworkDAO;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
 
@@ -28,5 +28,10 @@ public class NetworkRepositoryImpl implements NetworkRepository {
     @Override
     public Optional<StressNetwork> getById(String id) {
         return networkDAO.getById(id);
+    }
+
+    @Override
+    public void update(StressNetwork network) {
+        networkDAO.update(network);
     }
 }

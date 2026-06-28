@@ -1,8 +1,9 @@
 package org.jellerijk.mccreatecalc.data.database;
 
-import org.jellerijk.mccreatecalc.application.usecases.network.NetworkInfo;
+import org.jellerijk.mccreatecalc.application.dto.NetworkInfo;
 import org.jellerijk.mccreatecalc.data.dao.NetworkDAO;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
+import org.jellerijk.mccreatecalc.entities.StressNetworkBuilder;
 import org.jellerijk.mccreatecalc.exceptions.DataBaseAccessException;
 import org.jellerijk.mccreatecalc.util.sql.QueryBuilder;
 
@@ -59,9 +60,25 @@ public class NetworkDB implements NetworkDAO {
         }
     }
 
+    @Override
+    public void update(StressNetwork network) {
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement query = conn.prepareStatement(QueryBuilder.updateCols(TABLE, COL_ID, List.of(COL_NAME)))) {
+            query.setString(1, network.name());
+            query.setString(2, network.id());
+            query.executeUpdate();
+        } catch (SQLException e) {
+            throw new DataBaseAccessException("Something went wrong while updating a stress network.", e);
+        }
+    }
+
     private StressNetwork mapToStressNetwork(ResultSet res) throws SQLException {
         String id = res.getString(COL_ID);
         String name = res.getString(COL_NAME);
-        return new StressNetwork(id, name);
+        return StressNetworkBuilder.aStressNetwork()
+                .withId(id)
+                .withName(name)
+                .withGenerators(new ArrayList<>())
+                .build(); // TODO fill components argument with actual components
     }
 }

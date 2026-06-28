@@ -1,11 +1,25 @@
-.root{
-    small-text: 11;
-    medium-text: 13;
-    text-primary: rgba(1, 1, 12);
+.root {
+    -small-text: 11;
+    -medium-text: 13;
+    -big-text: 16;
+    -text-primary: rgb(1, 1, 12);
+}
 
+.green-text {
+    -fx-text-fill: green;
+}
+
+.network-details__header__name {
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-primary;
 }
 
 .component-name {
     -fx-font-weight: bold;
-    -fx-text-fill: text-primary;
+    -fx-text-fill: -text-primary;
+}
+
+.combo-box > .list-cell .label {
+    -fx-text-fill: rgb(1, 1, 12);
 }

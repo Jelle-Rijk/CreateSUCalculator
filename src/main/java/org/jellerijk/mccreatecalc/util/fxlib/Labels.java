@@ -2,6 +2,7 @@ package org.jellerijk.mccreatecalc.util.fxlib;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.value.ObservableIntegerValue;
 import javafx.beans.value.ObservableStringValue;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
@@ -15,7 +16,14 @@ public abstract class Labels {
         return lbl;
     }
 
-    public static Label balanceLabel(IntegerProperty number, String... styleClasses) {
+    public static Label integerDisplay(ObservableIntegerValue integerValue, String... styleClasses) {
+        Label lbl = new Label();
+        lbl.textProperty().bind(Bindings.createStringBinding(() -> integerValue.getValue().toString(), integerValue));
+        lbl.getStyleClass().addAll(styleClasses);
+        return lbl;
+    }
+
+    public static Label balanceLabel(IntegerProperty number, String... styleClasses) {//TODO bidirectional binding
         Label lbl = new Label();
         lbl.textProperty().bind(number.asString());
         lbl.textFillProperty()

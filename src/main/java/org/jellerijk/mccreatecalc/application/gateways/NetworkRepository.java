@@ -1,6 +1,6 @@
 package org.jellerijk.mccreatecalc.application.gateways;
 
-import org.jellerijk.mccreatecalc.application.usecases.network.NetworkInfo;
+import org.jellerijk.mccreatecalc.application.dto.NetworkInfo;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
 
 import java.util.List;
@@ -12,4 +12,6 @@ public interface NetworkRepository {
     List<NetworkInfo> getInfoForAllNetworks();
 
     Optional<StressNetwork> getById(String id);
+
+    void update(StressNetwork network);
 }
