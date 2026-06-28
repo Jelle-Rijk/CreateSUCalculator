@@ -2,10 +2,13 @@ package org.jellerijk.mccreatecalc.entities;
 
 import org.jellerijk.mccreatecalc.entities.components.*;
 
+import java.util.UUID;
+
 public class ComponentGroup implements Identifiable {
     private final int amount;
     private final Component component;
     private final String id;
+
     public ComponentGroup(String id, Component component, int amount) {
         validateId(id);
         if (component == null) throw new IllegalArgumentException("Component cannot be null");
@@ -45,6 +48,10 @@ public class ComponentGroup implements Identifiable {
     @Override
     public String getId() {
         return id;
+    }
+
+    public static String generateId() {
+        return UUID.randomUUID().toString();
     }
 
     public boolean isConsumer() {
