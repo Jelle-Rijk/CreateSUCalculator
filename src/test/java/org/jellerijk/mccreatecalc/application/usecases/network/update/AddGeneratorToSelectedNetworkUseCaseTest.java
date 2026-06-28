@@ -2,8 +2,7 @@ package org.jellerijk.mccreatecalc.application.usecases.network.update;
 
 import org.jellerijk.mccreatecalc.application.services.GeneratorService;
 import org.jellerijk.mccreatecalc.application.services.NetworkService;
-import org.jellerijk.mccreatecalc.entities.ComponentGroup;
-import org.jellerijk.mccreatecalc.entities.GeneratorEntry;
+import org.jellerijk.mccreatecalc.application.dto.ComponentGroupDTO;
 import org.jellerijk.mccreatecalc.entities.components.WaterWheel;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
 import org.jellerijk.mccreatecalc.entities.components.ComponentType;
@@ -47,7 +46,7 @@ class AddGeneratorToSelectedNetworkUseCaseTest {
     //    === Adding different types ===
     @Test
     void execute_WaterWheel_addsWaterWheel() {
-        List<ComponentGroup> generators = new ArrayList<>();
+        List<ComponentGroupDTO> generators = new ArrayList<>();
         StressNetwork n = mock();
         when(n.generators()).thenReturn(generators);
         when(networkService.getSelectedNetwork()).thenReturn(Optional.of(n));

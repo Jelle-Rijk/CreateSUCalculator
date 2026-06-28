@@ -1,11 +1,11 @@
 package org.jellerijk.mccreatecalc.application.usecases;
 
-import org.jellerijk.mccreatecalc.entities.ComponentGroup;
+import org.jellerijk.mccreatecalc.application.dto.ComponentGroupDTO;
 
 // TODO: implement use case
-public class GetComponentGroupUC implements UseCase<String, ComponentGroup> {
+public class GetComponentGroupUC implements UseCase<String, ComponentGroupDTO> {
     @Override
-    public ComponentGroup execute(String s) {
+    public ComponentGroupDTO execute(String s) {
         return null;
     }
 }
