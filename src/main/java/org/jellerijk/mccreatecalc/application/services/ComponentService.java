@@ -13,4 +13,6 @@ public interface ComponentService {
     Optional<WaterWheel> getByName(String name);
 
     List<WaterWheel> getAllGeneratorOptions();
+
+    List<ComponentOption> getAllConsumerOptions();
 }

@@ -22,4 +22,9 @@ public class ComponentServiceImpl implements ComponentService {
     public List<WaterWheel> getAllGeneratorOptions() {
         return generatorRepo.getAll();
     }
+
+    @Override
+    public List<ComponentOption> getAllConsumerOptions() {
+        return List.of();
+    }
 }

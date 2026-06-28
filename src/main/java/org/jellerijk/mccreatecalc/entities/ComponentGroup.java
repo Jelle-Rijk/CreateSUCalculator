@@ -37,12 +37,7 @@ public class ComponentGroup implements Identifiable {
     }
 
     public ComponentType getComponentType() {
-        return switch (component) {
-            case Consumer _ -> ComponentType.CONSUMER;
-            case WaterWheel _ -> ComponentType.WATER_WHEEL;
-            case Windmill _ -> ComponentType.WINDMILL;
-            default -> throw new IllegalStateException("Unexpected value: " + component);
-        };
+        return ComponentType.of(component);
     }
 
     @Override
