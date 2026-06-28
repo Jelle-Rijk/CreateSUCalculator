@@ -1,41 +1,80 @@
 package org.jellerijk.mccreatecalc.entities;
 
 import org.jellerijk.mccreatecalc.entities.components.ComponentType;
+import org.jellerijk.mccreatecalc.entities.components.Consumer;
+import org.jellerijk.mccreatecalc.entities.components.WaterWheel;
 
-public record ComponentGroup(String id, ComponentType type, String name, String img, int amount, int sails,
-                             String level, int su, int rpm) {
+public class ComponentGroup implements Identifiable {
+    private final int amount;
+    private final Component component;
+    private final String id;
+    public ComponentGroup(String id, Component component, int amount) {
+        validateId(id);
+        if (component == null) throw new IllegalArgumentException("Component cannot be null");
+        if (amount < 0) throw new IllegalArgumentException("Amount cannot be a negative number");
+
+        this.id = id;
+        this.component = component;
+        this.amount = amount;
+    }
+
+    //===== Public methods =====
+    public int calculateSu() {
+        if (component instanceof Consumer c)
+            return c.getSuConsumption() * amount;
+        if (component instanceof Generator g)
+            return g.getSuProduction() * amount;
+        throw new IllegalArgumentException("Unknown component type");
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public Component getComponent() {
+        return component;
+    }
+
+    public ComponentType getComponentType() {
+        return switch (component) {
+            case Consumer _ -> ComponentType.CONSUMER;
+            case WaterWheel _ -> ComponentType.WATER_WHEEL;
+            case Windmill _ -> ComponentType.WINDMILL;
+            default -> throw new IllegalStateException("Unexpected value: " + component);
+        };
+    }
+
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    public boolean isConsumer() {
+        return component instanceof Consumer;
+    }
+
     public static final class Builder {
         private int amount;
+        private Component component;
         private String id;
-        private String img;
-        private String level;
-        private String name;
-        private int rpm;
-        private int sails;
-        private int su;
-        private ComponentType type;
 
         public Builder() {
         }
 
         public Builder(ComponentGroup other) {
-            this.amount = other.amount();
-            this.id = other.id();
-            this.img = other.img();
-            this.level = other.level();
-            this.name = other.name();
-            this.rpm = other.rpm();
-            this.sails = other.sails();
-            this.su = other.su();
-            this.type = other.type();
+            this.amount = other.amount;
+            this.component = other.component;
+            this.id = other.id;
         }
 
+        //===== Static methods =====
         public static Builder aComponentGroup() {
             return new Builder();
         }
 
+        //===== Public methods =====
         public ComponentGroup build() {
-            return new ComponentGroup(id, type, name, img, amount, sails, level, su, rpm);
+            return new ComponentGroup(id, component, amount);
         }
 
         public Builder withAmount(int amount) {
@@ -43,43 +82,13 @@ public record ComponentGroup(String id, ComponentType type, String name, String 
             return this;
         }
 
+        public Builder withComponent(Component component) {
+            this.component = component;
+            return this;
+        }
+
         public Builder withId(String id) {
             this.id = id;
-            return this;
-        }
-
-        public Builder withImg(String img) {
-            this.img = img;
-            return this;
-        }
-
-        public Builder withLevel(String level) {
-            this.level = level;
-            return this;
-        }
-
-        public Builder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder withRpm(int rpm) {
-            this.rpm = rpm;
-            return this;
-        }
-
-        public Builder withSails(int sails) {
-            this.sails = sails;
-            return this;
-        }
-
-        public Builder withSu(int su) {
-            this.su = su;
-            return this;
-        }
-
-        public Builder withType(ComponentType type) {
-            this.type = type;
             return this;
         }
     }

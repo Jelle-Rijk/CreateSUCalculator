@@ -1,9 +1,18 @@
 package org.jellerijk.mccreatecalc.application.dto;
 
+import org.jellerijk.mccreatecalc.entities.Component;
+import org.jellerijk.mccreatecalc.entities.ComponentGroup;
+import org.jellerijk.mccreatecalc.entities.Windmill;
 import org.jellerijk.mccreatecalc.entities.components.ComponentType;
 
 public record ComponentGroupDTO(String id, ComponentType type, String name, String img, int amount, int sails,
                                 String level, int su, int rpm) {
+    public static ComponentGroupDTO map(ComponentGroup cg) {
+        Component c = cg.getComponent();
+        ComponentType type = cg.getComponentType();
+        return new ComponentGroupDTO(cg.getId(), type, c.getName(), c.getImg(), cg.getAmount(), c instanceof Windmill w ? w.getSails() : 0, null, cg.calculateSu(), c.getRpm());
+    }
+
     public static final class Builder {
         private int amount;
         private String id;

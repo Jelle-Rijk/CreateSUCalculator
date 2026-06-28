@@ -6,7 +6,7 @@ import org.jellerijk.mccreatecalc.entities.components.ComponentType;
 import java.util.List;
 
 public record StressNetwork(String id, String name, List<ComponentGroupDTO> generators,
-                            List<ComponentGroupDTO> consumers) implements SUProducer {
+                            List<ComponentGroupDTO> consumers) implements SUProducer, Identifiable {
 
     public StressNetwork {
         validateId(id);
@@ -56,9 +56,9 @@ public record StressNetwork(String id, String name, List<ComponentGroupDTO> gene
             throw new IllegalArgumentException("Generators contained a consumer");
     }
 
-    private void validateId(String id) {
-        if (id == null || id.isBlank())
-            throw new IllegalArgumentException("Id cannot be null or blank");
+    @Override
+    public String getId() {
+        return id;
     }
 
     private void validateName(String name) {
