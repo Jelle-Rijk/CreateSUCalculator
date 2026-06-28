@@ -50,6 +50,14 @@ class StressNetworkTest {
     }
 
     @Test
+    void constructor_generatorsContainsConsumer_ThrowsIAE() {
+        ComponentGroup consumer = mock();
+        when(consumer.type()).thenReturn(ComponentType.CONSUMER);
+        List<ComponentGroup> generators = List.of(consumer);
+        assertThrows(IllegalArgumentException.class, () -> builder.withGenerators(generators).build());
+    }
+
+    @Test
     void constructor_consumersIsNull_throwsIAE() {
         assertThrows(IllegalArgumentException.class, () -> builder.withConsumers(null).build());
     }
@@ -66,11 +74,11 @@ class StressNetworkTest {
     //    === calculateSUProduced() ===
     @Test
     void calculateSUProduced_returnsCorrectValue() {
-        GeneratorEntry entry1 = mock();
-        GeneratorEntry entry2 = mock();
-        when(entry1.calculateSUProduced()).thenReturn(100);
-        when(entry2.calculateSUProduced()).thenReturn(200);
-        StressNetwork network = builder.withGenerators(List.of(entry1, entry2)).build();
+        ComponentGroup group1 = mock();
+        ComponentGroup group2 = mock();
+        when(group1.su()).thenReturn(100);
+        when(group2.su()).thenReturn(200);
+        StressNetwork network = builder.withGenerators(List.of(group1, group2)).build();
 
         assertEquals(300, network.calculateSUProduced());
     }
@@ -118,31 +126,31 @@ class StressNetworkTest {
 
     @Test
     void calculateSuBalance_OnlyProducers_ReturnsCorrectValue() {
-        GeneratorEntry entry1 = mock();
-        GeneratorEntry entry2 = mock();
-        when(entry1.calculateSUProduced()).thenReturn(200);
-        when(entry2.calculateSUProduced()).thenReturn(300);
-        List<GeneratorEntry> generatorEntries = List.of(entry1, entry2);
+        ComponentGroup group1 = mock();
+        ComponentGroup group2 = mock();
+        when(group1.su()).thenReturn(200);
+        when(group2.su()).thenReturn(300);
+        List<ComponentGroup> generators = List.of(group1, group2);
 
-        assertEquals(500, builder.withGenerators(generatorEntries).build().calculateSUBalance());
+        assertEquals(500, builder.withGenerators(generators).build().calculateSUBalance());
     }
 
     @Test
     void calculateSuBalance_ConsumersAndProducers_ReturnsCorrectValue() {
         ComponentGroup consumer1 = mock();
         ComponentGroup consumer2 = mock();
-        GeneratorEntry generator1 = mock();
-        GeneratorEntry generator2 = mock();
+        ComponentGroup generator1 = mock();
+        ComponentGroup generator2 = mock();
 
         when(consumer1.su()).thenReturn(100);
         when(consumer2.su()).thenReturn(250);
         when(consumer1.type()).thenReturn(ComponentType.CONSUMER);
         when(consumer2.type()).thenReturn(ComponentType.CONSUMER);
-        when(generator1.calculateSUProduced()).thenReturn(300);
-        when(generator2.calculateSUProduced()).thenReturn(200);
+        when(generator1.su()).thenReturn(300);
+        when(generator2.su()).thenReturn(200);
 
         List<ComponentGroup> consumers = List.of(consumer1, consumer2);
-        List<GeneratorEntry> generators = List.of(generator1, generator2);
+        List<ComponentGroup> generators = List.of(generator1, generator2);
         StressNetwork network = builder.withConsumers(consumers).withGenerators(generators).build();
 
         int expected = 300 + 200 - 100 - 250;

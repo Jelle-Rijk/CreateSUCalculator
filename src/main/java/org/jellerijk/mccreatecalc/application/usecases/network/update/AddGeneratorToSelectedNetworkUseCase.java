@@ -13,6 +13,7 @@ import org.jellerijk.mccreatecalc.entities.components.WindmillImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class AddGeneratorToSelectedNetworkUseCase implements UseCase<AddGeneratorToSelectedNetworkRequest, StressNetwork> {
 
     private final NetworkService networkService;
@@ -29,30 +30,7 @@ public class AddGeneratorToSelectedNetworkUseCase implements UseCase<AddGenerato
      */
     @Override
     public StressNetwork execute(AddGeneratorToSelectedNetworkRequest request) {
-        StressNetwork network = networkService.getSelectedNetwork().orElseThrow();
-        GeneratorEntry newEntry = new GeneratorEntry(createGenerator(request), request.amount());
-        List<GeneratorEntry> generators = updateGenerators(network, newEntry);
-        network = new StressNetwork.Builder(network).withGenerators(generators).build();
-        networkService.save(network);
-        networkService.setSelectedNetwork(network);
-        return network;
-    }
-
-    private Generator createGenerator(AddGeneratorToSelectedNetworkRequest request) {
-        return switch (request.type()) {
-            case WATER_WHEEL -> {
-                WaterWheelType type = request.waterWheelType();
-                yield new WaterWheel(type.getName(), type.getImg(), type.getSuProduction(), type.getRpm());
-            }
-            case WINDMILL -> new WindmillImpl(request.sails());
-            default -> throw new IllegalArgumentException("Unsupported Generator type");
-        };
-    }
-
-    private List<GeneratorEntry> updateGenerators(StressNetwork network, GeneratorEntry newEntry) {
-        List<GeneratorEntry> generators = new ArrayList<>(network.generators());
-        generators.add(newEntry);
-        return generators;
+        throw new UnsupportedOperationException();
     }
 
 }

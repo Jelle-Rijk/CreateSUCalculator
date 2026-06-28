@@ -2,6 +2,7 @@ package org.jellerijk.mccreatecalc.application.usecases.network.update;
 
 import org.jellerijk.mccreatecalc.application.services.GeneratorService;
 import org.jellerijk.mccreatecalc.application.services.NetworkService;
+import org.jellerijk.mccreatecalc.entities.ComponentGroup;
 import org.jellerijk.mccreatecalc.entities.GeneratorEntry;
 import org.jellerijk.mccreatecalc.entities.components.WaterWheel;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
@@ -40,13 +41,13 @@ class AddGeneratorToSelectedNetworkUseCaseTest {
 
         AddGeneratorToSelectedNetworkRequest request = new AddGeneratorToSelectedNetworkRequest(ComponentType.WATER_WHEEL, WaterWheelType.SMALL, generatorName, 5, 0);
         StressNetwork result = useCase.execute(request);
-        assertEquals(generator, result.generators().getFirst().getGenerator());
+        assertEquals(ComponentType.WATER_WHEEL, result.generators().getFirst().type());
     }
 
     //    === Adding different types ===
     @Test
-    void execute_WaterWheel_addsConstantGenerator() {
-        List<GeneratorEntry> generators = new ArrayList<>();
+    void execute_WaterWheel_addsWaterWheel() {
+        List<ComponentGroup> generators = new ArrayList<>();
         StressNetwork n = mock();
         when(n.generators()).thenReturn(generators);
         when(networkService.getSelectedNetwork()).thenReturn(Optional.of(n));
@@ -54,7 +55,7 @@ class AddGeneratorToSelectedNetworkUseCaseTest {
         AddGeneratorToSelectedNetworkRequest request = new AddGeneratorToSelectedNetworkRequest(ComponentType.WATER_WHEEL, WaterWheelType.SMALL, null, 5, 0);
         StressNetwork result = useCase.execute(request);
 
-        assertEquals(WaterWheel.class, result.generators().getFirst().getGenerator().getClass());
+        assertEquals(ComponentType.WATER_WHEEL, result.generators().getFirst().type());
     }
 
     @Test

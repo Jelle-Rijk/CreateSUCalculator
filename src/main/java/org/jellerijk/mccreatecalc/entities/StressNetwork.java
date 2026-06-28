@@ -4,7 +4,7 @@ import org.jellerijk.mccreatecalc.entities.components.ComponentType;
 
 import java.util.List;
 
-public record StressNetwork(String id, String name, List<GeneratorEntry> generators,
+public record StressNetwork(String id, String name, List<ComponentGroup> generators,
                             List<ComponentGroup> consumers) implements SUProducer {
 
     public StressNetwork {
@@ -13,6 +13,7 @@ public record StressNetwork(String id, String name, List<GeneratorEntry> generat
         validateGenerators(generators);
         validateConsumers(consumers);
         generators = List.copyOf(generators);
+        consumers = List.copyOf(consumers);
     }
 
     //===== Public methods =====
@@ -25,7 +26,7 @@ public record StressNetwork(String id, String name, List<GeneratorEntry> generat
     }
 
     public int calculateSUProduced() {
-        return generators.stream().mapToInt(GeneratorEntry::calculateSUProduced).reduce(0, Integer::sum);
+        return calculateTotalSuFromComponentGroups(generators);
     }
 
 //===== Private methods =====
@@ -47,9 +48,11 @@ public record StressNetwork(String id, String name, List<GeneratorEntry> generat
             throw new IllegalArgumentException("Consumers contained non-consumer.");
     }
 
-    private void validateGenerators(List<GeneratorEntry> generators) {
+    private void validateGenerators(List<ComponentGroup> generators) {
         if (generators == null)
             throw new IllegalArgumentException("StressNetwork needs a list of generator entries.");
+        if (generators.stream().anyMatch(componentGroup -> componentGroup.type() == ComponentType.CONSUMER))
+            throw new IllegalArgumentException("Generators contained a consumer");
     }
 
     private void validateId(String id) {
@@ -64,7 +67,7 @@ public record StressNetwork(String id, String name, List<GeneratorEntry> generat
 
     public static final class Builder {
         private List<ComponentGroup> consumers;
-        private List<GeneratorEntry> generators;
+        private List<ComponentGroup> generators;
         private String id;
         private String name;
 
@@ -93,7 +96,7 @@ public record StressNetwork(String id, String name, List<GeneratorEntry> generat
             return this;
         }
 
-        public Builder withGenerators(List<GeneratorEntry> generators) {
+        public Builder withGenerators(List<ComponentGroup> generators) {
             this.generators = generators;
             return this;
         }
