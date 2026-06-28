@@ -2,8 +2,6 @@ package org.jellerijk.mccreatecalc.presentation.componentselector;
 
 import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
 import org.jellerijk.mccreatecalc.application.usecases.generator.GetGeneratorsUseCase;
-import org.jellerijk.mccreatecalc.application.usecases.network.update.AddGeneratorToSelectedNetworkRequest;
-import org.jellerijk.mccreatecalc.application.usecases.network.update.AddGeneratorToSelectedNetworkUseCase;
 
 import java.util.function.Consumer;
 
