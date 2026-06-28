@@ -42,44 +42,44 @@ class WindmillTest {
     @Test
     void getRpm_0Sails_returns0() {
         Windmill w = builder.withSails(0).build();
-        assertEquals(0, w.getRPM());
+        assertEquals(0, w.getRpm());
     }
 
     @Test
     void getRpm_7Sails_returns0() {
         Windmill w = builder.withSails(7).build();
-        assertEquals(0, w.getRPM());
+        assertEquals(0, w.getRpm());
     }
 
     @Test
     void getRpm_8Sails_returns1() {
         Windmill w = builder.withSails(8).build();
-        assertEquals(1, w.getRPM());
+        assertEquals(1, w.getRpm());
     }
 
     @Test
     void getRpm_9Sails_returns1() {
         Windmill w = builder.withSails(9).build();
-        assertEquals(1, w.getRPM());
+        assertEquals(1, w.getRpm());
     }
 
     @Test
     void getRPM_16Sails_returns2() {
         Windmill w = builder.withSails(16).build();
-        assertEquals(2, w.getRPM());
+        assertEquals(2, w.getRpm());
     }
 
     @Test
     void getRPM_128_returns16() {
         Windmill w = builder.withSails(128).build();
-        assertEquals(16, w.getRPM());
+        assertEquals(16, w.getRpm());
     }
 
     @ParameterizedTest
     @ValueSource(ints = {129, 300, Integer.MAX_VALUE})
     void getRpm_moreThan128Sails_returns16(int sails) {
         Windmill w = builder.withSails(sails).build();
-        assertEquals(16, w.getRPM());
+        assertEquals(16, w.getRpm());
     }
 
 //    === SU Production ===

@@ -20,10 +20,11 @@ public class WindmillImpl extends BaseComponent implements Windmill {
 //===== Public methods =====
     @Override
     public int getSuProduction() {
-        return getRPM() * SU_PER_RPM;
+        return getRpm() * SU_PER_RPM;
     }
 
-    public int getRPM() {
+@Override
+    public int getRpm() {
         if (sails >= MAX_SAILS)
             return MAX_RPM;
         return sails / 8;

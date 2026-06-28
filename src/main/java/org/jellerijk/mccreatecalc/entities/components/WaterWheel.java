@@ -33,7 +33,7 @@ public class WaterWheel extends BaseComponent implements Generator {
     }
 
     @Override
-    public int getRPM() {
+    public int getRpm() {
         return rpm;
     }
 
