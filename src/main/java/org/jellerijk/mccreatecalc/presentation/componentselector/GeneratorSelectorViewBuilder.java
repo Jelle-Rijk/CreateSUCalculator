@@ -5,6 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import org.jellerijk.mccreatecalc.application.services.ComponentOption;
 import org.jellerijk.mccreatecalc.util.fxlib.HBoxes;
 import org.jellerijk.mccreatecalc.util.fxlib.TextFields;
 
@@ -22,12 +23,12 @@ public class GeneratorSelectorViewBuilder {
         return buildAddComponentPane();
     }
 
-    private ComboBox<GeneratorOption> buildGeneratorSelector() {
-        ComboBox<GeneratorOption> optionComboBox = new ComboBox<>();
-        optionComboBox.setCellFactory(_ -> new GeneratorOptionListCell());
-        optionComboBox.setButtonCell(new GeneratorOptionListCell());
-        optionComboBox.setItems(model.getGeneratorOptions());
-        optionComboBox.valueProperty().bindBidirectional(model.selectedGeneratorOptionProperty());
+    private ComboBox<ComponentOption> buildGeneratorSelector() {
+        ComboBox<ComponentOption> optionComboBox = new ComboBox<>();
+        optionComboBox.setCellFactory(_ -> new ComponentOptionListCell());
+        optionComboBox.setButtonCell(new ComponentOptionListCell());
+        optionComboBox.setItems(model.getComponentOptions());
+        optionComboBox.valueProperty().bindBidirectional(model.selectedComponentOptionProperty());
         return optionComboBox;
     }
 

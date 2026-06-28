@@ -2,10 +2,13 @@ package org.jellerijk.mccreatecalc.data.repositories;
 
 import org.jellerijk.mccreatecalc.application.gateways.GeneratorRepository;
 import org.jellerijk.mccreatecalc.data.dao.GeneratorDAO;
+import org.jellerijk.mccreatecalc.entities.components.Component;
 import org.jellerijk.mccreatecalc.entities.components.WaterWheel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class GeneratorRepositoryImpl implements GeneratorRepository {
     private final GeneratorDAO genDAO;
@@ -20,7 +23,7 @@ public class GeneratorRepositoryImpl implements GeneratorRepository {
     }
 
     @Override
-    public List<WaterWheel> getAll() {
-        return genDAO.getAll();
+    public List<Component> getAll() {
+        return genDAO.getAll().stream().map(w -> (Component) w).collect(Collectors.toCollection(ArrayList::new));
     }
 }

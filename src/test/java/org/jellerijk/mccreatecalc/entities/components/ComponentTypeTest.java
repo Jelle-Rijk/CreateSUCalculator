@@ -1,7 +1,5 @@
 package org.jellerijk.mccreatecalc.entities.components;
 
-import org.jellerijk.mccreatecalc.entities.ComponentGroup;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

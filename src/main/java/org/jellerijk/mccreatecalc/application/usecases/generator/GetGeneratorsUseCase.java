@@ -1,12 +1,12 @@
 package org.jellerijk.mccreatecalc.application.usecases.generator;
 
+import org.jellerijk.mccreatecalc.application.services.ComponentOption;
 import org.jellerijk.mccreatecalc.application.services.ComponentService;
 import org.jellerijk.mccreatecalc.application.usecases.NoArgsUseCase;
-import org.jellerijk.mccreatecalc.entities.components.WaterWheel;
 
 import java.util.List;
 
-public class GetGeneratorsUseCase implements NoArgsUseCase<List<WaterWheel>> {
+public class GetGeneratorsUseCase implements NoArgsUseCase<List<ComponentOption>> {
     private final ComponentService componentService;
 
     public GetGeneratorsUseCase(ComponentService componentService) {
@@ -15,7 +15,7 @@ public class GetGeneratorsUseCase implements NoArgsUseCase<List<WaterWheel>> {
 
 
     @Override
-    public List<WaterWheel> execute() {
+    public List<ComponentOption> execute() {
         return componentService.getAllGeneratorOptions();
     }
 }

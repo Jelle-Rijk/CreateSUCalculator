@@ -3,22 +3,19 @@ package org.jellerijk.mccreatecalc.presentation.componentselector;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.jellerijk.mccreatecalc.application.services.ComponentOption;
 
 import java.util.Collection;
 
 public class GeneratorSelectorModel {
-    private final ObservableList<GeneratorOption> generatorOptions = FXCollections.observableArrayList();
-    private final ObjectProperty<GeneratorOption> selectedGeneratorOption = new SimpleObjectProperty<>();
+    private final ObservableList<ComponentOption> componentOptions = FXCollections.observableArrayList();
+    private final ObjectProperty<ComponentOption> selectedComponentOption = new SimpleObjectProperty<>();
     private final BooleanProperty selected = new SimpleBooleanProperty();
     private final IntegerProperty amount = new SimpleIntegerProperty();
     private final BooleanProperty addingDisabled = new SimpleBooleanProperty();
 
-    public GeneratorOption getSelectedGeneratorOption() {
-        return selectedGeneratorOption.get();
-    }
-
-    public int getAmount() {
-        return amount.get();
+    public ComponentOption getSelectedComponentOption() {
+        return selectedComponentOption.get();
     }
 
     public void setAddingDisabled(boolean enabled) {
@@ -37,15 +34,15 @@ public class GeneratorSelectorModel {
         return amount;
     }
 
-    public ObservableList<GeneratorOption> getGeneratorOptions() {
-        return generatorOptions;
+    public ObservableList<ComponentOption> getComponentOptions() {
+        return componentOptions;
     }
 
-    public void setGeneratorOptions(Collection<GeneratorOption> generatorOptions) {
-        this.generatorOptions.setAll(generatorOptions);
+    public void setComponentOptions(Collection<ComponentOption> componentOptions) {
+        this.componentOptions.setAll(componentOptions);
     }
 
-    public ObjectProperty<GeneratorOption> selectedGeneratorOptionProperty() {
-        return selectedGeneratorOption;
+    public ObjectProperty<ComponentOption> selectedComponentOptionProperty() {
+        return selectedComponentOption;
     }
 }

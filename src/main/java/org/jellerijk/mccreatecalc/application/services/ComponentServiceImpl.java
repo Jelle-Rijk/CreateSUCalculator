@@ -1,10 +1,8 @@
 package org.jellerijk.mccreatecalc.application.services;
 
 import org.jellerijk.mccreatecalc.application.gateways.GeneratorRepository;
-import org.jellerijk.mccreatecalc.entities.components.WaterWheel;
 
 import java.util.List;
-import java.util.Optional;
 
 public class ComponentServiceImpl implements ComponentService {
     private final GeneratorRepository generatorRepo;
@@ -14,13 +12,8 @@ public class ComponentServiceImpl implements ComponentService {
     }
 
     @Override
-    public Optional<WaterWheel> getByName(String name) {
-        return generatorRepo.getByName(name);
-    }
-
-    @Override
-    public List<WaterWheel> getAllGeneratorOptions() {
-        return generatorRepo.getAll();
+    public List<ComponentOption> getAllGeneratorOptions() {
+        return ComponentOption.map(generatorRepo.getAll());
     }
 
     @Override

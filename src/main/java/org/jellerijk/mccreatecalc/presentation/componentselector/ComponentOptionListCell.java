@@ -7,13 +7,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.jellerijk.mccreatecalc.application.services.ComponentOption;
 import org.jellerijk.mccreatecalc.util.fxlib.HBoxes;
 import org.jellerijk.mccreatecalc.util.fxlib.Labels;
 
-public class GeneratorOptionListCell extends ListCell<GeneratorOption> {
+public class ComponentOptionListCell extends ListCell<ComponentOption> {
     private final Node graphic;
 
-    public GeneratorOptionListCell() {
+    public ComponentOptionListCell() {
         ImageView icon = new ImageView();
         icon.setFitWidth(18);
         icon.setPreserveRatio(true);
@@ -24,7 +25,7 @@ public class GeneratorOptionListCell extends ListCell<GeneratorOption> {
     }
 
     @Override
-    protected void updateItem(GeneratorOption item, boolean empty) {
+    protected void updateItem(ComponentOption item, boolean empty) {
         super.updateItem(item, empty);
         if (empty || item == null)
             setGraphic(null);
