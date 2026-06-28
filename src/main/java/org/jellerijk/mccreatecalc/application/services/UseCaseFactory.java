@@ -10,11 +10,11 @@ import org.jellerijk.mccreatecalc.application.usecases.network.selection.SelectN
 
 public class UseCaseFactory {
     private final NetworkService networkService;
-    private final GeneratorService generatorService;
+    private final ComponentService componentService;
 
-    public UseCaseFactory(NetworkService networkService, GeneratorService generatorService) {
+    public UseCaseFactory(NetworkService networkService, ComponentService componentService) {
         this.networkService = networkService;
-        this.generatorService = generatorService;
+        this.componentService = componentService;
 
     }
 
@@ -32,7 +32,7 @@ public class UseCaseFactory {
     }
 
     public GetGeneratorsUseCase buildGetGeneratorsUseCase() {
-        return new GetGeneratorsUseCase(generatorService);
+        return new GetGeneratorsUseCase(componentService);
     }
 
     public ObserveSelectedNetworkUC buildObserveSelectedNetworkUC() {

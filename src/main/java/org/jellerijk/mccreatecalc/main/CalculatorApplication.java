@@ -21,8 +21,8 @@ public class CalculatorApplication extends Application {
     @Override
     public void start(Stage stage) {
         NetworkService networkService = new NetworkServiceImpl(new NetworkRepositoryImpl(new NetworkDB()), new SelectedNetwork(), new SelectedNetworkPublisher());
-        GeneratorService generatorService = new GeneratorServiceImpl(new GeneratorRepositoryImpl(new GeneratorDB()));
-        UseCaseFactory networkUCFactory = new UseCaseFactory(networkService, generatorService);
+        ComponentService componentService = new ComponentServiceImpl(new GeneratorRepositoryImpl(new GeneratorDB()));
+        UseCaseFactory networkUCFactory = new UseCaseFactory(networkService, componentService);
 
         NetworkListController networkListController = new NetworkListController(networkUCFactory);
         NetworkDetailsController detailsController = new NetworkDetailsController(networkUCFactory);

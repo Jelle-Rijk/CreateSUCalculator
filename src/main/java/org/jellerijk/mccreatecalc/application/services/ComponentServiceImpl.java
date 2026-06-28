@@ -6,10 +6,10 @@ import org.jellerijk.mccreatecalc.entities.components.WaterWheel;
 import java.util.List;
 import java.util.Optional;
 
-public class GeneratorServiceImpl implements GeneratorService {
+public class ComponentServiceImpl implements ComponentService {
     private final GeneratorRepository generatorRepo;
 
-    public GeneratorServiceImpl(GeneratorRepository generatorRepo) {
+    public ComponentServiceImpl(GeneratorRepository generatorRepo) {
         this.generatorRepo = generatorRepo;
     }
 
@@ -19,7 +19,7 @@ public class GeneratorServiceImpl implements GeneratorService {
     }
 
     @Override
-    public List<WaterWheel> getAll() {
+    public List<WaterWheel> getAllGeneratorOptions() {
         return generatorRepo.getAll();
     }
 }
