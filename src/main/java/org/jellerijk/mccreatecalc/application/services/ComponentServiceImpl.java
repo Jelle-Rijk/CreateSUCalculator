@@ -1,14 +1,17 @@
 package org.jellerijk.mccreatecalc.application.services;
 
+import org.jellerijk.mccreatecalc.application.gateways.ComponentRepository;
 import org.jellerijk.mccreatecalc.application.gateways.GeneratorRepository;
 
 import java.util.List;
 
 public class ComponentServiceImpl implements ComponentService {
+    private final ComponentRepository componentRepo;
     private final GeneratorRepository generatorRepo;
 
-    public ComponentServiceImpl(GeneratorRepository generatorRepo) {
+    public ComponentServiceImpl(GeneratorRepository generatorRepo, ComponentRepository componentRepo) {
         this.generatorRepo = generatorRepo;
+        this.componentRepo = componentRepo;
     }
 
     @Override
@@ -18,6 +21,6 @@ public class ComponentServiceImpl implements ComponentService {
 
     @Override
     public List<ComponentOption> getAllConsumerOptions() {
-        return List.of();
+        return ComponentOption.map(componentRepo.getAllConsumers());
     }
 }
