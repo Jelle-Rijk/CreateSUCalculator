@@ -7,7 +7,7 @@ import org.jellerijk.mccreatecalc.entities.StressNetwork;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class CreateNetworkUseCase implements UseCase<CreateNetworkRequest, String> {
+public class CreateNetworkUseCase implements UseCase<String, String> {
     private final NetworkService networkService;
 
     public CreateNetworkUseCase(NetworkService networkService) {
@@ -17,15 +17,13 @@ public class CreateNetworkUseCase implements UseCase<CreateNetworkRequest, Strin
     /**
      * Creates a new network, saves it to the repository and returns the id for the newly
      * created network.
-     *
-     * @param createNetworkRequest The data needed for the new network.
      */
     @Override
-    public String execute(CreateNetworkRequest createNetworkRequest) {
+    public String execute(String networkName) {
         String id = UUID.randomUUID().toString();
         StressNetwork network = StressNetwork.Builder.aStressNetwork()
                 .withId(id)
-                .withName(createNetworkRequest.name())
+                .withName(networkName)
                 .withGenerators(new ArrayList<>())
                 .build();
         networkService.add(network);
