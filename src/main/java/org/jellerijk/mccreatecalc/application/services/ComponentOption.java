@@ -12,7 +12,7 @@ public record ComponentOption(ComponentType type, String name, String img) {
         return new ComponentOption(ComponentType.of(c), c.getName(), c.getImg());
     }
 
-    public static List<ComponentOption> map(List<Component> components) {
+    public static <T extends Component> List<ComponentOption> map(List<T> components) {
         return components.stream().map(ComponentOption::map).collect(Collectors.toCollection(ArrayList::new));
     }
 }
