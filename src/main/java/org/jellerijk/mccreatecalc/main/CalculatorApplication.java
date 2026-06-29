@@ -5,8 +5,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import org.jellerijk.mccreatecalc.application.gateways.ComponentRepository;
 import org.jellerijk.mccreatecalc.application.services.*;
+import org.jellerijk.mccreatecalc.data.database.ConsumerDB;
 import org.jellerijk.mccreatecalc.data.database.GeneratorDB;
 import org.jellerijk.mccreatecalc.data.database.NetworkDB;
 import org.jellerijk.mccreatecalc.data.local.SelectedNetwork;
@@ -19,13 +19,11 @@ import org.jellerijk.mccreatecalc.util.fxlib.HBoxes;
 
 import java.util.Objects;
 
-import static org.mockito.Mockito.mock;
-
 public class CalculatorApplication extends Application {
     @Override
     public void start(Stage stage) {
         NetworkService networkService = new NetworkServiceImpl(new NetworkRepositoryImpl(new NetworkDB()), new SelectedNetwork(), new SelectedNetworkPublisher());
-        ComponentService componentService = new ComponentServiceImpl(new GeneratorRepositoryImpl(new GeneratorDB()), new ComponentRepositoryImpl(mock()));
+        ComponentService componentService = new ComponentServiceImpl(new GeneratorRepositoryImpl(new GeneratorDB()), new ComponentRepositoryImpl(new ConsumerDB()));
         UseCaseFactory networkUCFactory = new UseCaseFactory(networkService, componentService);
 
         NetworkListController networkListController = new NetworkListController(networkUCFactory);
