@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ConsumerDB implements ConsumerDAO {
     private static final String TABLE = "Consumers";
@@ -31,6 +32,18 @@ public class ConsumerDB implements ConsumerDAO {
             return consumers;
         } catch (SQLException ex) {
             throw new DataBaseAccessException("Something went wrong while getting all consumers.", ex);
+        }
+    }
+
+    @Override
+    public Optional<Consumer> getByName(String name) {
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement query = conn.prepareStatement(QueryBuilder.selectBy(TABLE, COL_NAME))) {
+            query.setString(1, name);
+            ResultSet res = query.executeQuery();
+            return res.next() ? Optional.of(mapToConsumer(res)) : Optional.empty();
+        } catch (SQLException e) {
+            throw new DataBaseAccessException("Something went wrong while getting a consumer by name", e);
         }
     }
 

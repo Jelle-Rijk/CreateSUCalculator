@@ -1,15 +1,16 @@
 package org.jellerijk.mccreatecalc.data.repositories;
 
 import org.jellerijk.mccreatecalc.data.dao.ConsumerDAO;
-import org.jellerijk.mccreatecalc.entities.components.Consumer;
-import org.jellerijk.mccreatecalc.entities.components.WaterWheel;
-import org.jellerijk.mccreatecalc.entities.components.WaterWheelType;
-import org.jellerijk.mccreatecalc.entities.components.Windmill;
+import org.jellerijk.mccreatecalc.entities.components.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -56,6 +57,29 @@ class ComponentRepositoryImplTest {
         when(consumerDAO.getAll()).thenReturn(consumers);
 
         assertEquals(2, c.getAllConsumers().size());
+    }
+
+    @Test
+    void getConsumerByName_ConsumerInDatabase_ReturnsNonEmptyOptional() {
+        String name = "Cuckoo";
+        when(consumerDAO.getByName(name)).thenReturn(Optional.of(BaseConsumer.Builder.aBaseConsumer()
+                .withName(name)
+                .build()));
+        assertTrue(c.getConsumerByName(name).isPresent());
+    }
+
+    @Test
+    void getConsumerByName_ConsumerNotInDatabase_ReturnsEmptyOptional() {
+        String name = "Cuckoo";
+        when(consumerDAO.getByName(name)).thenReturn(Optional.empty());
+        assertTrue(c.getConsumerByName(name).isEmpty());
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {" ", "\t", "\n", "\r", "         "})
+    void getConsumerByName_InvalidName_ThrowsIAE(String invalidName) {
+        assertThrows(IllegalArgumentException.class, () -> c.getConsumerByName(invalidName));
     }
 
 }

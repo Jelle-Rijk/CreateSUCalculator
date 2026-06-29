@@ -5,6 +5,7 @@ import org.jellerijk.mccreatecalc.data.dao.ConsumerDAO;
 import org.jellerijk.mccreatecalc.entities.components.*;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ComponentRepositoryImpl implements ComponentRepository {
 
@@ -25,5 +26,12 @@ public class ComponentRepositoryImpl implements ComponentRepository {
         WaterWheel large = new WaterWheel(WaterWheelType.LARGE);
         Windmill windmill = new WindmillImpl(0);
         return List.of(small, large, windmill);
+    }
+
+    @Override
+    public Optional<Consumer> getConsumerByName(String name) {
+        if (name == null || name.isBlank())
+            throw new IllegalArgumentException("Queried name was null or blank");
+        return consumerDAO.getByName(name);
     }
 }
