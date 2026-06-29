@@ -1,5 +1,6 @@
 package org.jellerijk.mccreatecalc.application.usecases.network.update;
 
+import org.jellerijk.mccreatecalc.application.services.ComponentService;
 import org.jellerijk.mccreatecalc.application.services.NetworkService;
 import org.jellerijk.mccreatecalc.application.usecases.UseCase;
 import org.jellerijk.mccreatecalc.application.dto.ComponentGroupDTO;
@@ -14,10 +15,12 @@ import java.util.List;
 // This use case should add a new component group to the selected network. Before we can do this, we need to know which component this group will represent. The amount, level, sails, rpm, etc. can all be set to their defaults.
 public class AddComponentGroupToSelectedNetworkUC implements UseCase<AddComponentGroupRequest, ComponentGroupDTO> {
 
+    private final ComponentService componentService;
     private final NetworkService networkService;
 
-    public AddComponentGroupToSelectedNetworkUC(NetworkService networkService) {
+    public AddComponentGroupToSelectedNetworkUC(NetworkService networkService, ComponentService componentService) {
         this.networkService = networkService;
+        this.componentService = componentService;
     }
 
     @Override
@@ -61,7 +64,8 @@ public class AddComponentGroupToSelectedNetworkUC implements UseCase<AddComponen
         return switch (request.type()) {
             case WATER_WHEEL -> new WaterWheel(request.waterWheelType());
             case WINDMILL -> new WindmillImpl(0);
-            case STEAM_ENGINE, CONSUMER -> throw new UnsupportedOperationException();
+            case CONSUMER -> componentService.getConsumerByName(request.name()).orElseThrow();
+            case STEAM_ENGINE -> throw new UnsupportedOperationException();
         };
     }
 }
