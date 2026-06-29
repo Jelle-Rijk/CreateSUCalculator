@@ -1,12 +1,10 @@
 package org.jellerijk.mccreatecalc.application.services;
 
 import org.jellerijk.mccreatecalc.application.gateways.ComponentRepository;
-import org.jellerijk.mccreatecalc.application.gateways.GeneratorRepository;
 import org.jellerijk.mccreatecalc.entities.components.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,14 +14,12 @@ import static org.mockito.Mockito.when;
 
 class ComponentServiceImplTest {
     ComponentRepository compRepo;
-    GeneratorRepository generatorRepository;
     ComponentServiceImpl c;
 
     @BeforeEach
     void setUp() {
-        generatorRepository = mock();
         compRepo = mock();
-        c = new ComponentServiceImpl(generatorRepository, compRepo);
+        c = new ComponentServiceImpl(compRepo);
     }
 
 
