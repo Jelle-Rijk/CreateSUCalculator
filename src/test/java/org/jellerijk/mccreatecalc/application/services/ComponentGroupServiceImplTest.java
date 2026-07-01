@@ -1,6 +1,7 @@
 package org.jellerijk.mccreatecalc.application.services;
 
 import org.jellerijk.mccreatecalc.application.gateways.ComponentGroupRepository;
+import org.jellerijk.mccreatecalc.application.publishers.ComponentGroupPublisher;
 import org.jellerijk.mccreatecalc.entities.ComponentGroup;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,12 +14,14 @@ import static org.mockito.Mockito.when;
 
 class ComponentGroupServiceImplTest {
     private ComponentGroupRepository cgRepo;
+    private ComponentGroupPublisher cgPublisher;
     private ComponentGroupService service;
 
     @BeforeEach
     void setUp() {
         cgRepo = mock();
-        service = new ComponentGroupServiceImpl(cgRepo);
+        cgPublisher = mock();
+        service = new ComponentGroupServiceImpl(cgRepo, cgPublisher);
     }
 
     @Test
