@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public abstract class DBConnection {
     public static final Path DATABASE_LOCATION = Path
@@ -20,6 +21,9 @@ public abstract class DBConnection {
             Connection conn = DriverManager.getConnection(DATABASE_URL);
             if (conn == null)
                 throw new IllegalStateException("Could not get connection to Database.");
+            try (Statement stmt = conn.createStatement()) {
+                stmt.execute("PRAGMA foreign_keys = ON");
+            }
             conn.setAutoCommit(autocommit);
             return conn;
         } catch (SQLException e) {
