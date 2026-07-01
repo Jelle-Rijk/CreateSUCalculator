@@ -102,4 +102,9 @@ class SQLBuilderTest {
     void values_MultipleCols_SetsCorrectString() {
         assertEquals("(Size, Colour, Print) VALUES (?,?,?) ", builder.values("Size", "Colour", "Print").build());
     }
+
+    @Test
+    void deleteFrom_SetsCorrectString() {
+        assertEquals("DELETE FROM Products ", builder.deleteFrom("Products").build());
+    }
 }

@@ -76,4 +76,9 @@ public class SQLBuilder {
         query.append(values);
         return this;
     }
+
+    public SQLBuilder deleteFrom(String table) {
+        query.append("DELETE FROM ").append(table).append(" ");
+        return this;
+    }
 }
