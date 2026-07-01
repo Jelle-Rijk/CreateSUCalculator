@@ -50,22 +50,26 @@ class SQLBuilderTest {
 
     @Test
     void innerJoin() {
-        assertEquals("JOIN Books ON p.id = b.id ", builder.innerJoin("Books", "p.id", "b.id").build());
+        assertEquals("JOIN Books ON Products.Id = Books.BookId ", builder.innerJoin("Products", "Id", "Books", "BookId")
+                .build());
     }
 
     @Test
     void leftJoin() {
-        assertEquals("LEFT JOIN Books ON p.id = b.id ", builder.leftJoin("Books", "p.id", "b.id").build());
+        assertEquals("LEFT JOIN Books ON Products.Id = Books.BookId ", builder.leftJoin("Products", "Id", "Books", "BookId")
+                .build());
     }
 
     @Test
     void rightJoin() {
-        assertEquals("RIGHT JOIN Books ON p.id = b.id ", builder.rightJoin("Books", "p.id", "b.id").build());
+        assertEquals("RIGHT JOIN Books ON Products.Id = Books.BookId ", builder.rightJoin("Products", "Id", "Books", "BookId")
+                .build());
     }
 
     @Test
     void fullJoin() {
-        assertEquals("FULL JOIN Books ON p.id = b.id ", builder.fullJoin("Books", "p.id", "b.id").build());
+        assertEquals("FULL JOIN Books ON Products.Id = Books.BookId ", builder.fullJoin("Products", "Id", "Books", "BookId")
+                .build());
     }
 
     @Test
@@ -78,9 +82,24 @@ class SQLBuilderTest {
     void combiningClauses_Complex_GivesCorrectOutput() {
         String sql = builder.select("Id")
                 .from("Product")
-                .leftJoin("Books", "Product.Id", "Books.Id")
+                .leftJoin("Product", "Id", "Books", "Id")
                 .where("pages", "colour")
                 .build();
         assertEquals("SELECT Id FROM Product LEFT JOIN Books ON Product.Id = Books.Id WHERE pages=? AND colour=? ", sql);
+    }
+
+    @Test
+    void insertInto_SetsCorrectString() {
+        assertEquals("INSERT INTO Products ", builder.insertInto("Products").build());
+    }
+
+    @Test
+    void values_OneCol_SetsCorrectString() {
+        assertEquals("(Size) VALUES (?) ", builder.values("Size").build());
+    }
+
+    @Test
+    void values_MultipleCols_SetsCorrectString() {
+        assertEquals("(Size, Colour, Print) VALUES (?,?,?) ", builder.values("Size", "Colour", "Print").build());
     }
 }

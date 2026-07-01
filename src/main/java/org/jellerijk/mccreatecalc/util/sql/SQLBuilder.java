@@ -25,6 +25,7 @@ public class SQLBuilder {
         return this;
     }
 
+
     /**
      * Default where clause. This will match every col to the supplied argument.
      *
@@ -37,31 +38,42 @@ public class SQLBuilder {
         return this;
     }
 
-    public SQLBuilder innerJoin(String table, String leftCol, String rightCol) {
-        query.append(buildJoinString("JOIN", table, leftCol, rightCol));
+    public SQLBuilder innerJoin(String leftTable, String leftCol, String rightTable, String rightCol) {
+        query.append(buildJoinString("JOIN", leftTable, leftCol, rightTable, rightCol));
         return this;
     }
 
-    public SQLBuilder leftJoin(String table, String leftCol, String rightCol) {
-        query.append(buildJoinString("LEFT JOIN", table, leftCol, rightCol));
+    public SQLBuilder leftJoin(String leftTable, String leftCol, String rightTable, String rightCol) {
+        query.append(buildJoinString("LEFT JOIN", leftTable, leftCol, rightTable, rightCol));
         return this;
     }
 
-    public SQLBuilder rightJoin(String table, String leftCol, String rightCol) {
-        query.append(buildJoinString("RIGHT JOIN", table, leftCol, rightCol));
+    public SQLBuilder rightJoin(String leftTable, String leftCol, String rightTable, String rightCol) {
+        query.append(buildJoinString("RIGHT JOIN", leftTable, leftCol, rightTable, rightCol));
         return this;
     }
 
-    public SQLBuilder fullJoin(String table, String leftCol, String rightCol) {
-        query.append(buildJoinString("FULL JOIN", table, leftCol, rightCol));
+    public SQLBuilder fullJoin(String leftTable, String leftCol, String rightTable, String rightCol) {
+        query.append(buildJoinString("FULL JOIN", leftTable, leftCol, rightTable, rightCol));
         return this;
     }
 
-    private String buildJoinString(String join, String table, String leftCol, String rightCol) {
-        return String.format("%s %s ON %s = %s ", join, table, leftCol, rightCol);
+    private String buildJoinString(String join, String leftTable, String leftCol, String rightTable, String rightCol) {
+        return String.format("%s %s ON %s.%s = %s.%s ", join, rightTable, leftTable, leftCol, rightTable, rightCol);
     }
 
     public String build() {
         return query.toString();
+    }
+
+    public SQLBuilder insertInto(String table) {
+        query.append("INSERT INTO ").append(table).append(" ");
+        return this;
+    }
+
+    public SQLBuilder values(String... cols) {
+        String values = "(" + String.join(", ", cols) + ") VALUES (" + "?,".repeat(cols.length - 1) + "?) ";
+        query.append(values);
+        return this;
     }
 }
