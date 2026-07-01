@@ -1,7 +1,8 @@
-package org.jellerijk.mccreatecalc.application.usecases;
+package org.jellerijk.mccreatecalc.application.usecases.network.read;
 
 import org.jellerijk.mccreatecalc.application.dto.ComponentGroupDTO;
 import org.jellerijk.mccreatecalc.application.gateways.ComponentGroupRepository;
+import org.jellerijk.mccreatecalc.application.usecases.UseCase;
 
 public class GetComponentGroupUC implements UseCase<String, ComponentGroupDTO> {
     private final ComponentGroupRepository componentGroupRepo;

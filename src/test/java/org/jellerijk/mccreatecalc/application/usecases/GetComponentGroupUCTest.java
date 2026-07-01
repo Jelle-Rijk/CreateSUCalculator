@@ -2,6 +2,7 @@ package org.jellerijk.mccreatecalc.application.usecases;
 
 
 import org.jellerijk.mccreatecalc.application.gateways.ComponentGroupRepository;
+import org.jellerijk.mccreatecalc.application.usecases.network.read.GetComponentGroupUC;
 import org.jellerijk.mccreatecalc.entities.ComponentGroup;
 import org.jellerijk.mccreatecalc.entities.components.ComponentType;
 import org.jellerijk.mccreatecalc.entities.components.WaterWheel;

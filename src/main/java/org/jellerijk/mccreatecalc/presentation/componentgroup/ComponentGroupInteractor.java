@@ -1,7 +1,7 @@
 package org.jellerijk.mccreatecalc.presentation.componentgroup;
 
 import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
-import org.jellerijk.mccreatecalc.application.usecases.GetComponentGroupUC;
+import org.jellerijk.mccreatecalc.application.usecases.network.read.GetComponentGroupUC;
 import org.jellerijk.mccreatecalc.application.dto.ComponentGroupDTO;
 import org.jellerijk.mccreatecalc.entities.components.ComponentType;
 

@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.jellerijk.mccreatecalc.application.services.*;
-import org.jellerijk.mccreatecalc.application.usecases.GetComponentGroupUC;
+import org.jellerijk.mccreatecalc.application.usecases.network.read.GetComponentGroupUC;
 import org.jellerijk.mccreatecalc.application.dto.ComponentGroupDTO;
 import org.jellerijk.mccreatecalc.entities.components.ComponentType;
 import org.jellerijk.mccreatecalc.presentation.componentgroup.ComponentGroupController;
