@@ -37,7 +37,6 @@ public class CalculatorTestApplication extends Application {
         GetComponentGroupUC componentGroupUC = mock();
         ComponentGroupDTO group = new ComponentGroupDTO("1234", ComponentType.CONSUMER, "Water Wheel", "create_water_wheel.png", 3, 0, null, 3 * 256, 8);
         when(componentGroupUC.execute("1234")).thenReturn(group);
-        when(factory.buildGetComponentGroupUC()).thenReturn(componentGroupUC);
 
         ComponentGroupController controller = new ComponentGroupController(factory, "1234");
         return (Parent) controller.getView();

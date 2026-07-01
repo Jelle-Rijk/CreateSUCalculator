@@ -1,7 +1,7 @@
 package org.jellerijk.mccreatecalc.presentation.networklist;
 
 import org.jellerijk.mccreatecalc.application.dto.NetworkInfo;
-import org.jellerijk.mccreatecalc.application.usecases.network.creation.CreateNetworkUseCase;
+import org.jellerijk.mccreatecalc.application.usecases.network.CreateNetworkUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.network.read.FetchNetworksInfoUseCase;
 import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
 import org.jellerijk.mccreatecalc.application.usecases.network.selection.SelectNetworkUseCase;

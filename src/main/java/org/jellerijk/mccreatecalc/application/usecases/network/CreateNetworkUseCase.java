@@ -1,4 +1,4 @@
-package org.jellerijk.mccreatecalc.application.usecases.network.creation;
+package org.jellerijk.mccreatecalc.application.usecases.network;
 
 import org.jellerijk.mccreatecalc.application.services.NetworkService;
 import org.jellerijk.mccreatecalc.application.usecases.UseCase;

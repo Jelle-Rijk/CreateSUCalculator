@@ -34,4 +34,5 @@ public class CalculatorApplication extends Application {
         stage.setTitle("Test application");
         stage.show();
     }
+
 }

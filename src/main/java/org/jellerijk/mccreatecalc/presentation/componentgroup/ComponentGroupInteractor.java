@@ -5,13 +5,15 @@ import org.jellerijk.mccreatecalc.application.usecases.GetComponentGroupUC;
 import org.jellerijk.mccreatecalc.application.dto.ComponentGroupDTO;
 import org.jellerijk.mccreatecalc.entities.components.ComponentType;
 
+import static org.mockito.Mockito.mock;
+
 public class ComponentGroupInteractor {
     private final ComponentGroupModel model;
     private final GetComponentGroupUC componentGroupFetcher;
 
     public ComponentGroupInteractor(ComponentGroupModel model, UseCaseFactory factory) {
         this.model = model;
-        this.componentGroupFetcher = factory.buildGetComponentGroupUC();
+        this.componentGroupFetcher = mock();
         updateComponentGroupData();
     }
 
