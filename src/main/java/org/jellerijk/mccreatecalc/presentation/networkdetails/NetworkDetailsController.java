@@ -3,7 +3,7 @@ package org.jellerijk.mccreatecalc.presentation.networkdetails;
 import javafx.scene.layout.Region;
 import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
 import org.jellerijk.mccreatecalc.presentation.Controller;
-import org.jellerijk.mccreatecalc.presentation.componentselector.GeneratorSelectorController;
+import org.jellerijk.mccreatecalc.presentation.componentselector.ComponentSelectorController;
 
 public class NetworkDetailsController extends Controller {
     private final NetworkDetailsViewBuilder viewBuilder;
@@ -11,7 +11,9 @@ public class NetworkDetailsController extends Controller {
     public NetworkDetailsController(UseCaseFactory factory) {
         NetworkDetailsModel model = new NetworkDetailsModel();
         NetworkDetailsInteractor interactor = new NetworkDetailsInteractor(model, factory);
-        viewBuilder = new NetworkDetailsViewBuilder(model, new GeneratorSelectorController(factory, interactor::addGeneratorGroup).getView());
+        ComponentSelectorController generatorSelector = new ComponentSelectorController(interactor::addComponentGroup, interactor::getGeneratorOptions);
+        ComponentSelectorController consumerSelector = new ComponentSelectorController(interactor::addComponentGroup, interactor::getConsumerOptions);
+        viewBuilder = new NetworkDetailsViewBuilder(model, generatorSelector.getView(), consumerSelector.getView(), factory);
     }
 
     public Region getView() {

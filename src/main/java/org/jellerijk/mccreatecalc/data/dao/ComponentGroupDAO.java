@@ -15,4 +15,12 @@ public interface ComponentGroupDAO {
     Optional<ComponentGroup> get(String groupId);
 
     void deleteGroup(String groupId);
+
+    /**
+     * Updates the componentGroups for a network. Any component groups associated with the network, but not in the supplied list, will be deleted.
+     *
+     * @param networkId       The network to sync entries for.
+     * @param componentGroups The component groups to sync.
+     */
+    void syncComponentGroups(String networkId, List<ComponentGroup> componentGroups);
 }

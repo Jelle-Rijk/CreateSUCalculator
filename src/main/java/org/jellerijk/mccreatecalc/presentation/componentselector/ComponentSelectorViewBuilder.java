@@ -4,17 +4,17 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import org.jellerijk.mccreatecalc.application.services.ComponentOption;
 import org.jellerijk.mccreatecalc.util.fxlib.HBoxes;
-import org.jellerijk.mccreatecalc.util.fxlib.TextFields;
 
-public class GeneratorSelectorViewBuilder {
+public class ComponentSelectorViewBuilder {
 
-    private final GeneratorSelectorModel model;
+    private final ComponentSelectorModel model;
     private final Runnable addGeneratorHandler;
 
-    public GeneratorSelectorViewBuilder(GeneratorSelectorModel model, Runnable addGeneratorHandler) {
+    public ComponentSelectorViewBuilder(ComponentSelectorModel model, Runnable addGeneratorHandler) {
         this.model = model;
         this.addGeneratorHandler = addGeneratorHandler;
     }
@@ -33,16 +33,9 @@ public class GeneratorSelectorViewBuilder {
     }
 
     private Node buildAddComponentPane() {
-        Node amount = buildAmountField();
-        Node btnAdd = buildAddButton();
-        return HBoxes.aligned(Pos.CENTER_LEFT, 3, buildGeneratorSelector(), amount, btnAdd);
-    }
-
-    private Node buildAmountField() {
-        TextField amount = TextFields.numericalField(model.amountProperty());
-        amount.editableProperty().bind(model.addingDisabledProperty().not().and(model.selectedProperty()));
-        amount.disableProperty().bind(amount.editableProperty().not());
-        return amount;
+        Node generatorSelector = buildGeneratorSelector();
+        HBox.setHgrow(generatorSelector, Priority.ALWAYS);
+        return HBoxes.aligned(Pos.CENTER_LEFT, 3, buildGeneratorSelector(), buildAddButton());
     }
 
     private Node buildAddButton() {

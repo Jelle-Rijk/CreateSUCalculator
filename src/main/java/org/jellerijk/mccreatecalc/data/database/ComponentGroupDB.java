@@ -22,12 +22,7 @@ public class ComponentGroupDB implements ComponentGroupDAO {
     public void addGroupToNetwork(ComponentGroup group, String networkId) {
         try (Connection conn = DBConnection.getConnection(false)) {
             try {
-                addComponentGroupToNetwork(conn, group, networkId);
-                switch (group.getComponentType()) {
-                    case WATER_WHEEL -> addWaterWheelGroup(conn, group);
-                    case WINDMILL -> addWindmillGroup(conn, group);
-                    case CONSUMER -> addConsumerGroup(conn, group);
-                }
+                addGroupToNetwork(conn, group, networkId);
                 conn.commit();
             } catch (SQLException | DataBaseAccessException ex) {
                 conn.rollback();
@@ -35,6 +30,15 @@ public class ComponentGroupDB implements ComponentGroupDAO {
             }
         } catch (SQLException ex) {
             throw new DataBaseAccessException("Something went wrong while adding a group to a network.", ex);
+        }
+    }
+
+    private void addGroupToNetwork(Connection conn, ComponentGroup group, String networkId) {
+        addComponentGroupToNetwork(conn, group, networkId);
+        switch (group.getComponentType()) {
+            case WATER_WHEEL -> addWaterWheelGroup(conn, group);
+            case WINDMILL -> addWindmillGroup(conn, group);
+            case CONSUMER -> addConsumerGroup(conn, group);
         }
     }
 
@@ -127,6 +131,24 @@ public class ComponentGroupDB implements ComponentGroupDAO {
             query.executeUpdate();
         } catch (SQLException e) {
             throw new DataBaseAccessException("Something went wrong while deleting component group by id", e);
+        }
+    }
+
+    @Override
+    public void syncComponentGroups(String networkId, List<ComponentGroup> componentGroups) {
+        try (Connection conn = DBConnection.getConnection(false)) {
+            try (PreparedStatement deleteQuery = conn.prepareStatement(Queries.DELETE_BY_NETWORK)) {
+                deleteQuery.setString(1, networkId);
+                deleteQuery.executeUpdate();
+                for (ComponentGroup cg : componentGroups) {
+                    addGroupToNetwork(conn, cg, networkId);
+                }
+                conn.commit();
+            } catch (Exception ex) {
+                conn.rollback();
+            }
+        } catch (SQLException ex) {
+            throw new DataBaseAccessException("Something went wrong while syncing component groups for a network.", ex);
         }
     }
 
@@ -239,6 +261,10 @@ public class ComponentGroupDB implements ComponentGroupDAO {
 
         private static final String DELETE_BY_ID = new SQLBuilder().deleteFrom(TABLE_COMPONENT_GROUP)
                 .where(Columns.ID)
+                .build();
+
+        private static final String DELETE_BY_NETWORK = new SQLBuilder().deleteFrom(TABLE_COMPONENT_GROUP)
+                .where(Columns.NETWORK)
                 .build();
     }
 }

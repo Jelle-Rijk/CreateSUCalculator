@@ -1,4 +1,4 @@
-package org.jellerijk.mccreatecalc.application.usecases.generator;
+package org.jellerijk.mccreatecalc.application.usecases.components;
 
 import org.jellerijk.mccreatecalc.application.services.ComponentOption;
 import org.jellerijk.mccreatecalc.application.services.ComponentService;

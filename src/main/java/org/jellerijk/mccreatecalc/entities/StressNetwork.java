@@ -48,7 +48,7 @@ public record StressNetwork(String id, String name, List<ComponentGroup> generat
 
     private void validateGenerators(List<ComponentGroup> generators) {
         if (generators == null)
-            throw new IllegalArgumentException("StressNetwork needs a list of generator entries.");
+            throw new IllegalArgumentException("StressNetwork needs a list of components entries.");
         if (generators.stream().anyMatch(ComponentGroup::isConsumer))
             throw new IllegalArgumentException("Generators contained a consumer");
     }

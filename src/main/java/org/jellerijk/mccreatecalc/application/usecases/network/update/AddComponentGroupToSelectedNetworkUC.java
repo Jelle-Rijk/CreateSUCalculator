@@ -11,8 +11,6 @@ import org.jellerijk.mccreatecalc.entities.components.*;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: implement
-// This use case should add a new component group to the selected network. Before we can do this, we need to know which component this group will represent. The amount, level, sails, rpm, etc. can all be set to their defaults.
 public class AddComponentGroupToSelectedNetworkUC implements UseCase<AddComponentGroupRequest, ComponentGroupDTO> {
 
     private final ComponentService componentService;
@@ -23,6 +21,12 @@ public class AddComponentGroupToSelectedNetworkUC implements UseCase<AddComponen
         this.componentService = componentService;
     }
 
+    /**
+     * Adds a component group to the selected network.
+     *
+     * @param addComponentGroupRequest The request containing data for the component group to add.
+     * @return A DTO representing the newly added component group.
+     */
     @Override
     public ComponentGroupDTO execute(AddComponentGroupRequest addComponentGroupRequest) {
         StressNetwork network = getNetwork();

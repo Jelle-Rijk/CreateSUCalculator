@@ -8,12 +8,16 @@ import org.jellerijk.mccreatecalc.presentation.Controller;
 public class ComponentGroupController extends Controller {
     private final ComponentGroupInteractor interactor;
     private final ComponentGroupViewBuilder viewBuilder;
+    private final ComponentGroupModel model;
 
-    public ComponentGroupController(UseCaseFactory factory, String groupId) {
-        ComponentGroupModel model = new ComponentGroupModel();
-        model.setGroupId(groupId);
+    public ComponentGroupController(UseCaseFactory factory) {
+        model = new ComponentGroupModel();
         interactor = new ComponentGroupInteractor(model, factory);
         viewBuilder = new ComponentGroupViewBuilder(model, this::delete, this::submitChanges);
+    }
+
+    public void setGroupId(String id) {
+        model.setGroupId(id);
     }
 
     @Override

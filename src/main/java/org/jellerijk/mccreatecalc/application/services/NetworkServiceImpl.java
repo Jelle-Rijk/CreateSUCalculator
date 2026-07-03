@@ -43,11 +43,15 @@ public class NetworkServiceImpl implements NetworkService {
 
     @Override
     public void save(StressNetwork network) {
+        if (network == null)
+            throw new IllegalArgumentException("Cannot save null");
         networkRepo.update(network);
     }
 
     @Override
     public void add(StressNetwork network) {
+        if (network == null)
+            throw new IllegalArgumentException("Cannot add null");
         networkRepo.add(network);
     }
 
