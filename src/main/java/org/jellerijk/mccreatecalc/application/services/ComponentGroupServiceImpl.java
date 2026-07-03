@@ -25,4 +25,14 @@ public class ComponentGroupServiceImpl implements ComponentGroupService {
     public void subscribe(Subscription<ComponentGroupDTO, String> subscription) {
         publisher.subscribe(subscription);
     }
+
+    @Override
+    public Optional<String> getNetworkIdForGroup(String groupId) {
+        return cgRepo.getNetworkId(groupId);
+    }
+
+    @Override
+    public void delete(String groupId) {
+        cgRepo.delete(groupId);
+    }
 }

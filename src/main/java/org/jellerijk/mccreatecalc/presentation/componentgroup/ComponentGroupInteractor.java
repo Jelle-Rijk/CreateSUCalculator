@@ -5,16 +5,19 @@ import org.jellerijk.mccreatecalc.application.publishers.Subscription;
 import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
 import org.jellerijk.mccreatecalc.application.usecases.ObserveComponentGroupUC;
 import org.jellerijk.mccreatecalc.application.dto.ComponentGroupDTO;
+import org.jellerijk.mccreatecalc.application.usecases.network.update.DeleteComponentGroupFromSelectedNetworkUseCase;
 import org.jellerijk.mccreatecalc.entities.components.ComponentType;
 
 public class ComponentGroupInteractor implements Observer<ComponentGroupDTO> {
     private final ComponentGroupModel model;
     private final ObserveComponentGroupUC observeComponentGroupUC;
+    private final DeleteComponentGroupFromSelectedNetworkUseCase deleteGroupUC;
 
     public ComponentGroupInteractor(ComponentGroupModel model, UseCaseFactory factory) {
         this.model = model;
         model.groupIdProperty().addListener((_, oldId, newId) -> handleGroupIdChange(oldId, newId));
         observeComponentGroupUC = factory.buildObserveComponentGroupUC();
+        deleteGroupUC = factory.buildDeleteComponentGroupFromSelectedNetworkUseCase();
     }
 
     private void handleGroupIdChange(String oldId, String newId) {
@@ -58,6 +61,6 @@ public class ComponentGroupInteractor implements Observer<ComponentGroupDTO> {
     }
 
     public void deleteGroup() {
-        System.out.println("ComponentGroupInteractor: Group deleted");
+        deleteGroupUC.execute(model.getGroupId());
     }
 }

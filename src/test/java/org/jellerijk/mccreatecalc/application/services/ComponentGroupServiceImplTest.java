@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class ComponentGroupServiceImplTest {
     private ComponentGroupRepository cgRepo;
@@ -34,5 +33,23 @@ class ComponentGroupServiceImplTest {
     void getById_NotInRepo_ReturnsEmptyOptional() {
         when(cgRepo.getById("id")).thenReturn(Optional.empty());
         assertTrue(service.getById("id").isEmpty());
+    }
+
+    @Test
+    void getNetworkIdForGroup_GroupDoesNotExist_ReturnsOptional() {
+        when(cgRepo.getNetworkId("a")).thenReturn(Optional.empty());
+        assertTrue(service.getNetworkIdForGroup("a").isEmpty());
+    }
+
+    @Test
+    void getNetworkIdForGroup_GroupExists_ReturnsNetworkId() {
+        when(cgRepo.getNetworkId("a")).thenReturn(Optional.of("b"));
+        assertTrue(service.getNetworkIdForGroup("a").isPresent());
+    }
+
+    @Test
+    void delete_DelegatesCall() {
+        service.delete("test");
+        verify(cgRepo).delete("test");
     }
 }

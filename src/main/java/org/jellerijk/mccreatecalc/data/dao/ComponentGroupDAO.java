@@ -23,4 +23,6 @@ public interface ComponentGroupDAO {
      * @param componentGroups The component groups to sync.
      */
     void syncComponentGroups(String networkId, List<ComponentGroup> componentGroups);
+
+    Optional<String> getNetworkId(String groupId);
 }

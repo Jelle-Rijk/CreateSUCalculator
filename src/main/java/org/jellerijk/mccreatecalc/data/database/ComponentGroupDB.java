@@ -152,6 +152,18 @@ public class ComponentGroupDB implements ComponentGroupDAO {
         }
     }
 
+    @Override
+    public Optional<String> getNetworkId(String groupId) {
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement query = conn.prepareStatement(Queries.GET_NETWORK_ID)) {
+            query.setString(1, groupId);
+            ResultSet res = query.executeQuery();
+            return Optional.ofNullable(res.next() ? res.getString(Columns.NETWORK) : null);
+        } catch (SQLException e) {
+            throw new DataBaseAccessException("Something went wrong while getting the network Id for a group", e);
+        }
+    }
+
     private List<ComponentGroup> selectComponentsInNetwork(Connection conn, String networkId, String sql, ComponentType type) {
         List<ComponentGroup> componentGroups = new ArrayList<>();
         try (PreparedStatement query = conn.prepareStatement(sql)) {
@@ -265,6 +277,11 @@ public class ComponentGroupDB implements ComponentGroupDAO {
 
         private static final String DELETE_BY_NETWORK = new SQLBuilder().deleteFrom(TABLE_COMPONENT_GROUP)
                 .where(Columns.NETWORK)
+                .build();
+
+        private static final String GET_NETWORK_ID = new SQLBuilder().select(Columns.NETWORK)
+                .from(TABLE_COMPONENT_GROUP)
+                .where(Columns.ID)
                 .build();
     }
 }
