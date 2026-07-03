@@ -5,6 +5,7 @@ import org.jellerijk.mccreatecalc.entities.ComponentGroup;
 import org.jellerijk.mccreatecalc.entities.components.*;
 import org.jellerijk.mccreatecalc.exceptions.DataBaseAccessException;
 import org.jellerijk.mccreatecalc.util.sql.SQLBuilder;
+import org.sqlite.core.DB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
