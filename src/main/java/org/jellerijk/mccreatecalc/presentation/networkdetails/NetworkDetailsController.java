@@ -11,8 +11,8 @@ public class NetworkDetailsController extends Controller {
     public NetworkDetailsController(UseCaseFactory factory) {
         NetworkDetailsModel model = new NetworkDetailsModel();
         NetworkDetailsInteractor interactor = new NetworkDetailsInteractor(model, factory);
-        GeneratorSelectorController generatorSelector = new GeneratorSelectorController(factory, interactor::addGeneratorGroup, interactor::getGeneratorOptions);
-        GeneratorSelectorController consumerSelector = new GeneratorSelectorController(factory, interactor::addGeneratorGroup, interactor::getConsumerOptions);
+        GeneratorSelectorController generatorSelector = new GeneratorSelectorController(factory, interactor::addComponentGroup, interactor::getGeneratorOptions);
+        GeneratorSelectorController consumerSelector = new GeneratorSelectorController(factory, interactor::addComponentGroup, interactor::getConsumerOptions);
         viewBuilder = new NetworkDetailsViewBuilder(model, generatorSelector.getView(), consumerSelector.getView());
     }
 
