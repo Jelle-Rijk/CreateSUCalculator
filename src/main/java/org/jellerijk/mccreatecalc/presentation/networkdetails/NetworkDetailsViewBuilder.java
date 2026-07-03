@@ -13,13 +13,15 @@ import org.jellerijk.mccreatecalc.util.fxlib.HBoxes;
 import org.jellerijk.mccreatecalc.util.fxlib.Labels;
 
 public class NetworkDetailsViewBuilder implements Builder<Region> {
+    private final Node consumerSelectorContent;
     private final NetworkDetailsModel model;
     private final Node generatorSelectorContent;
 
     public NetworkDetailsViewBuilder(NetworkDetailsModel model,
-                                     Node generatorSelectorContent) {
+                                     Node generatorSelectorContent, Node consumerSelectorContent) {
         this.model = model;
         this.generatorSelectorContent = generatorSelectorContent;
+        this.consumerSelectorContent = consumerSelectorContent;
     }
 
     @Override
@@ -43,7 +45,7 @@ public class NetworkDetailsViewBuilder implements Builder<Region> {
     private Node buildComponentLists() {
         Node generators = buildComponentOverview("Generators", model.suProducedProperty(), generatorSelectorContent);
         Node consumers = buildComponentOverview("Consumers", model.suConsumedProperty(),
-                new Label("Consumer selector here"));
+                consumerSelectorContent);
         return HBoxes.aligned(Pos.TOP_CENTER, 5, generators, consumers);
     }
 
