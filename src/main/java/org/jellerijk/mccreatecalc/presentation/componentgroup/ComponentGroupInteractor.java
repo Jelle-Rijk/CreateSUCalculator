@@ -1,5 +1,6 @@
 package org.jellerijk.mccreatecalc.presentation.componentgroup;
 
+import org.jellerijk.mccreatecalc.application.publishers.Observer;
 import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
 import org.jellerijk.mccreatecalc.application.usecases.network.read.GetComponentGroupUC;
 import org.jellerijk.mccreatecalc.application.dto.ComponentGroupDTO;
@@ -7,21 +8,25 @@ import org.jellerijk.mccreatecalc.entities.components.ComponentType;
 
 import static org.mockito.Mockito.mock;
 
-public class ComponentGroupInteractor {
+public class ComponentGroupInteractor implements Observer<ComponentGroupDTO> {
     private final ComponentGroupModel model;
     private final GetComponentGroupUC componentGroupFetcher;
 
     public ComponentGroupInteractor(ComponentGroupModel model, UseCaseFactory factory) {
         this.model = model;
         this.componentGroupFetcher = mock();
-        updateComponentGroupData();
+        updateComponentGroupData(componentGroupFetcher.execute(model.getGroupId()));
+    }
+
+    @Override
+    public void update(ComponentGroupDTO message) {
+        updateComponentGroupData(message);
     }
 
     /**
      * Fetches and sets the data for the component group that is associated with this interactor's {@link ComponentGroupModel}.
      */
-    public void updateComponentGroupData() {
-        ComponentGroupDTO componentGroupDTO = componentGroupFetcher.execute(model.getGroupId());
+    public void updateComponentGroupData(ComponentGroupDTO componentGroupDTO) {
         ComponentType type = componentGroupDTO.type();
         switch (type) {
             case CONSUMER -> {

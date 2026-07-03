@@ -14,13 +14,12 @@ import static org.mockito.Mockito.when;
 
 class ComponentGroupServiceImplTest {
     private ComponentGroupRepository cgRepo;
-    private ComponentGroupPublisher cgPublisher;
     private ComponentGroupService service;
 
     @BeforeEach
     void setUp() {
         cgRepo = mock();
-        cgPublisher = mock();
+        ComponentGroupPublisher cgPublisher = mock();
         service = new ComponentGroupServiceImpl(cgRepo, cgPublisher);
     }
 

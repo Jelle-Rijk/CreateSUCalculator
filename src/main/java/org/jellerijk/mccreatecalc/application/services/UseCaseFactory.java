@@ -1,5 +1,6 @@
 package org.jellerijk.mccreatecalc.application.services;
 
+import org.jellerijk.mccreatecalc.application.usecases.ObserveComponentGroupUC;
 import org.jellerijk.mccreatecalc.application.usecases.generator.GetGeneratorsUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.network.CreateNetworkUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.network.read.FetchNetworksInfoUseCase;
@@ -9,10 +10,12 @@ import org.jellerijk.mccreatecalc.application.usecases.network.selection.SelectN
 public class UseCaseFactory {
     private final ComponentService componentService;
     private final NetworkService networkService;
+    private final ComponentGroupService componentGroupService;
 
-    public UseCaseFactory(NetworkService networkService, ComponentService componentService) {
+    public UseCaseFactory(NetworkService networkService, ComponentService componentService, ComponentGroupService componentGroupService) {
         this.networkService = networkService;
         this.componentService = componentService;
+        this.componentGroupService = componentGroupService;
     }
 
     //===== Public methods =====
@@ -34,6 +37,10 @@ public class UseCaseFactory {
 
     public ObserveSelectedNetworkUC buildObserveSelectedNetworkUC() {
         return new ObserveSelectedNetworkUC(networkService);
+    }
+
+    public ObserveComponentGroupUC buildObserveComponentGroupUC() {
+        return new ObserveComponentGroupUC(componentGroupService);
     }
 }
 
