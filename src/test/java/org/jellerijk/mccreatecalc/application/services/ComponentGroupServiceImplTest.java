@@ -1,7 +1,7 @@
 package org.jellerijk.mccreatecalc.application.services;
 
 import org.jellerijk.mccreatecalc.application.gateways.ComponentGroupRepository;
-import org.jellerijk.mccreatecalc.application.publishers.ComponentGroupPublisher;
+import org.jellerijk.mccreatecalc.application.publishers.ComponentGroupDTOPublisher;
 import org.jellerijk.mccreatecalc.entities.ComponentGroup;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ class ComponentGroupServiceImplTest {
     @BeforeEach
     void setUp() {
         cgRepo = mock();
-        ComponentGroupPublisher cgPublisher = mock();
+        ComponentGroupDTOPublisher cgPublisher = mock();
         service = new ComponentGroupServiceImpl(cgRepo, cgPublisher);
     }
 

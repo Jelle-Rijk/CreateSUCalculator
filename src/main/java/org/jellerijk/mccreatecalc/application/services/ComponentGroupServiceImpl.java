@@ -1,7 +1,8 @@
 package org.jellerijk.mccreatecalc.application.services;
 
+import org.jellerijk.mccreatecalc.application.dto.ComponentGroupDTO;
 import org.jellerijk.mccreatecalc.application.gateways.ComponentGroupRepository;
-import org.jellerijk.mccreatecalc.application.publishers.ComponentGroupPublisher;
+import org.jellerijk.mccreatecalc.application.publishers.ComponentGroupDTOPublisher;
 import org.jellerijk.mccreatecalc.application.publishers.Subscription;
 import org.jellerijk.mccreatecalc.entities.ComponentGroup;
 
@@ -9,9 +10,9 @@ import java.util.Optional;
 
 public class ComponentGroupServiceImpl implements ComponentGroupService {
     private final ComponentGroupRepository cgRepo;
-    private final ComponentGroupPublisher publisher;
+    private final ComponentGroupDTOPublisher publisher;
 
-    public ComponentGroupServiceImpl(ComponentGroupRepository cgRepo, ComponentGroupPublisher publisher) {
+    public ComponentGroupServiceImpl(ComponentGroupRepository cgRepo, ComponentGroupDTOPublisher publisher) {
         this.cgRepo = cgRepo;
         this.publisher = publisher;
     }
@@ -21,7 +22,7 @@ public class ComponentGroupServiceImpl implements ComponentGroupService {
     }
 
     @Override
-    public void subscribe(Subscription<ComponentGroup, String> subscription) {
+    public void subscribe(Subscription<ComponentGroupDTO, String> subscription) {
         publisher.subscribe(subscription);
     }
 }

@@ -5,7 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import org.jellerijk.mccreatecalc.application.publishers.ComponentGroupPublisher;
+import org.jellerijk.mccreatecalc.application.publishers.ComponentGroupDTOPublisher;
 import org.jellerijk.mccreatecalc.application.services.*;
 import org.jellerijk.mccreatecalc.data.database.ComponentGroupDB;
 import org.jellerijk.mccreatecalc.data.database.ConsumerDB;
@@ -25,7 +25,7 @@ public class CalculatorApplication extends Application {
     public void start(Stage stage) {
         NetworkService networkService = new NetworkServiceImpl(new NetworkRepositoryImpl(new NetworkDB()), new SelectedNetwork(), new SelectedNetworkPublisher());
         ComponentService componentService = new ComponentServiceImpl(new ComponentRepositoryImpl(new ConsumerDB()));
-        ComponentGroupService componentGroupService = new ComponentGroupServiceImpl(new ComponentGroupRepositoryImpl(new ComponentGroupDB()), new ComponentGroupPublisher());
+        ComponentGroupService componentGroupService = new ComponentGroupServiceImpl(new ComponentGroupRepositoryImpl(new ComponentGroupDB()), new ComponentGroupDTOPublisher());
         UseCaseFactory networkUCFactory = new UseCaseFactory(networkService, componentService, componentGroupService);
 
         NetworkListController networkListController = new NetworkListController(networkUCFactory);
