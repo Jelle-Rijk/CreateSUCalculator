@@ -140,6 +140,20 @@ class ComponentGroupDBTest {
         deleteLargeWaterWheel();
     }
 
+    @Test
+    void getNetworkId_GroupExists_ReturnsCorrectNetworkId() {
+        addWindmill();
+        assertEquals(TEST_NETWORK, db.getNetworkId(WINDMILL_ID).orElseThrow());
+        deleteWindmill();
+    }
+
+    @Test
+    void getNetworkId_GroupDoesNotExist_ReturnsEmptyOptional() {
+        assertTrue(db.getNetworkId("non-existant-id").isEmpty());
+    }
+
+
+
     @BeforeEach
     void setUp() {
         db = new ComponentGroupDB();

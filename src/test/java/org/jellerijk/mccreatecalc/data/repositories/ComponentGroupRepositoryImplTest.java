@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class ComponentGroupRepositoryImplTest {
     private ComponentGroupDAO cgDAO;
@@ -33,5 +32,23 @@ class ComponentGroupRepositoryImplTest {
     void getById_IdDoesNotExist_ReturnsEmptyOptional() {
         when(cgDAO.get("id")).thenReturn(Optional.empty());
         assertTrue(cgRepo.getById("id").isEmpty());
+    }
+
+    @Test
+    void delete_delegatesToDAO() {
+        cgRepo.delete("test");
+        verify(cgDAO).deleteGroup("test");
+    }
+
+    @Test
+    void getNetworkId_GroupExists_ReturnsNetworkId() {
+        when(cgDAO.getNetworkId("test")).thenReturn(Optional.of("Test-Network"));
+        assertTrue(cgRepo.getNetworkId("test").isPresent());
+    }
+
+    @Test
+    void getNetworkId_GroupDoesNotExist_ReturnsEmptyOptional() {
+        when(cgDAO.getNetworkId("test")).thenReturn(Optional.empty());
+        assertTrue(cgRepo.getNetworkId("test").isEmpty());
     }
 }

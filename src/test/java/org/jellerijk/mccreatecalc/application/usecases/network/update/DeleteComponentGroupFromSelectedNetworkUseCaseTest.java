@@ -12,27 +12,40 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.mockito.Mockito.mock;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class DeleteComponentGroupFromSelectedNetworkUseCaseTest {
     @Mock
-    StressNetwork network;
+    private StressNetwork network;
     private NetworkService networkService;
-    private SelectedNetworkData selectedNetwork;
     @Mock
     ComponentGroupService cgService;
     private DeleteComponentGroupFromSelectedNetworkUseCase useCase;
 
     @BeforeEach
     void setUp() {
-        selectedNetwork = new SelectedNetwork();
-
+        SelectedNetworkData selectedNetwork = new SelectedNetwork();
         networkService = new NetworkServiceImpl(mock(), selectedNetwork, mock());
         useCase = new DeleteComponentGroupFromSelectedNetworkUseCase(cgService, networkService);
     }
 
     @Test
     void execute_groupIdExists_removesComponent() {
+        when(cgService.getNetworkIdForGroup("test")).thenReturn(Optional.of("test-net"));
+        when(networkService.getById("test-net")).thenReturn(Optional.of(network));
+        useCase.execute("test");
+        verify(cgService).delete("test");
+    }
+
+    @Test
+    void execute_groupIdExists_updatesSelectedNetwork() {
+        when(cgService.getNetworkIdForGroup("test")).thenReturn(Optional.of("test-net"));
+        when(networkService.getById("test-net")).thenReturn(Optional.of(network));
+        useCase.execute("test");
+        assertEquals(network, networkService.getSelectedNetwork().orElseThrow());
     }
 }
