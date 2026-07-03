@@ -1,5 +1,6 @@
 package org.jellerijk.mccreatecalc.application.gateways;
 
+import org.jellerijk.mccreatecalc.application.usecases.network.update.UpdateComponentGroupRequest;
 import org.jellerijk.mccreatecalc.entities.ComponentGroup;
 
 import java.util.Optional;
@@ -14,4 +15,6 @@ public interface ComponentGroupRepository {
     Optional<String> getNetworkId(String groupId);
 
     void delete(String groupId);
+
+    void update(UpdateComponentGroupRequest request);
 }

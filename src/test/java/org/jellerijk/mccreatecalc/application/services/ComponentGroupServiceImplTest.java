@@ -2,6 +2,7 @@ package org.jellerijk.mccreatecalc.application.services;
 
 import org.jellerijk.mccreatecalc.application.gateways.ComponentGroupRepository;
 import org.jellerijk.mccreatecalc.application.publishers.ComponentGroupDTOPublisher;
+import org.jellerijk.mccreatecalc.application.usecases.network.update.UpdateComponentGroupRequest;
 import org.jellerijk.mccreatecalc.entities.ComponentGroup;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,5 +52,12 @@ class ComponentGroupServiceImplTest {
     void delete_DelegatesCall() {
         service.delete("test");
         verify(cgRepo).delete("test");
+    }
+
+    @Test
+    void update_DelegatesCall() {
+        UpdateComponentGroupRequest request = mock();
+        service.update(request);
+        verify(cgRepo).update(request);
     }
 }

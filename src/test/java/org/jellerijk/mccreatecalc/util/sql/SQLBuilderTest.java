@@ -107,4 +107,20 @@ class SQLBuilderTest {
     void deleteFrom_SetsCorrectString() {
         assertEquals("DELETE FROM Products ", builder.deleteFrom("Products").build());
     }
+
+    @Test
+    void update_OneCol_SetsCorrectString() {
+        assertEquals("UPDATE Products SET Price=? ", builder.update("Products", "Price").build());
+    }
+
+    @Test
+    void update_MultipleCols_SetsCorrectString() {
+        assertEquals("UPDATE Products SET Price=?,Colour=?,Quality=? ", builder.update("Products", "Price", "Colour", "Quality")
+                .build());
+    }
+
+    @Test
+    void update_NoCols_ThrowsIAE() {
+        assertThrows(IllegalArgumentException.class, () -> builder.update("Products"));
+    }
 }
