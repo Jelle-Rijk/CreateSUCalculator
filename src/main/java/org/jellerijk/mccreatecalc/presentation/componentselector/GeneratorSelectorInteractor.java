@@ -11,12 +11,10 @@ import java.util.function.Supplier;
 public class GeneratorSelectorInteractor {
     private final Consumer<ComponentOption> addGeneratorGroup;
     private final GeneratorSelectorModel model;
-    private final GetGeneratorsUseCase generatorOptionFetcher;
     private final Supplier<List<ComponentOption>> optionsSupplier;
 
     public GeneratorSelectorInteractor(GeneratorSelectorModel model, UseCaseFactory factory, Consumer<ComponentOption> addGeneratorGroup, Supplier<List<ComponentOption>> optionsSupplier) {
         this.model = model;
-        generatorOptionFetcher = factory.buildGetGeneratorsUseCase();
         this.addGeneratorGroup = addGeneratorGroup;
         this.optionsSupplier = optionsSupplier;
         bindModelProperties();
