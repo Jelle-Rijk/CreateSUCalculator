@@ -5,12 +5,20 @@ import org.jellerijk.mccreatecalc.entities.ComponentGroup;
 import org.jellerijk.mccreatecalc.entities.components.Windmill;
 import org.jellerijk.mccreatecalc.entities.components.ComponentType;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public record ComponentGroupDTO(String id, ComponentType type, String name, String img, int amount, int sails,
                                 String level, int su, int rpm) {
     public static ComponentGroupDTO map(ComponentGroup cg) {
         Component c = cg.getComponent();
         ComponentType type = cg.getComponentType();
         return new ComponentGroupDTO(cg.getId(), type, c.getName(), c.getImg(), cg.getAmount(), c instanceof Windmill w ? w.getSails() : 0, null, cg.calculateSu(), c.getRpm());
+    }
+
+    public static List<ComponentGroupDTO> map(List<ComponentGroup> cg) {
+        return cg.stream().map(ComponentGroupDTO::map).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public static final class Builder {
