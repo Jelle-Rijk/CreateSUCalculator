@@ -1,10 +1,10 @@
 package org.jellerijk.mccreatecalc.presentation.networkdetails;
 
 import javafx.application.Platform;
+import org.jellerijk.mccreatecalc.application.services.ComponentOption;
 import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
 import org.jellerijk.mccreatecalc.application.usecases.network.selection.SelectedNetworkObserver;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
-import org.jellerijk.mccreatecalc.presentation.componentselector.GeneratorOption;
 
 public class NetworkDetailsInteractor implements SelectedNetworkObserver {
     private final NetworkDetailsModel model;
@@ -14,7 +14,7 @@ public class NetworkDetailsInteractor implements SelectedNetworkObserver {
         factory.buildObserveSelectedNetworkUC().execute(this);
     }
 
-    public void addGeneratorGroup(GeneratorOption generatorOption) {
+    public void addGeneratorGroup(ComponentOption componentOption) {
         System.out.println("NetworkDetailsInteractor: added generator group");
     }
 

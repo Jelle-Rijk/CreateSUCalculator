@@ -5,11 +5,14 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import org.jellerijk.mccreatecalc.application.publishers.ComponentGroupDTOPublisher;
 import org.jellerijk.mccreatecalc.application.services.*;
-import org.jellerijk.mccreatecalc.data.database.GeneratorDB;
+import org.jellerijk.mccreatecalc.data.database.ComponentGroupDB;
+import org.jellerijk.mccreatecalc.data.database.ConsumerDB;
 import org.jellerijk.mccreatecalc.data.database.NetworkDB;
 import org.jellerijk.mccreatecalc.data.local.SelectedNetwork;
-import org.jellerijk.mccreatecalc.data.repositories.GeneratorRepositoryImpl;
+import org.jellerijk.mccreatecalc.data.repositories.ComponentGroupRepositoryImpl;
+import org.jellerijk.mccreatecalc.data.repositories.ComponentRepositoryImpl;
 import org.jellerijk.mccreatecalc.data.repositories.NetworkRepositoryImpl;
 import org.jellerijk.mccreatecalc.presentation.networkdetails.NetworkDetailsController;
 import org.jellerijk.mccreatecalc.presentation.networklist.NetworkListController;
@@ -21,8 +24,9 @@ public class CalculatorApplication extends Application {
     @Override
     public void start(Stage stage) {
         NetworkService networkService = new NetworkServiceImpl(new NetworkRepositoryImpl(new NetworkDB()), new SelectedNetwork(), new SelectedNetworkPublisher());
-        GeneratorService generatorService = new GeneratorServiceImpl(new GeneratorRepositoryImpl(new GeneratorDB()));
-        UseCaseFactory networkUCFactory = new UseCaseFactory(networkService, generatorService);
+        ComponentService componentService = new ComponentServiceImpl(new ComponentRepositoryImpl(new ConsumerDB()));
+        ComponentGroupService componentGroupService = new ComponentGroupServiceImpl(new ComponentGroupRepositoryImpl(new ComponentGroupDB()), new ComponentGroupDTOPublisher());
+        UseCaseFactory networkUCFactory = new UseCaseFactory(networkService, componentService, componentGroupService);
 
         NetworkListController networkListController = new NetworkListController(networkUCFactory);
         NetworkDetailsController detailsController = new NetworkDetailsController(networkUCFactory);
@@ -34,4 +38,5 @@ public class CalculatorApplication extends Application {
         stage.setTitle("Test application");
         stage.show();
     }
+
 }

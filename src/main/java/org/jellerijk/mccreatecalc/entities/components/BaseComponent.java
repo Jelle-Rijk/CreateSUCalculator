@@ -1,7 +1,5 @@
 package org.jellerijk.mccreatecalc.entities.components;
 
-import org.jellerijk.mccreatecalc.entities.Component;
-
 public abstract class BaseComponent implements Component {
     private final String img;
     private final String name;

@@ -3,7 +3,6 @@ package org.jellerijk.mccreatecalc.data.database;
 import org.jellerijk.mccreatecalc.application.dto.NetworkInfo;
 import org.jellerijk.mccreatecalc.data.dao.NetworkDAO;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
-import org.jellerijk.mccreatecalc.entities.StressNetworkBuilder;
 import org.jellerijk.mccreatecalc.exceptions.DataBaseAccessException;
 import org.jellerijk.mccreatecalc.util.sql.QueryBuilder;
 
@@ -75,7 +74,7 @@ public class NetworkDB implements NetworkDAO {
     private StressNetwork mapToStressNetwork(ResultSet res) throws SQLException {
         String id = res.getString(COL_ID);
         String name = res.getString(COL_NAME);
-        return StressNetworkBuilder.aStressNetwork()
+        return StressNetwork.Builder.aStressNetwork()
                 .withId(id)
                 .withName(name)
                 .withGenerators(new ArrayList<>())

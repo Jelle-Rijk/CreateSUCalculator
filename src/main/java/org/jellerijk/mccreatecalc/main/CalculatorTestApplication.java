@@ -7,8 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.jellerijk.mccreatecalc.application.services.*;
-import org.jellerijk.mccreatecalc.application.usecases.GetComponentGroupUC;
-import org.jellerijk.mccreatecalc.entities.ComponentGroup;
+import org.jellerijk.mccreatecalc.application.usecases.network.read.GetComponentGroupUC;
+import org.jellerijk.mccreatecalc.application.dto.ComponentGroupDTO;
 import org.jellerijk.mccreatecalc.entities.components.ComponentType;
 import org.jellerijk.mccreatecalc.presentation.componentgroup.ComponentGroupController;
 
@@ -35,9 +35,8 @@ public class CalculatorTestApplication extends Application {
     private Parent buildRoot() {
         UseCaseFactory factory = mock();
         GetComponentGroupUC componentGroupUC = mock();
-        ComponentGroup group = new ComponentGroup(ComponentType.CONSUMER, "Water Wheel", "create_water_wheel.png", 3, 0, null, 3 * 256, 8);
+        ComponentGroupDTO group = new ComponentGroupDTO("1234", ComponentType.CONSUMER, "Water Wheel", "create_water_wheel.png", 3, 0, null, 3 * 256, 8);
         when(componentGroupUC.execute("1234")).thenReturn(group);
-        when(factory.buildGetComponentGroupUC()).thenReturn(componentGroupUC);
 
         ComponentGroupController controller = new ComponentGroupController(factory, "1234");
         return (Parent) controller.getView();
