@@ -3,6 +3,7 @@ package org.jellerijk.mccreatecalc.presentation.networkdetails;
 import javafx.application.Platform;
 import org.jellerijk.mccreatecalc.application.services.ComponentOption;
 import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
+import org.jellerijk.mccreatecalc.application.usecases.components.GetConsumersUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.components.GetGeneratorsUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.network.selection.SelectedNetworkObserver;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
@@ -12,10 +13,12 @@ import java.util.List;
 public class NetworkDetailsInteractor implements SelectedNetworkObserver {
     private final NetworkDetailsModel model;
     private final GetGeneratorsUseCase generatorOptionsFetcher;
+    private final GetConsumersUseCase consumerOptionsFetcher;
 
     public NetworkDetailsInteractor(NetworkDetailsModel model, UseCaseFactory factory) {
         this.model = model;
         generatorOptionsFetcher = factory.buildGetGeneratorsUseCase();
+        consumerOptionsFetcher = factory.buildGetConsumersUC();
         factory.buildObserveSelectedNetworkUC().execute(this);
     }
 
@@ -42,6 +45,10 @@ public class NetworkDetailsInteractor implements SelectedNetworkObserver {
 
     public List<ComponentOption> getGeneratorOptions() {
         return generatorOptionsFetcher.execute();
+    }
+
+    public List<ComponentOption> getConsumerOptions() {
+        return consumerOptionsFetcher.execute();
     }
 
     private void clearStressNetworkProperties() {

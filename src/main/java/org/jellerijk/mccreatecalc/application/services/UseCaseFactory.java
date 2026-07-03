@@ -1,6 +1,7 @@
 package org.jellerijk.mccreatecalc.application.services;
 
 import org.jellerijk.mccreatecalc.application.usecases.ObserveComponentGroupUC;
+import org.jellerijk.mccreatecalc.application.usecases.components.GetConsumersUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.components.GetGeneratorsUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.network.CreateNetworkUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.network.read.FetchNetworksInfoUseCase;
@@ -41,6 +42,10 @@ public class UseCaseFactory {
 
     public ObserveComponentGroupUC buildObserveComponentGroupUC() {
         return new ObserveComponentGroupUC(componentGroupService);
+    }
+
+    public GetConsumersUseCase buildGetConsumersUC() {
+        return new GetConsumersUseCase(componentService);
     }
 }
 
