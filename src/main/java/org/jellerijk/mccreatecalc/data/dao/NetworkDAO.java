@@ -14,4 +14,6 @@ public interface NetworkDAO {
     Optional<StressNetwork> getById(String id);
 
     void update(StressNetwork network);
+
+    void delete(String id);
 }
