@@ -9,12 +9,12 @@ import javafx.scene.layout.Priority;
 import org.jellerijk.mccreatecalc.application.services.ComponentOption;
 import org.jellerijk.mccreatecalc.util.fxlib.HBoxes;
 
-public class GeneratorSelectorViewBuilder {
+public class ComponentSelectorViewBuilder {
 
-    private final GeneratorSelectorModel model;
+    private final ComponentSelectorModel model;
     private final Runnable addGeneratorHandler;
 
-    public GeneratorSelectorViewBuilder(GeneratorSelectorModel model, Runnable addGeneratorHandler) {
+    public ComponentSelectorViewBuilder(ComponentSelectorModel model, Runnable addGeneratorHandler) {
         this.model = model;
         this.addGeneratorHandler = addGeneratorHandler;
     }

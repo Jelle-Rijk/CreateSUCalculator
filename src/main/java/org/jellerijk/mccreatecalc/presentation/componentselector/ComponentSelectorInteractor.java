@@ -1,19 +1,17 @@
 package org.jellerijk.mccreatecalc.presentation.componentselector;
 
 import org.jellerijk.mccreatecalc.application.services.ComponentOption;
-import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
-import org.jellerijk.mccreatecalc.application.usecases.components.GetGeneratorsUseCase;
 
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class GeneratorSelectorInteractor {
+public class ComponentSelectorInteractor {
     private final Consumer<ComponentOption> addGeneratorGroup;
-    private final GeneratorSelectorModel model;
+    private final ComponentSelectorModel model;
     private final Supplier<List<ComponentOption>> optionsSupplier;
 
-    public GeneratorSelectorInteractor(GeneratorSelectorModel model, UseCaseFactory factory, Consumer<ComponentOption> addGeneratorGroup, Supplier<List<ComponentOption>> optionsSupplier) {
+    public ComponentSelectorInteractor(ComponentSelectorModel model, Consumer<ComponentOption> addGeneratorGroup, Supplier<List<ComponentOption>> optionsSupplier) {
         this.model = model;
         this.addGeneratorGroup = addGeneratorGroup;
         this.optionsSupplier = optionsSupplier;

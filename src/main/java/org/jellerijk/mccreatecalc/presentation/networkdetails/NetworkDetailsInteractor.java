@@ -37,14 +37,7 @@ public class NetworkDetailsInteractor implements SelectedNetworkObserver {
         if (componentOption.type() == ComponentType.WATER_WHEEL) {
             request.withWaterWheelType(WaterWheelType.fromName(componentOption.name()));
         }
-        ComponentGroupDTO newGroup = addComponentGroupHandler.execute(request.build());
-
-        Platform.runLater(() -> {
-            if (newGroup.type() == ComponentType.CONSUMER)
-                model.addConsumer(newGroup);
-            else
-                model.addGenerator(newGroup);
-        });
+        addComponentGroupHandler.execute(request.build());
     }
 
     @Override

@@ -7,11 +7,10 @@ import org.jellerijk.mccreatecalc.application.services.ComponentOption;
 
 import java.util.Collection;
 
-public class GeneratorSelectorModel {
+public class ComponentSelectorModel {
     private final ObservableList<ComponentOption> componentOptions = FXCollections.observableArrayList();
     private final ObjectProperty<ComponentOption> selectedComponentOption = new SimpleObjectProperty<>();
     private final BooleanProperty selected = new SimpleBooleanProperty();
-    private final IntegerProperty amount = new SimpleIntegerProperty();
     private final BooleanProperty addingDisabled = new SimpleBooleanProperty();
 
     public ComponentOption getSelectedComponentOption() {
@@ -28,10 +27,6 @@ public class GeneratorSelectorModel {
 
     public BooleanProperty selectedProperty() {
         return selected;
-    }
-
-    public IntegerProperty amountProperty() {
-        return amount;
     }
 
     public ObservableList<ComponentOption> getComponentOptions() {
