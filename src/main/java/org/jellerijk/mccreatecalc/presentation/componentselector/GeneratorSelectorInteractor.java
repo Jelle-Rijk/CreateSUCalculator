@@ -2,7 +2,7 @@ package org.jellerijk.mccreatecalc.presentation.componentselector;
 
 import org.jellerijk.mccreatecalc.application.services.ComponentOption;
 import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
-import org.jellerijk.mccreatecalc.application.usecases.generator.GetGeneratorsUseCase;
+import org.jellerijk.mccreatecalc.application.usecases.components.GetGeneratorsUseCase;
 
 import java.util.List;
 import java.util.function.Consumer;
