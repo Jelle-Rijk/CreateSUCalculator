@@ -1,22 +1,21 @@
 package org.jellerijk.mccreatecalc.application.services;
 
-import org.jellerijk.mccreatecalc.application.usecases.GetComponentGroupUC;
 import org.jellerijk.mccreatecalc.application.usecases.ObserveComponentGroupUC;
 import org.jellerijk.mccreatecalc.application.usecases.generator.GetGeneratorsUseCase;
-import org.jellerijk.mccreatecalc.application.usecases.network.creation.CreateNetworkUseCase;
+import org.jellerijk.mccreatecalc.application.usecases.network.CreateNetworkUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.network.read.FetchNetworksInfoUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.network.selection.ObserveSelectedNetworkUC;
 import org.jellerijk.mccreatecalc.application.usecases.network.selection.SelectNetworkUseCase;
-import org.jellerijk.mccreatecalc.application.usecases.network.update.AddGeneratorToSelectedNetworkUseCase;
 
 public class UseCaseFactory {
+    private final ComponentService componentService;
     private final NetworkService networkService;
-    private final GeneratorService generatorService;
+    private final ComponentGroupService componentGroupService;
 
-    public UseCaseFactory(NetworkService networkService, GeneratorService generatorService) {
+    public UseCaseFactory(NetworkService networkService, ComponentService componentService, ComponentGroupService componentGroupService) {
         this.networkService = networkService;
-        this.generatorService = generatorService;
-
+        this.componentService = componentService;
+        this.componentGroupService = componentGroupService;
     }
 
     //===== Public methods =====
@@ -32,24 +31,16 @@ public class UseCaseFactory {
         return new SelectNetworkUseCase(networkService);
     }
 
-    public AddGeneratorToSelectedNetworkUseCase buildAddGeneratorToNetworkUseCase() {
-        return new AddGeneratorToSelectedNetworkUseCase(networkService, generatorService);
-    }
-
     public GetGeneratorsUseCase buildGetGeneratorsUseCase() {
-        return new GetGeneratorsUseCase(generatorService);
+        return new GetGeneratorsUseCase(componentService);
     }
 
     public ObserveSelectedNetworkUC buildObserveSelectedNetworkUC() {
         return new ObserveSelectedNetworkUC(networkService);
     }
 
-    public GetComponentGroupUC buildGetComponentGroupUC() {
-        return new GetComponentGroupUC();
-    }
-
     public ObserveComponentGroupUC buildObserveComponentGroupUC() {
-        return new ObserveComponentGroupUC();
+        return new ObserveComponentGroupUC(componentGroupService);
     }
 }
 

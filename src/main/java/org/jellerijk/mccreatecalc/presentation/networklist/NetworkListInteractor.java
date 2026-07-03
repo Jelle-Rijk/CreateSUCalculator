@@ -1,8 +1,7 @@
 package org.jellerijk.mccreatecalc.presentation.networklist;
 
 import org.jellerijk.mccreatecalc.application.dto.NetworkInfo;
-import org.jellerijk.mccreatecalc.application.usecases.network.creation.CreateNetworkRequest;
-import org.jellerijk.mccreatecalc.application.usecases.network.creation.CreateNetworkUseCase;
+import org.jellerijk.mccreatecalc.application.usecases.network.CreateNetworkUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.network.read.FetchNetworksInfoUseCase;
 import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
 import org.jellerijk.mccreatecalc.application.usecases.network.selection.SelectNetworkUseCase;
@@ -32,9 +31,9 @@ public class NetworkListInteractor {
     }
 
     public void createNetwork() {
-        CreateNetworkRequest request = new CreateNetworkRequest(model.getUserInput());
+        String name = model.getUserInput();
         model.setUserInputEnabled(false);
-        networkCreator.execute(request);
+        networkCreator.execute(name);
         model.setUserInput("");
         model.setUserInputEnabled(true);
     }

@@ -1,6 +1,7 @@
 package org.jellerijk.mccreatecalc.entities;
 
 import org.jellerijk.mccreatecalc.entities.components.WaterWheel;
+import org.jellerijk.mccreatecalc.entities.components.WaterWheelType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,71 +17,30 @@ class WaterWheelTest {
     private static final int VALID_SU = 512;
 
     private static final String DEFAULT_IMAGE = "create_cuckoo_clock.png";
-    private WaterWheel.Builder builder;
+    private WaterWheel smallWaterWheel;
+    private WaterWheel largeWaterWheel;
 
     @BeforeEach
     void setup() {
-        builder = WaterWheel.Builder.aConstantGenerator()
-                .withName(VALID_NAME)
-                .withImg(VALID_IMG)
-                .withSuGeneration(VALID_SU)
-                .withRpm(8);
-    }
-
-    //    ==================== FIELD - IMG ====================
-    @Test
-    void getImg_ImageIsNull_ReturnsDefaultImg() {
-        assertEquals(DEFAULT_IMAGE, builder.withImg(null).build().getImg());
+        smallWaterWheel = new WaterWheel(WaterWheelType.SMALL);
+        largeWaterWheel = new WaterWheel(WaterWheelType.LARGE);
     }
 
     @Test
-    void getImg_Valid_ReturnsCorrectString() {
-        assertEquals(VALID_IMG, builder.build().getImg());
+    void constructor_smallWaterWheel_SetsCorrectValues() {
+        assertEquals("Water Wheel", smallWaterWheel.getName());
+        assertEquals(WaterWheelType.SMALL, smallWaterWheel.getSize());
+        assertEquals(256, smallWaterWheel.getSuProduction());
+        assertEquals(8, smallWaterWheel.getRpm());
+        assertEquals("create_water_wheel.png", smallWaterWheel.getImg());
     }
-
-
-    @ParameterizedTest
-    @EmptySource
-    @ValueSource(strings = {"  ", "\t", "\r", "\n", "test", ".png", "test,png"})
-    void constructor_InvalidImg_ThrowsIAE(String invalidImg) {
-        assertThrows(IllegalArgumentException.class,
-                () -> builder.withImg(invalidImg).build());
-    }
-
-    // ==================== FIELD - NAME ====================
 
     @Test
-    void getName_Valid_Returns() {
-        assertEquals(VALID_NAME, builder.build().getName());
-    }
-
-    @ParameterizedTest
-    @NullAndEmptySource
-    @ValueSource(strings = {"  ", "\t", "\r", "\n"})
-    void constructor_InvalidName_ThrowsIAE(String invalidName) {
-        assertThrows(IllegalArgumentException.class,
-                () -> builder.withName(invalidName).build());
-    }
-
-//    ==================== FIELD - SU ====================
-
-    @ParameterizedTest
-    @ValueSource(ints = {0, 1, VALID_SU, Integer.MAX_VALUE})
-    void getSuGeneration_Valid_Returns(int validSU) {
-        WaterWheel gen = builder.withSuGeneration(validSU).build();
-        assertEquals(validSU, gen.getSuGeneration());
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = {Integer.MIN_VALUE, -1})
-    void constructor_invalidSuGeneration_ThrowsIAE(int invalidSU) {
-        assertThrows(IllegalArgumentException.class,
-                () -> builder.withSuGeneration(invalidSU).build());
-    }
-
-    //    === CalculateSUProduced() ===
-    @Test
-    void getSUProduced_matchesSuGeneration() {
-        assertEquals(builder.build().getSuGeneration(), builder.build().getSuProduction());
+    void constructor_largeWaterWheel_SetsCorrectValues() {
+        assertEquals("Large Water Wheel", largeWaterWheel.getName());
+        assertEquals(WaterWheelType.LARGE, largeWaterWheel.getSize());
+        assertEquals(512, largeWaterWheel.getSuProduction());
+        assertEquals(4, largeWaterWheel.getRpm());
+        assertEquals("create_large_water_wheel.png", largeWaterWheel.getImg());
     }
 }

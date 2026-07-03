@@ -29,7 +29,6 @@ public class ComponentGroupController extends Controller {
                 return null;
             }
         };
-        changeSubmit.setOnSucceeded((_) -> interactor.updateComponentGroupData());
         startTaskOnNewThread(changeSubmit);
     }
 

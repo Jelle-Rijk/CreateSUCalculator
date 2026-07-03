@@ -1,6 +1,5 @@
 package org.jellerijk.mccreatecalc.entities.components;
 
-import org.jellerijk.mccreatecalc.entities.Windmill;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
