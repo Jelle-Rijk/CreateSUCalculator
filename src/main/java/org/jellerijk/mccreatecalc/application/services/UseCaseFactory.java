@@ -56,5 +56,13 @@ public class UseCaseFactory {
     public SelectNetworkUseCase buildSelectNetworkUseCase() {
         return new SelectNetworkUseCase(networkService);
     }
+
+    public GetConsumersUseCase buildGetConsumersUC() {
+        return new GetConsumersUseCase(componentService);
+    }
+
+    public AddComponentGroupToSelectedNetworkUC buildAddComponentGroupUC() {
+        return new AddComponentGroupToSelectedNetworkUC(networkService, componentService);
+    }
 }
 
