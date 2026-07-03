@@ -1,13 +1,7 @@
 package org.jellerijk.mccreatecalc.data.dao;
 
-import org.jellerijk.mccreatecalc.data.database.DBConnection;
 import org.jellerijk.mccreatecalc.entities.ComponentGroup;
-import org.jellerijk.mccreatecalc.exceptions.DataBaseAccessException;
-import org.jellerijk.mccreatecalc.util.sql.SQLBuilder;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 

@@ -1,6 +1,5 @@
 package org.jellerijk.mccreatecalc.application.usecases.network.update;
 
-import org.jellerijk.mccreatecalc.application.services.ComponentGroupService;
 import org.jellerijk.mccreatecalc.application.services.ComponentService;
 import org.jellerijk.mccreatecalc.application.services.NetworkService;
 import org.jellerijk.mccreatecalc.application.usecases.UseCase;
