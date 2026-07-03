@@ -40,5 +40,6 @@ public class ComponentGroupServiceImpl implements ComponentGroupService {
     @Override
     public void update(UpdateComponentGroupRequest request) {
         cgRepo.update(request);
+        publisher.publish(cgRepo.getById(request.groupId()).orElseThrow());
     }
 }
