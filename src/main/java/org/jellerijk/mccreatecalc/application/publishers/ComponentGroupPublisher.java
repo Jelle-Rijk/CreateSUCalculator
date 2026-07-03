@@ -11,15 +11,11 @@ public class ComponentGroupPublisher implements Publisher<ComponentGroup, String
         this.subscriptions = new HashMap<>();
     }
 
-    /**
-     * @param observer The observer to subscribe.
-     * @param groupId  The groupId of the component group to subscribe to.
-     */
     @Override
-    public void subscribe(Observer<ComponentGroup> observer, String groupId) {
-        List<Observer<ComponentGroup>> observers = subscriptions.getOrDefault(groupId, new ArrayList<>());
-        observers.add(observer);
-        subscriptions.put(groupId, observers);
+    public void subscribe(Subscription<ComponentGroup, String> subscription) {
+        List<Observer<ComponentGroup>> observers = subscriptions.getOrDefault(subscription.getEventIdentifier(), new ArrayList<>());
+        observers.add(subscription.getObserver());
+        subscriptions.put(subscription.getEventIdentifier(), observers);
     }
 
     @Override

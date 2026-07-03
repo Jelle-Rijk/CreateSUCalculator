@@ -26,7 +26,7 @@ class ComponentGroupPublisherTest {
     @Test
     void publish_notifiesSubscriber() {
         when(cg.getId()).thenReturn("test");
-        cgPublisher.subscribe(observer, "test");
+        cgPublisher.subscribe(new Subscription<>(observer, "test"));
         cgPublisher.publish(cg);
         verify(observer).update(cg);
     }
@@ -34,8 +34,8 @@ class ComponentGroupPublisherTest {
     @Test
     void publish_subscribedToDifferentCG_NotUpdated() {
         when(cg.getId()).thenReturn("differentId");
-        cgPublisher.subscribe(mock(), "differentId");
-        cgPublisher.subscribe(observer, "anId");
+        cgPublisher.subscribe(new Subscription<>(mock(), "differentId"));
+        cgPublisher.subscribe(new Subscription<>(observer, "anId"));
         cgPublisher.publish(cg);
         verifyNoInteractions(observer);
     }
