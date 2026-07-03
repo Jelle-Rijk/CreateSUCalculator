@@ -24,6 +24,10 @@ public class ComponentGroupModel {
         return componentName;
     }
 
+    public String getGroupId() {
+        return groupId.get();
+    }
+
     public String getImage() {
         return image.get();
     }
