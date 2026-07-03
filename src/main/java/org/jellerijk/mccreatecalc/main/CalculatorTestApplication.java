@@ -38,7 +38,7 @@ public class CalculatorTestApplication extends Application {
         ComponentGroupDTO group = new ComponentGroupDTO("1234", ComponentType.CONSUMER, "Water Wheel", "create_water_wheel.png", 3, 0, null, 3 * 256, 8);
         when(componentGroupUC.execute("1234")).thenReturn(group);
 
-        ComponentGroupController controller = new ComponentGroupController(factory, "1234");
+        ComponentGroupController controller = new ComponentGroupController(factory);
         return (Parent) controller.getView();
     }
 }

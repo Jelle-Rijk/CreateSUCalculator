@@ -1,6 +1,7 @@
 package org.jellerijk.mccreatecalc.presentation.networkdetails;
 
 import javafx.application.Platform;
+import org.jellerijk.mccreatecalc.application.dto.ComponentGroupDTO;
 import org.jellerijk.mccreatecalc.application.services.ComponentOption;
 import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
 import org.jellerijk.mccreatecalc.application.usecases.components.GetConsumersUseCase;
@@ -36,14 +37,19 @@ public class NetworkDetailsInteractor implements SelectedNetworkObserver {
         if (componentOption.type() == ComponentType.WATER_WHEEL) {
             request.withWaterWheelType(WaterWheelType.fromName(componentOption.name()));
         }
-        addComponentGroupHandler.execute(request.build());
-        System.out.println("NetworkDetailsInteractor: ADDED");
+        ComponentGroupDTO newGroup = addComponentGroupHandler.execute(request.build());
+
+        Platform.runLater(() -> {
+            if (newGroup.type() == ComponentType.CONSUMER)
+                model.addConsumer(newGroup);
+            else
+                model.addGenerator(newGroup);
+        });
     }
 
     @Override
     public void onNetworkSelectionChanged(StressNetwork selectedNetwork) {
         Platform.runLater(() -> setStressNetworkProperties(selectedNetwork));
-        System.out.printf("NetworkDetailsInteractor: %s selected%n", selectedNetwork.name());
     }
 
     private void setStressNetworkProperties(StressNetwork network) {

@@ -1,21 +1,26 @@
 package org.jellerijk.mccreatecalc.presentation.componentgroup;
 
 import org.jellerijk.mccreatecalc.application.publishers.Observer;
+import org.jellerijk.mccreatecalc.application.publishers.Subscription;
 import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
-import org.jellerijk.mccreatecalc.application.usecases.network.read.GetComponentGroupUC;
+import org.jellerijk.mccreatecalc.application.usecases.ObserveComponentGroupUC;
 import org.jellerijk.mccreatecalc.application.dto.ComponentGroupDTO;
 import org.jellerijk.mccreatecalc.entities.components.ComponentType;
 
-import static org.mockito.Mockito.mock;
-
 public class ComponentGroupInteractor implements Observer<ComponentGroupDTO> {
     private final ComponentGroupModel model;
-    private final GetComponentGroupUC componentGroupFetcher;
+    private final ObserveComponentGroupUC observeComponentGroupUC;
 
     public ComponentGroupInteractor(ComponentGroupModel model, UseCaseFactory factory) {
         this.model = model;
-        this.componentGroupFetcher = mock();
-        updateComponentGroupData(componentGroupFetcher.execute(model.getGroupId()));
+        model.groupIdProperty().addListener((_, oldId, newId) -> handleGroupIdChange(oldId, newId));
+        observeComponentGroupUC = factory.buildObserveComponentGroupUC();
+    }
+
+    private void handleGroupIdChange(String oldId, String newId) {
+        System.out.printf("ComponentGroupInteractor: Unsubscribing from %s (not implemented yet)%n", oldId);
+        observeComponentGroupUC.execute(new Subscription<>(this, newId));
+
     }
 
     @Override

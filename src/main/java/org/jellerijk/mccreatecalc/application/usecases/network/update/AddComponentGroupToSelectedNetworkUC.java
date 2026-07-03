@@ -23,6 +23,12 @@ public class AddComponentGroupToSelectedNetworkUC implements UseCase<AddComponen
         this.componentService = componentService;
     }
 
+    /**
+     * Adds a component group to the selected network.
+     *
+     * @param addComponentGroupRequest The request containing data for the component group to add.
+     * @return A DTO representing the newly added component group.
+     */
     @Override
     public ComponentGroupDTO execute(AddComponentGroupRequest addComponentGroupRequest) {
         StressNetwork network = getNetwork();

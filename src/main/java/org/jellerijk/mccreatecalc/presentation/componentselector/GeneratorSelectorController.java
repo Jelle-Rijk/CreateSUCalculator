@@ -25,26 +25,27 @@ public class GeneratorSelectorController extends Controller {
     }
 
     private void loadGeneratorOptions() {
-        Task<Void> loadOptions = new Task<>() {
-            @Override
-            protected Void call() {
-                interactor.loadComponentOptions();
-                return null;
-            }
-        };
-        startTaskOnNewThread(loadOptions);
+//        Task<Void> loadOptions = new Task<>() {
+//            @Override
+//            protected Void call() {
+//                interactor.loadComponentOptions();
+//                return null;
+//            }
+//        };
+//        startTaskOnNewThread(loadOptions);
+        interactor.loadComponentOptions();
     }
 
     private void addGenerator() {
         Task<Void> addGenerator = new Task<>() {
             @Override
             protected Void call() {
-                model.setAddingDisabled(true);
                 interactor.addGenerator();
                 return null;
             }
         };
         addGenerator.setOnSucceeded(_ -> model.setAddingDisabled(false));
+        model.setAddingDisabled(true);
         startTaskOnNewThread(addGenerator);
     }
 
