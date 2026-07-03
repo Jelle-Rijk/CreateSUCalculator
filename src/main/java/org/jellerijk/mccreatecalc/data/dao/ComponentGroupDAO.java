@@ -1,7 +1,13 @@
 package org.jellerijk.mccreatecalc.data.dao;
 
+import org.jellerijk.mccreatecalc.data.database.DBConnection;
 import org.jellerijk.mccreatecalc.entities.ComponentGroup;
+import org.jellerijk.mccreatecalc.exceptions.DataBaseAccessException;
+import org.jellerijk.mccreatecalc.util.sql.SQLBuilder;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,4 +21,12 @@ public interface ComponentGroupDAO {
     Optional<ComponentGroup> get(String groupId);
 
     void deleteGroup(String groupId);
+
+    /**
+     * Updates the componentGroups for a network. Any component groups associated with the network, but not in the supplied list, will be deleted.
+     *
+     * @param networkId       The network to sync entries for.
+     * @param componentGroups The component groups to sync.
+     */
+    void syncComponentGroups(String networkId, List<ComponentGroup> componentGroups);
 }
