@@ -10,4 +10,12 @@ public interface ComponentGroupService {
     Optional<ComponentGroup> getById(String groupId);
 
     void subscribe(Subscription<ComponentGroupDTO, String> subscription);
+
+    /**
+     * @param groupId The group to look up the network id for.
+     * @return An optional containing the network's id.
+     */
+    Optional<String> getNetworkIdForGroup(String groupId);
+
+    void delete(String groupId);
 }

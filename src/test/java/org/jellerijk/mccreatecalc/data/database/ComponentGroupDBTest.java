@@ -1,10 +1,14 @@
 package org.jellerijk.mccreatecalc.data.database;
 
 import org.jellerijk.mccreatecalc.entities.ComponentGroup;
+import org.jellerijk.mccreatecalc.entities.StressNetwork;
 import org.jellerijk.mccreatecalc.entities.components.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,6 +22,18 @@ class ComponentGroupDBTest {
     private static final String WATERWHEEL_ID = "Test-WaterWheel";
     private static final String WINDMILL_ID = "Test-Windmill";
     ComponentGroupDB db;
+
+    @BeforeAll
+    static void beforeAll() {
+        NetworkDB networkDB = new NetworkDB();
+        networkDB.insert(new StressNetwork(TEST_NETWORK, "Test-Network", new ArrayList<>(), new ArrayList<>()));
+    }
+
+    @AfterAll
+    static void afterAll() {
+        NetworkDB networkDB = new NetworkDB();
+        networkDB.delete(TEST_NETWORK);
+    }
 
     private void addConsumer() {
         Consumer c = mock();
@@ -123,6 +139,20 @@ class ComponentGroupDBTest {
         deleteSmallWaterWheel();
         deleteLargeWaterWheel();
     }
+
+    @Test
+    void getNetworkId_GroupExists_ReturnsCorrectNetworkId() {
+        addWindmill();
+        assertEquals(TEST_NETWORK, db.getNetworkId(WINDMILL_ID).orElseThrow());
+        deleteWindmill();
+    }
+
+    @Test
+    void getNetworkId_GroupDoesNotExist_ReturnsEmptyOptional() {
+        assertTrue(db.getNetworkId("non-existant-id").isEmpty());
+    }
+
+
 
     @BeforeEach
     void setUp() {

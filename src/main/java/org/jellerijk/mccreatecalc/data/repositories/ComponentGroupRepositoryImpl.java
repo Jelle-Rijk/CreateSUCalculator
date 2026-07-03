@@ -17,4 +17,14 @@ public class ComponentGroupRepositoryImpl implements ComponentGroupRepository {
     public Optional<ComponentGroup> getById(String id) {
         return cgDAO.get(id);
     }
+
+    @Override
+    public Optional<String> getNetworkId(String groupId) {
+        return cgDAO.getNetworkId(groupId);
+    }
+
+    @Override
+    public void delete(String groupId) {
+        cgDAO.deleteGroup(groupId);
+    }
 }

@@ -11,7 +11,9 @@ public interface NetworkDAO {
 
     List<NetworkInfo> loadInfoAndIdsForAllNetworks();
 
-    Optional<StressNetwork> getById(String id);
+    Optional<NetworkInfo> getById(String id);
 
     void update(StressNetwork network);
+
+    void delete(String id);
 }
