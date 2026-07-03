@@ -32,10 +32,9 @@ public class NetworkDB implements NetworkDAO {
     }
 
     public void delete(String id) {
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement query = conn.prepareStatement(new SQLBuilder().deleteFrom(TABLE)
-                     .where(COL_ID)
-                     .build())) {
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement query = conn.prepareStatement(new SQLBuilder().deleteFrom(TABLE)
+                .where(COL_ID)
+                .build())) {
             query.setString(1, id);
             query.executeUpdate();
         } catch (SQLException ex) {
@@ -57,12 +56,12 @@ public class NetworkDB implements NetworkDAO {
     }
 
     @Override
-    public Optional<StressNetwork> getById(String id) {
-        StressNetwork network = null;
+    public Optional<NetworkInfo> getById(String id) {
+        NetworkInfo network = null;
         try (Connection conn = DBConnection.getConnection(); PreparedStatement query = conn.prepareStatement(QueryBuilder.selectBy(TABLE, COL_ID))) {
             query.setString(1, id);
             ResultSet res = query.executeQuery();
-            if (res.next()) network = mapToStressNetwork(res);
+            if (res.next()) network = mapToNetworkInfo(res);
             return Optional.ofNullable(network);
         } catch (SQLException e) {
             throw new DataBaseAccessException("Something went wrong while getting a network by its id.", e);
@@ -80,14 +79,9 @@ public class NetworkDB implements NetworkDAO {
         }
     }
 
-    private StressNetwork mapToStressNetwork(ResultSet res) throws SQLException {
+    private NetworkInfo mapToNetworkInfo(ResultSet res) throws SQLException {
         String id = res.getString(COL_ID);
         String name = res.getString(COL_NAME);
-        return StressNetwork.Builder.aStressNetwork()
-                .withId(id)
-                .withName(name)
-                .withGenerators(new ArrayList<>())
-                .withConsumers(new ArrayList<>())
-                .build(); // TODO fill components argument with actual components
+        return new NetworkInfo(id, name);
     }
 }

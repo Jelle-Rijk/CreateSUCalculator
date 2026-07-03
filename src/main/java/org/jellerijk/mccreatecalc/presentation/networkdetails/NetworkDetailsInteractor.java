@@ -58,6 +58,8 @@ public class NetworkDetailsInteractor implements SelectedNetworkObserver {
             return;
         }
 
+        model.setConsumers(ComponentGroupDTO.map(network.consumers()));
+        model.setGenerators(ComponentGroupDTO.map(network.generators()));
         model.networkNameProperty().set(network.name());
         model.suConsumedProperty().set(network.calculateSUConsumed());
         model.suProducedProperty().set(network.calculateSUProduced());

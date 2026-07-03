@@ -34,7 +34,22 @@ public class NetworkRepositoryImpl implements NetworkRepository {
 
     @Override
     public Optional<StressNetwork> getById(String id) {
-        return networkDAO.getById(id);
+        return networkDAO.getById(id).map(networkInfo -> {
+            List<ComponentGroup> groups = componentGroupDAO.getGroupsForNetwork(id);
+            List<ComponentGroup> generators = groups.stream()
+                    .filter(cg -> !cg.isConsumer())
+                    .collect(Collectors.toCollection(ArrayList::new));
+            System.out.println(generators);
+            List<ComponentGroup> consumers = groups.stream()
+                    .filter(ComponentGroup::isConsumer)
+                    .collect(Collectors.toCollection(ArrayList::new));
+            return StressNetwork.Builder.aStressNetwork()
+                    .withId(networkInfo.id())
+                    .withName(networkInfo.name())
+                    .withConsumers(consumers)
+                    .withGenerators(generators)
+                    .build();
+        });
     }
 
     @Override
