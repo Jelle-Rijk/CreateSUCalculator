@@ -3,14 +3,19 @@ package org.jellerijk.mccreatecalc.presentation.networkdetails;
 import javafx.application.Platform;
 import org.jellerijk.mccreatecalc.application.services.ComponentOption;
 import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
+import org.jellerijk.mccreatecalc.application.usecases.generator.GetGeneratorsUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.network.selection.SelectedNetworkObserver;
 import org.jellerijk.mccreatecalc.entities.StressNetwork;
 
+import java.util.List;
+
 public class NetworkDetailsInteractor implements SelectedNetworkObserver {
     private final NetworkDetailsModel model;
+    private final GetGeneratorsUseCase generatorOptionsFetcher;
 
     public NetworkDetailsInteractor(NetworkDetailsModel model, UseCaseFactory factory) {
         this.model = model;
+        generatorOptionsFetcher = factory.buildGetGeneratorsUseCase();
         factory.buildObserveSelectedNetworkUC().execute(this);
     }
 
@@ -33,6 +38,10 @@ public class NetworkDetailsInteractor implements SelectedNetworkObserver {
         model.suConsumedProperty().set(network.calculateSUConsumed());
         model.suProducedProperty().set(network.calculateSUProduced());
 //        model.suBalanceProperty().set(network.calculateSUBalance()); //TODO needs to implement bidirectional binding first.
+    }
+
+    public List<ComponentOption> getGeneratorOptions() {
+        return generatorOptionsFetcher.execute();
     }
 
     private void clearStressNetworkProperties() {

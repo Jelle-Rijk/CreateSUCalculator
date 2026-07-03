@@ -7,7 +7,9 @@ import org.jellerijk.mccreatecalc.application.services.ComponentOption;
 import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
 import org.jellerijk.mccreatecalc.presentation.Controller;
 
+import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 
 public class GeneratorSelectorController extends Controller {
@@ -16,8 +18,8 @@ public class GeneratorSelectorController extends Controller {
     private final GeneratorSelectorModel model = new GeneratorSelectorModel();
 
     public GeneratorSelectorController(
-            UseCaseFactory factory, Consumer<ComponentOption> addGeneratorGroupFunction) {
-        interactor = new GeneratorSelectorInteractor(model, factory, addGeneratorGroupFunction);
+            UseCaseFactory factory, Consumer<ComponentOption> addGeneratorGroupFunction, Supplier<List<ComponentOption>> optionsSupplier) {
+        interactor = new GeneratorSelectorInteractor(model, factory, addGeneratorGroupFunction, optionsSupplier);
         viewBuilder = new GeneratorSelectorViewBuilder(model, this::addGenerator);
         loadGeneratorOptions();
     }
@@ -26,7 +28,7 @@ public class GeneratorSelectorController extends Controller {
         Task<Void> loadOptions = new Task<>() {
             @Override
             protected Void call() {
-                interactor.loadGeneratorSelectorOptions();
+                interactor.loadComponentOptions();
                 return null;
             }
         };
