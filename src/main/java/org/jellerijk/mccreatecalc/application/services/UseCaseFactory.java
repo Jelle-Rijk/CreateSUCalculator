@@ -14,6 +14,7 @@ public class UseCaseFactory {
     private final ComponentGroupService componentGroupService;
     private final ComponentService componentService;
     private final NetworkService networkService;
+
     public UseCaseFactory(NetworkService networkService, ComponentService componentService, ComponentGroupService componentGroupService) {
         this.networkService = networkService;
         this.componentService = componentService;
@@ -55,14 +56,6 @@ public class UseCaseFactory {
 
     public SelectNetworkUseCase buildSelectNetworkUseCase() {
         return new SelectNetworkUseCase(networkService);
-    }
-
-    public GetConsumersUseCase buildGetConsumersUC() {
-        return new GetConsumersUseCase(componentService);
-    }
-
-    public AddComponentGroupToSelectedNetworkUC buildAddComponentGroupUC() {
-        return new AddComponentGroupToSelectedNetworkUC(networkService, componentService);
     }
 }
 
