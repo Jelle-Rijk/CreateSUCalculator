@@ -31,4 +31,16 @@ public enum WaterWheelType {
         return rpm;
     }
 
+    /**
+     * @param name The name of the component.
+     * @return The WaterWheelType associated with the component.
+     */
+    public static WaterWheelType fromName(String name) {
+        return switch (name) {
+            case "Water Wheel" -> SMALL;
+            case "Large Water Wheel" -> LARGE;
+            default -> throw new IllegalStateException("Unexpected value: " + name);
+        };
+    }
+
 }
