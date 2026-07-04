@@ -24,6 +24,14 @@ public class ComponentGroupModel {
         return componentName;
     }
 
+    public int getComponentAmount() {
+        return componentAmount.get();
+    }
+
+    public int getSails() {
+        return sails.get();
+    }
+
     public String getGroupId() {
         return groupId.get();
     }

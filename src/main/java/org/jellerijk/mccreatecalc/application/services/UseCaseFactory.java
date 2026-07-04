@@ -9,6 +9,7 @@ import org.jellerijk.mccreatecalc.application.usecases.network.selection.Observe
 import org.jellerijk.mccreatecalc.application.usecases.network.selection.SelectNetworkUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.network.update.AddComponentGroupToSelectedNetworkUC;
 import org.jellerijk.mccreatecalc.application.usecases.network.update.DeleteComponentGroupFromSelectedNetworkUseCase;
+import org.jellerijk.mccreatecalc.application.usecases.network.update.UpdateComponentGroupUC;
 
 public class UseCaseFactory {
     private final ComponentGroupService componentGroupService;
@@ -56,6 +57,10 @@ public class UseCaseFactory {
 
     public SelectNetworkUseCase buildSelectNetworkUseCase() {
         return new SelectNetworkUseCase(networkService);
+    }
+
+    public UpdateComponentGroupUC buildUpdateComponentGroupUC() {
+        return new UpdateComponentGroupUC(componentGroupService);
     }
 }
 

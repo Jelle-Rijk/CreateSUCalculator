@@ -6,18 +6,22 @@ import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
 import org.jellerijk.mccreatecalc.application.usecases.ObserveComponentGroupUC;
 import org.jellerijk.mccreatecalc.application.dto.ComponentGroupDTO;
 import org.jellerijk.mccreatecalc.application.usecases.network.update.DeleteComponentGroupFromSelectedNetworkUseCase;
+import org.jellerijk.mccreatecalc.application.usecases.network.update.UpdateComponentGroupRequest;
+import org.jellerijk.mccreatecalc.application.usecases.network.update.UpdateComponentGroupUC;
 import org.jellerijk.mccreatecalc.entities.components.ComponentType;
 
 public class ComponentGroupInteractor implements Observer<ComponentGroupDTO> {
     private final ComponentGroupModel model;
     private final ObserveComponentGroupUC observeComponentGroupUC;
     private final DeleteComponentGroupFromSelectedNetworkUseCase deleteGroupUC;
+    private final UpdateComponentGroupUC updateGroupUC;
 
     public ComponentGroupInteractor(ComponentGroupModel model, UseCaseFactory factory) {
         this.model = model;
         model.groupIdProperty().addListener((_, oldId, newId) -> handleGroupIdChange(oldId, newId));
         observeComponentGroupUC = factory.buildObserveComponentGroupUC();
         deleteGroupUC = factory.buildDeleteComponentGroupFromSelectedNetworkUseCase();
+        updateGroupUC = factory.buildUpdateComponentGroupUC();
     }
 
     private void handleGroupIdChange(String oldId, String newId) {
@@ -57,7 +61,8 @@ public class ComponentGroupInteractor implements Observer<ComponentGroupDTO> {
     }
 
     public void submitChanges() {
-        System.out.println("ComponentGroupInteractor: Changes submitted.");
+        UpdateComponentGroupRequest request = new UpdateComponentGroupRequest(model.getGroupId(), model.getComponentAmount(), model.getRpm(), model.getSails());
+        updateGroupUC.execute(request);
     }
 
     public void deleteGroup() {
