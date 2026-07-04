@@ -16,7 +16,7 @@ public class NetworkListController extends Controller {
     public NetworkListController(UseCaseFactory factory) {
         NetworkListModel model = new NetworkListModel();
         interactor = new NetworkListInteractor(model, factory);
-        viewBuilder = new NetworkListViewBuilder(model, this::createNetwork, this::selectNetwork);
+        viewBuilder = new NetworkListViewBuilder(model, this::createNetwork, this::selectNetwork, this::deleteNetwork);
         fetchNetworks();
     }
 
@@ -47,6 +47,10 @@ public class NetworkListController extends Controller {
         };
         createNetwork.setOnSucceeded(_ -> fetchNetworks());
         startTaskOnNewThread(createNetwork);
+    }
+
+    private void deleteNetwork(String networkId) {
+        interactor.deleteNetwork(networkId);
     }
 
     private void selectNetwork(String networkId) {

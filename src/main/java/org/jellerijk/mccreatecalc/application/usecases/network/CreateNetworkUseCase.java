@@ -24,6 +24,7 @@ public class CreateNetworkUseCase implements UseCase<String, String> {
         StressNetwork network = StressNetwork.Builder.aStressNetwork()
                 .withId(id)
                 .withName(networkName)
+                .withConsumers(new ArrayList<>())
                 .withGenerators(new ArrayList<>())
                 .build();
         networkService.add(network);
