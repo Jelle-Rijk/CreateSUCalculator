@@ -3,8 +3,6 @@ package org.jellerijk.mccreatecalc.presentation.componentgroup;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -49,7 +47,7 @@ public class ComponentGroupViewBuilder {
     }
 
     private Node buildAmountField() {
-        return buildNumericalField("Amount", model.componentAmountProperty(), null); // TODO: make numerical fields bidirectionally bound.
+        return buildNumericalField("Amount", model.componentAmountProperty(), null);
     }
 
     private Node buildRpmField() {
