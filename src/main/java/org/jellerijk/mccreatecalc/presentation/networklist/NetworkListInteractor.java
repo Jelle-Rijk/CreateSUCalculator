@@ -41,9 +41,10 @@ public class NetworkListInteractor {
     public void createNetwork() {
         String name = model.getUserInput();
         model.setUserInputEnabled(false);
-        networkCreator.execute(name);
+        String id = networkCreator.execute(name);
         model.setUserInput("");
         model.setUserInputEnabled(true);
+        selectNetwork(id);
     }
 
     public void selectNetwork(String networkId) {
