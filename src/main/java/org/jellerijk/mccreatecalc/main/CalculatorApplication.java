@@ -2,6 +2,7 @@ package org.jellerijk.mccreatecalc.main;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -32,7 +33,11 @@ public class CalculatorApplication extends Application {
 
         NetworkListController networkListController = new NetworkListController(networkUCFactory);
         NetworkDetailsController detailsController = new NetworkDetailsController(networkUCFactory);
-        HBox container = HBoxes.aligned(Pos.CENTER_LEFT, 5, networkListController.getView(), detailsController.getView());
+        Node networkList = networkListController.getView();
+        Node networkDetails = detailsController.getView();
+
+        HBox container = HBoxes.aligned(Pos.CENTER_LEFT, 5, networkList, networkDetails);
+        container.setMinWidth(660);
         Scene scene = new Scene(container);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/main.css")).toExternalForm());
 

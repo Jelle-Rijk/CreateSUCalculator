@@ -127,4 +127,31 @@ class NetworkServiceImplTest {
         when(networkRepo.getInfoForAllNetworks()).thenReturn(new ArrayList<>());
         assertTrue(ns.getAllNamesAndIds().isEmpty());
     }
+
+    @Test
+    void delete_delegatesCallToRepo() {
+        ns.delete("id");
+        verify(networkRepo).delete("id");
+    }
+
+    @Test
+    void delete_DeletedNetworkWasSelectedNetwork_SetsSelectedNetworkToNull() {
+        StressNetwork network = new StressNetwork("test-id", "test-network", new ArrayList<>(), new ArrayList<>());
+        selectedNetwork.write(network);
+        ns.delete("test-id");
+        assertTrue(ns.getSelectedNetwork().isEmpty());
+    }
+
+    @Test
+    void delete_DeletedNetworkWasNotSelectedNetwork_LeavesSelectedNetwork() {
+        StressNetwork network = StressNetwork.Builder.aStressNetwork()
+                .withId("test-id")
+                .withName("test-name")
+                .withConsumers(new ArrayList<>())
+                .withGenerators(new ArrayList<>())
+                .build();
+        selectedNetwork.write(network);
+        ns.delete("not-test-id");
+        assertEquals("test-id", ns.getSelectedNetwork().orElseThrow().getId());
+    }
 }

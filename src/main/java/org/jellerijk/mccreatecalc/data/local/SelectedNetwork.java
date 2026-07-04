@@ -17,4 +17,9 @@ public class SelectedNetwork implements SelectedNetworkData {
     public Optional<StressNetwork> read() {
         return Optional.ofNullable(selected);
     }
+
+    @Override
+    public Optional<String> getId() {
+        return selected == null ? Optional.empty() : Optional.of(selected.id());
+    }
 }

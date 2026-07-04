@@ -58,4 +58,9 @@ public class NetworkRepositoryImpl implements NetworkRepository {
                 .collect(Collectors.toCollection(ArrayList::new));
         componentGroupDAO.syncComponentGroups(network.id(), groups);
     }
+
+    @Override
+    public void delete(String networkId) {
+        networkDAO.delete(networkId);
+    }
 }

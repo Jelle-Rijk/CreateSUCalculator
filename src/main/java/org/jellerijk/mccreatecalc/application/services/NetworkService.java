@@ -44,4 +44,6 @@ public interface NetworkService {
      * @return List of objects containing a name and id for each network in the repository.
      */
     List<NetworkInfo> getAllNamesAndIds();
+
+    void delete(String networkId);
 }

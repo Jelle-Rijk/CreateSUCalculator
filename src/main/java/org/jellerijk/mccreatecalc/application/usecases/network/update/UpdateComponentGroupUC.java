@@ -2,13 +2,16 @@ package org.jellerijk.mccreatecalc.application.usecases.network.update;
 
 import org.jellerijk.mccreatecalc.application.VoidUseCase;
 import org.jellerijk.mccreatecalc.application.services.ComponentGroupService;
+import org.jellerijk.mccreatecalc.application.services.NetworkService;
 
 public class UpdateComponentGroupUC implements VoidUseCase<UpdateComponentGroupRequest> {
 
     private final ComponentGroupService componentGroupService;
+    private final NetworkService networkService;
 
-    public UpdateComponentGroupUC(ComponentGroupService componentGroupService) {
+    public UpdateComponentGroupUC(ComponentGroupService componentGroupService, NetworkService networkService) {
         this.componentGroupService = componentGroupService;
+        this.networkService = networkService;
     }
 
     /**
@@ -18,6 +21,8 @@ public class UpdateComponentGroupUC implements VoidUseCase<UpdateComponentGroupR
     public void execute(UpdateComponentGroupRequest request) {
         validateRequest(request);
         componentGroupService.update(request);
+        String groupId = componentGroupService.getNetworkIdForGroup(request.groupId()).orElseThrow();
+        networkService.setSelectedNetwork(networkService.getById(groupId).orElseThrow());
     }
 
     private void validateRequest(UpdateComponentGroupRequest request) {

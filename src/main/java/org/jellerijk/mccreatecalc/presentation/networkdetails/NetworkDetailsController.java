@@ -1,6 +1,6 @@
 package org.jellerijk.mccreatecalc.presentation.networkdetails;
 
-import javafx.scene.layout.Region;
+import javafx.scene.Node;
 import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
 import org.jellerijk.mccreatecalc.presentation.Controller;
 import org.jellerijk.mccreatecalc.presentation.componentselector.ComponentSelectorController;
@@ -16,7 +16,7 @@ public class NetworkDetailsController extends Controller {
         viewBuilder = new NetworkDetailsViewBuilder(model, generatorSelector.getView(), consumerSelector.getView(), factory);
     }
 
-    public Region getView() {
+    public Node getView() {
         return viewBuilder.build();
     }
 }

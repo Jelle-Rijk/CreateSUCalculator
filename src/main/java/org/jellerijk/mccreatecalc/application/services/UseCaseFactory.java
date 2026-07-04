@@ -5,6 +5,7 @@ import org.jellerijk.mccreatecalc.application.usecases.UnsubscribeFromComponentG
 import org.jellerijk.mccreatecalc.application.usecases.components.GetConsumersUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.components.GetGeneratorsUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.network.CreateNetworkUseCase;
+import org.jellerijk.mccreatecalc.application.usecases.network.DeleteNetworkUC;
 import org.jellerijk.mccreatecalc.application.usecases.network.read.FetchNetworksInfoUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.network.selection.ObserveSelectedNetworkUC;
 import org.jellerijk.mccreatecalc.application.usecases.network.selection.SelectNetworkUseCase;
@@ -65,7 +66,11 @@ public class UseCaseFactory {
     }
 
     public UpdateComponentGroupUC buildUpdateComponentGroupUC() {
-        return new UpdateComponentGroupUC(componentGroupService);
+        return new UpdateComponentGroupUC(componentGroupService, networkService);
+    }
+
+    public DeleteNetworkUC buildDeleteNetworkUC() {
+        return new DeleteNetworkUC(networkService);
     }
 }
 
