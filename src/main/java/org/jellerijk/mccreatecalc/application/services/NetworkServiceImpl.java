@@ -59,4 +59,11 @@ public class NetworkServiceImpl implements NetworkService {
     public List<NetworkInfo> getAllNamesAndIds() {
         return networkRepo.getInfoForAllNetworks();
     }
+
+    @Override
+    public void delete(String networkId) {
+        networkRepo.delete(networkId);
+        if (selectedNetwork.getId().map(id -> id.equals(networkId)).orElse(false))
+            setSelectedNetwork(null);
+    }
 }

@@ -14,4 +14,6 @@ public interface NetworkRepository {
     Optional<StressNetwork> getById(String id);
 
     void update(StressNetwork network);
+
+    void delete(String networkId);
 }

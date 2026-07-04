@@ -150,4 +150,10 @@ class NetworkRepositoryImplTest {
 
         assertEquals(2, n.getById(id).orElseThrow().generators().size());
     }
+
+    @Test
+    void delete_delegatesCallToDAO() {
+        n.delete("id");
+        verify(networkDAO).delete("id");
+    }
 }

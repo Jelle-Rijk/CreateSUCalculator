@@ -16,4 +16,6 @@ public interface SelectedNetworkData {
      * @return An optional containing the currently selected stress network.
      */
     Optional<StressNetwork> read();
+
+    Optional<String> getId();
 }
