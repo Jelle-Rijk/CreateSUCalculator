@@ -48,4 +48,41 @@ class ComponentGroupDTOPublisherTest {
     void publish_NobodySubscribed_DoesNotThrow() {
         assertDoesNotThrow(() -> cgPublisher.publish(cg));
     }
+
+    @Test
+    void unsubscribe_ValidRequest_UnsubscribesObserver() {
+        cgPublisher.subscribe(new Subscription<>(observer, "id"));
+        cgPublisher.unsubscribe(new Subscription<>(observer, "id"));
+        cgPublisher.publish(cg);
+        verifyNoInteractions(observer);
+    }
+
+    @Test
+    void unsubscribe_GroupIdNotInSubscriptions_DoesNotThrow() {
+        assertDoesNotThrow(() -> cgPublisher.unsubscribe(new Subscription<>(observer, "id")));
+    }
+
+    @Test
+    void unsubscribe_ObserverNotSubscribedToGroupId_DoesNotThrow() {
+        cgPublisher.subscribe(new Subscription<>(mock(), "id"));
+        assertDoesNotThrow(() -> cgPublisher.unsubscribe(new Subscription<>(observer, "id")));
+    }
+
+    @Test
+    void containsKey_containsKey_ReturnsTrue() {
+        cgPublisher.subscribe(new Subscription<>(mock(), "key"));
+        assertTrue(() -> cgPublisher.containsKey("key"));
+    }
+
+    @Test
+    void containsKey_DoesNotContainKey_ReturnsFalse() {
+        assertFalse(() -> cgPublisher.containsKey("non-existant-key"));
+    }
+
+    @Test
+    void unsubscribe_LastObserver_RemovesGroupIdFromMap() {
+        cgPublisher.subscribe(new Subscription<>(observer, "id"));
+        cgPublisher.unsubscribe(new Subscription<>(observer, "id"));
+        assertFalse(cgPublisher.containsKey("id"));
+    }
 }

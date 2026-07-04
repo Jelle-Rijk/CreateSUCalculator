@@ -1,6 +1,7 @@
 package org.jellerijk.mccreatecalc.util.fxlib;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.util.StringConverter;
@@ -26,7 +27,12 @@ public abstract class TextFields {
             return null;
         });
         txf.setTextFormatter(formatter);
-        formatter.valueProperty().bindBidirectional(intProperty.asObject());
+
+        ObjectProperty<Integer> intPropertyAsObject = intProperty.asObject();
+        formatter.valueProperty().bindBidirectional(intPropertyAsObject);
+        txf.getProperties()
+                .put("intPropertyAsObjectRef", intPropertyAsObject); // Needed so that the garbage collector does not remove the property.
+
         return txf;
     }
 

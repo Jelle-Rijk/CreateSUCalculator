@@ -12,6 +12,8 @@ public interface ComponentGroupService {
 
     void subscribe(Subscription<ComponentGroupDTO, String> subscription);
 
+    void unsubscribe(Subscription<ComponentGroupDTO, String> subscription);
+
     /**
      * @param groupId The group to look up the network id for.
      * @return An optional containing the network's id.

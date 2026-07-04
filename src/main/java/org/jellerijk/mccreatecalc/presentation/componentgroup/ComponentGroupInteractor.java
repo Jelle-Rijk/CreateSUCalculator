@@ -6,6 +6,7 @@ import org.jellerijk.mccreatecalc.application.publishers.Subscription;
 import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
 import org.jellerijk.mccreatecalc.application.usecases.ObserveComponentGroupUC;
 import org.jellerijk.mccreatecalc.application.dto.ComponentGroupDTO;
+import org.jellerijk.mccreatecalc.application.usecases.UnsubscribeFromComponentGroupUC;
 import org.jellerijk.mccreatecalc.application.usecases.network.update.DeleteComponentGroupFromSelectedNetworkUseCase;
 import org.jellerijk.mccreatecalc.application.usecases.network.update.UpdateComponentGroupRequest;
 import org.jellerijk.mccreatecalc.application.usecases.network.update.UpdateComponentGroupUC;
@@ -16,6 +17,7 @@ public class ComponentGroupInteractor implements Observer<ComponentGroupDTO> {
     private final ObserveComponentGroupUC observeComponentGroupUC;
     private final DeleteComponentGroupFromSelectedNetworkUseCase deleteGroupUC;
     private final UpdateComponentGroupUC updateGroupUC;
+    private final UnsubscribeFromComponentGroupUC unsubscribeFromComponentGroupUC;
 
     public ComponentGroupInteractor(ComponentGroupModel model, UseCaseFactory factory) {
         this.model = model;
@@ -23,17 +25,31 @@ public class ComponentGroupInteractor implements Observer<ComponentGroupDTO> {
         observeComponentGroupUC = factory.buildObserveComponentGroupUC();
         deleteGroupUC = factory.buildDeleteComponentGroupFromSelectedNetworkUseCase();
         updateGroupUC = factory.buildUpdateComponentGroupUC();
+        unsubscribeFromComponentGroupUC = factory.buildUnsubscribeFromComponentGroupUC();
     }
 
     private void handleGroupIdChange(String oldId, String newId) {
-        System.out.printf("ComponentGroupInteractor: Unsubscribing from %s (not implemented yet)%n", oldId);
+        if (oldId != null) unsubscribeFromComponentGroupUC.execute(new Subscription<>(this, oldId));
+        resetModelFields();
         observeComponentGroupUC.execute(new Subscription<>(this, newId));
 
     }
 
     @Override
     public void update(ComponentGroupDTO message) {
-        Platform.runLater(() -> updateComponentGroupData(message));
+        Platform.runLater(() -> {
+            if (message.id().equals(model.getGroupId())) updateComponentGroupData(message);
+        });
+    }
+
+    private void resetModelFields() {
+        model.setNeedsSails(false);
+        model.setNeedsRpm(false);
+        model.setNeedsLevel(false);
+        model.sailsProperty().set(0);
+        model.rpmProperty().set(0);
+        model.levelProperty().set("");
+        model.componentAmountProperty().set(0);
     }
 
     /**

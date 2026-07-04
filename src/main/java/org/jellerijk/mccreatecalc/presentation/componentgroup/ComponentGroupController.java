@@ -26,14 +26,7 @@ public class ComponentGroupController extends Controller {
     }
 
     private void submitChanges() {
-        Task<Void> changeSubmit = new Task<>() {
-            @Override
-            protected Void call() {
-                interactor.submitChanges();
-                return null;
-            }
-        };
-        startTaskOnNewThread(changeSubmit);
+        interactor.submitChanges();
     }
 
     private void delete() {
@@ -44,7 +37,6 @@ public class ComponentGroupController extends Controller {
                 return null;
             }
         };
-        //TODO : implement removing the card from the list.
         startTaskOnNewThread(deleteTask);
     }
 }

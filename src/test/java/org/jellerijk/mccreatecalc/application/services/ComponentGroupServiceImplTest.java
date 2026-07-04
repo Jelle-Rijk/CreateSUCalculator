@@ -74,4 +74,11 @@ class ComponentGroupServiceImplTest {
         service.update(request);
         verify(cgPublisher).publish(cg);
     }
+
+
+    @Test
+    void unsubscribe_valid_delegatesCall() {
+        service.unsubscribe(mock());
+        verify(cgPublisher).unsubscribe(any());
+    }
 }
