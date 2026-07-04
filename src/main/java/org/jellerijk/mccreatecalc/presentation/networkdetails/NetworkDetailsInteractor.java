@@ -52,6 +52,7 @@ public class NetworkDetailsInteractor implements SelectedNetworkObserver {
         }
 
         model.setConsumers(ComponentGroupDTO.map(network.consumers()));
+        model.setNetworkSelected(true);
         model.setGenerators(ComponentGroupDTO.map(network.generators()));
         model.networkNameProperty().set(network.name());
         model.suConsumedProperty().set(network.calculateSUConsumed());
@@ -69,6 +70,7 @@ public class NetworkDetailsInteractor implements SelectedNetworkObserver {
 
     private void clearStressNetworkProperties() {
         model.networkNameProperty().set(null);
+        model.setNetworkSelected(false);
         model.suConsumedProperty().set(0);
         model.suProducedProperty().set(0);
         model.suBalanceProperty().set(0);

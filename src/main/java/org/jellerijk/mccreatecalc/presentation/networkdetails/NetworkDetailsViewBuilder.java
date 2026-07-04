@@ -1,6 +1,7 @@
 package org.jellerijk.mccreatecalc.presentation.networkdetails;
 
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -32,8 +33,15 @@ public class NetworkDetailsViewBuilder implements Builder<Region> {
     @Override
     public Region build() {
         BorderPane bp = new BorderPane();
-        bp.setTop(buildHeader());
+        Node header = buildHeader();
+        Node empty = buildEmptyScreen();
+        bp.centerProperty()
+                .bind(Bindings.createObjectBinding(() -> model.isNetworkSelected() ? header : empty, model.networkSelectedProperty()));
         return bp;
+    }
+
+    private Node buildEmptyScreen() {
+        return new Label("No network selected");
     }
 
     private Node buildHeader() {

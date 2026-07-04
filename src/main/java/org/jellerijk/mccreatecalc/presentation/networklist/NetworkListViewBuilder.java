@@ -41,7 +41,9 @@ public class NetworkListViewBuilder implements Builder<Region> {
                 lv.getSelectionModel().selectedItemProperty()));
         lv.getSelectionModel()
                 .selectedItemProperty()
-                .addListener((_, _, selected) -> selectNetworkHandler.accept(selected.id()));
+                .addListener((_, _, selected) -> {
+                    if (selected != null) selectNetworkHandler.accept(selected.id());
+                });
         return lv;
     }
 
