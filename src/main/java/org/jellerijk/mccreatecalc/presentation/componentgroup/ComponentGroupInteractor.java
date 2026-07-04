@@ -1,5 +1,6 @@
 package org.jellerijk.mccreatecalc.presentation.componentgroup;
 
+import javafx.application.Platform;
 import org.jellerijk.mccreatecalc.application.publishers.Observer;
 import org.jellerijk.mccreatecalc.application.publishers.Subscription;
 import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
@@ -32,7 +33,7 @@ public class ComponentGroupInteractor implements Observer<ComponentGroupDTO> {
 
     @Override
     public void update(ComponentGroupDTO message) {
-        updateComponentGroupData(message);
+        Platform.runLater(() -> updateComponentGroupData(message));
     }
 
     /**
