@@ -4,6 +4,7 @@ import org.jellerijk.mccreatecalc.application.dto.ComponentGroupDTO;
 import org.jellerijk.mccreatecalc.application.gateways.ComponentGroupRepository;
 import org.jellerijk.mccreatecalc.application.publishers.ComponentGroupDTOPublisher;
 import org.jellerijk.mccreatecalc.application.publishers.Subscription;
+import org.jellerijk.mccreatecalc.application.usecases.network.update.UpdateComponentGroupRequest;
 import org.jellerijk.mccreatecalc.entities.ComponentGroup;
 
 import java.util.Optional;
@@ -27,6 +28,11 @@ public class ComponentGroupServiceImpl implements ComponentGroupService {
     }
 
     @Override
+    public void unsubscribe(Subscription<ComponentGroupDTO, String> subscription) {
+        publisher.unsubscribe(subscription);
+    }
+
+    @Override
     public Optional<String> getNetworkIdForGroup(String groupId) {
         return cgRepo.getNetworkId(groupId);
     }
@@ -34,5 +40,11 @@ public class ComponentGroupServiceImpl implements ComponentGroupService {
     @Override
     public void delete(String groupId) {
         cgRepo.delete(groupId);
+    }
+
+    @Override
+    public void update(UpdateComponentGroupRequest request) {
+        cgRepo.update(request);
+        publisher.publish(cgRepo.getById(request.groupId()).orElseThrow());
     }
 }

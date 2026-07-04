@@ -39,7 +39,6 @@ public class NetworkRepositoryImpl implements NetworkRepository {
             List<ComponentGroup> generators = groups.stream()
                     .filter(cg -> !cg.isConsumer())
                     .collect(Collectors.toCollection(ArrayList::new));
-            System.out.println(generators);
             List<ComponentGroup> consumers = groups.stream()
                     .filter(ComponentGroup::isConsumer)
                     .collect(Collectors.toCollection(ArrayList::new));

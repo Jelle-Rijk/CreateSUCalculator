@@ -25,4 +25,10 @@ public interface ComponentGroupDAO {
     void syncComponentGroups(String networkId, List<ComponentGroup> componentGroups);
 
     Optional<String> getNetworkId(String groupId);
+
+    void update(String id, int amount);
+
+    void updateConsumer(String id, int rpm);
+
+    void updateWindmill(String id, int sails);
 }

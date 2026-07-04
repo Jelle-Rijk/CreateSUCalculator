@@ -152,7 +152,29 @@ class ComponentGroupDBTest {
         assertTrue(db.getNetworkId("non-existant-id").isEmpty());
     }
 
+    @Test
+    void update_ValidGroupComponent_UpdatesAmount() {
+        addWindmill();
+        db.update(WINDMILL_ID, 20);
+        assertEquals(20, db.get(WINDMILL_ID).orElseThrow().getAmount());
+        deleteWindmill();
+    }
 
+    @Test
+    void update_ValidWindmillComponent_UpdatesAmount() {
+        addWindmill();
+        db.updateWindmill(WINDMILL_ID, 37);
+        assertEquals(37, ((Windmill) db.get(WINDMILL_ID).orElseThrow().getComponent()).getSails());
+        deleteWindmill();
+    }
+
+    @Test
+    void update_ValidConsumer_UpdatesRPM() {
+        addConsumer();
+        db.updateConsumer(CONSUMER_ID, 202);
+        assertEquals(202, db.get(CONSUMER_ID).orElseThrow().getComponent().getRpm());
+        deleteConsumer();
+    }
 
     @BeforeEach
     void setUp() {

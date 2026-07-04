@@ -5,6 +5,7 @@ import org.jellerijk.mccreatecalc.entities.ComponentGroup;
 import org.jellerijk.mccreatecalc.entities.components.*;
 import org.jellerijk.mccreatecalc.exceptions.DataBaseAccessException;
 import org.jellerijk.mccreatecalc.util.sql.SQLBuilder;
+import org.sqlite.core.DB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -161,6 +162,45 @@ public class ComponentGroupDB implements ComponentGroupDAO {
             return Optional.ofNullable(res.next() ? res.getString(Columns.NETWORK) : null);
         } catch (SQLException e) {
             throw new DataBaseAccessException("Something went wrong while getting the network Id for a group", e);
+        }
+    }
+
+    @Override
+    public void updateConsumer(String id, int rpm) {
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement query = conn.prepareStatement(new SQLBuilder().update(TABLE_CONSUMERS, Consumers.COL_RPM)
+                     .where(Consumers.COL_ID).build())) {
+            query.setInt(1, rpm);
+            query.setString(2, id);
+            query.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DataBaseAccessException("Something went wrong while updating a consumer group's rpm.", ex);
+        }
+    }
+
+    @Override
+    public void updateWindmill(String id, int sails) {
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement query = conn.prepareStatement(new SQLBuilder().update(Windmills.TABLE, Windmills.COL_SAILS)
+                     .where(Windmills.COL_ID).build())) {
+            query.setInt(1, sails);
+            query.setString(2, id);
+            query.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DataBaseAccessException("Something went wrong while updating a windmill group's sails.", ex);
+        }
+    }
+
+    @Override
+    public void update(String id, int amount) {
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement query = conn.prepareStatement(new SQLBuilder().update(TABLE_COMPONENT_GROUP, Columns.AMOUNT)
+                     .where(Columns.ID).build())) {
+            query.setInt(1, amount);
+            query.setString(2, id);
+            query.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DataBaseAccessException("Something went wrong while updating a component group's amount.", ex);
         }
     }
 

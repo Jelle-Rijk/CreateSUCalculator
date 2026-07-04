@@ -81,4 +81,12 @@ public class SQLBuilder {
         query.append("DELETE FROM ").append(table).append(" ");
         return this;
     }
+
+    public SQLBuilder update(String table, String... cols) {
+        if (cols.length == 0)
+            throw new IllegalArgumentException("Did not specify columns to update");
+        String setString = Arrays.stream(cols).map(col -> col + "=?").collect(Collectors.joining(","));
+        query.append("UPDATE ").append(table).append(" SET ").append(setString).append(" ");
+        return this;
+    }
 }

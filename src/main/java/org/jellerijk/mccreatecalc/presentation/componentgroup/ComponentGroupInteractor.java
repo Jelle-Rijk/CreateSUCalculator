@@ -1,34 +1,55 @@
 package org.jellerijk.mccreatecalc.presentation.componentgroup;
 
+import javafx.application.Platform;
 import org.jellerijk.mccreatecalc.application.publishers.Observer;
 import org.jellerijk.mccreatecalc.application.publishers.Subscription;
 import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
 import org.jellerijk.mccreatecalc.application.usecases.ObserveComponentGroupUC;
 import org.jellerijk.mccreatecalc.application.dto.ComponentGroupDTO;
+import org.jellerijk.mccreatecalc.application.usecases.UnsubscribeFromComponentGroupUC;
 import org.jellerijk.mccreatecalc.application.usecases.network.update.DeleteComponentGroupFromSelectedNetworkUseCase;
+import org.jellerijk.mccreatecalc.application.usecases.network.update.UpdateComponentGroupRequest;
+import org.jellerijk.mccreatecalc.application.usecases.network.update.UpdateComponentGroupUC;
 import org.jellerijk.mccreatecalc.entities.components.ComponentType;
 
 public class ComponentGroupInteractor implements Observer<ComponentGroupDTO> {
     private final ComponentGroupModel model;
     private final ObserveComponentGroupUC observeComponentGroupUC;
     private final DeleteComponentGroupFromSelectedNetworkUseCase deleteGroupUC;
+    private final UpdateComponentGroupUC updateGroupUC;
+    private final UnsubscribeFromComponentGroupUC unsubscribeFromComponentGroupUC;
 
     public ComponentGroupInteractor(ComponentGroupModel model, UseCaseFactory factory) {
         this.model = model;
         model.groupIdProperty().addListener((_, oldId, newId) -> handleGroupIdChange(oldId, newId));
         observeComponentGroupUC = factory.buildObserveComponentGroupUC();
         deleteGroupUC = factory.buildDeleteComponentGroupFromSelectedNetworkUseCase();
+        updateGroupUC = factory.buildUpdateComponentGroupUC();
+        unsubscribeFromComponentGroupUC = factory.buildUnsubscribeFromComponentGroupUC();
     }
 
     private void handleGroupIdChange(String oldId, String newId) {
-        System.out.printf("ComponentGroupInteractor: Unsubscribing from %s (not implemented yet)%n", oldId);
+        if (oldId != null) unsubscribeFromComponentGroupUC.execute(new Subscription<>(this, oldId));
+        resetModelFields();
         observeComponentGroupUC.execute(new Subscription<>(this, newId));
 
     }
 
     @Override
     public void update(ComponentGroupDTO message) {
-        updateComponentGroupData(message);
+        Platform.runLater(() -> {
+            if (message.id().equals(model.getGroupId())) updateComponentGroupData(message);
+        });
+    }
+
+    private void resetModelFields() {
+        model.setNeedsSails(false);
+        model.setNeedsRpm(false);
+        model.setNeedsLevel(false);
+        model.sailsProperty().set(0);
+        model.rpmProperty().set(0);
+        model.levelProperty().set("");
+        model.componentAmountProperty().set(0);
     }
 
     /**
@@ -57,7 +78,8 @@ public class ComponentGroupInteractor implements Observer<ComponentGroupDTO> {
     }
 
     public void submitChanges() {
-        System.out.println("ComponentGroupInteractor: Changes submitted.");
+        UpdateComponentGroupRequest request = new UpdateComponentGroupRequest(model.getGroupId(), model.getComponentAmount(), model.getRpm(), model.getSails());
+        updateGroupUC.execute(request);
     }
 
     public void deleteGroup() {

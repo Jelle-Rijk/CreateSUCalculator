@@ -14,7 +14,8 @@ public class ComponentGroupDTOPublisher implements Publisher<ComponentGroupDTO, 
 
     @Override
     public void subscribe(Subscription<ComponentGroupDTO, String> subscription) {
-        subscriptions.computeIfAbsent(subscription.getEventIdentifier(), _ -> new ArrayList<>()).add(subscription.getObserver());
+        subscriptions.computeIfAbsent(subscription.getEventIdentifier(), _ -> new ArrayList<>())
+                .add(subscription.getObserver());
     }
 
     @Override
@@ -23,5 +24,18 @@ public class ComponentGroupDTOPublisher implements Publisher<ComponentGroupDTO, 
         if (observers == null)
             return;
         observers.forEach(obs -> obs.update(ComponentGroupDTO.map(message)));
+    }
+
+    public void unsubscribe(Subscription<ComponentGroupDTO, String> subscription) {
+        subscriptions.compute(subscription.getEventIdentifier(), (_, value) -> {
+            if (value == null)
+                return null;
+            value.remove(subscription.getObserver());
+            return value.isEmpty() ? null : value;
+        });
+    }
+
+    boolean containsKey(String key) {
+        return subscriptions.containsKey(key);
     }
 }
