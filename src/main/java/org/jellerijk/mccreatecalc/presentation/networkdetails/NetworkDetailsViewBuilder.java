@@ -8,7 +8,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Builder;
 import org.jellerijk.mccreatecalc.application.dto.ComponentGroupDTO;
@@ -16,7 +15,8 @@ import org.jellerijk.mccreatecalc.application.services.UseCaseFactory;
 import org.jellerijk.mccreatecalc.util.fxlib.HBoxes;
 import org.jellerijk.mccreatecalc.util.fxlib.Labels;
 
-public class NetworkDetailsViewBuilder implements Builder<Region> {
+public class NetworkDetailsViewBuilder implements Builder<Node> {
+    private static final Double MIN_WIDTH = 600.0;
     private final Node consumerSelectorContent;
     private final UseCaseFactory factory;
     private final NetworkDetailsModel model;
@@ -31,10 +31,14 @@ public class NetworkDetailsViewBuilder implements Builder<Region> {
     }
 
     @Override
-    public Region build() {
+    public Node build() {
         BorderPane bp = new BorderPane();
+        bp.minWidth(MIN_WIDTH);
+        bp.prefWidth(MIN_WIDTH);
         Node header = buildHeader();
         Node empty = buildEmptyScreen();
+        header.minWidth(MIN_WIDTH);
+        empty.minWidth(MIN_WIDTH);
         bp.centerProperty()
                 .bind(Bindings.createObjectBinding(() -> model.isNetworkSelected() ? header : empty, model.networkSelectedProperty()));
         return bp;
@@ -51,7 +55,7 @@ public class NetworkDetailsViewBuilder implements Builder<Region> {
 
     private Node buildSUOverview() {
         Node suBalance = HBoxes.aligned(Pos.CENTER_LEFT, 1,
-                new Label("Balance:", Labels.balanceLabel(model.suBalanceProperty())));
+                new Label("Balance:"), Labels.balanceLabel(model.suBalanceProperty()));
         return HBoxes.aligned(Pos.CENTER_LEFT, 5, suBalance);
     }
 

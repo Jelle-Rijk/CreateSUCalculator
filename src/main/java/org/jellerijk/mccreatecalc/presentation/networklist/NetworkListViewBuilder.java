@@ -28,6 +28,7 @@ public class NetworkListViewBuilder implements Builder<Region> {
     @Override
     public Region build() {
         VBox container = new VBox();
+        container.setMaxWidth(150);
         container.getChildren().add(buildNetworkListView());
         container.getChildren().add(buildInputField());
         return container;

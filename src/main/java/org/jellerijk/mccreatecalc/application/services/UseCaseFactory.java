@@ -66,7 +66,7 @@ public class UseCaseFactory {
     }
 
     public UpdateComponentGroupUC buildUpdateComponentGroupUC() {
-        return new UpdateComponentGroupUC(componentGroupService);
+        return new UpdateComponentGroupUC(componentGroupService, networkService);
     }
 
     public DeleteNetworkUC buildDeleteNetworkUC() {
